@@ -97,5 +97,11 @@ export function resolveStripePriceId(productId: ProductId): string {
 
 export function isStripePriceConfigured(productId: ProductId): boolean {
   const priceId = resolveStripePriceId(productId);
-  return Boolean(priceId && !priceId.includes("REPLACE"));
+  if (!priceId) return false;
+  const v = priceId.toLowerCase();
+  return !(
+    v.includes("replace") ||
+    v.includes("inlocuieste") ||
+    v.includes("xxx")
+  );
 }

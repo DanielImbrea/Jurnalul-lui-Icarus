@@ -54,7 +54,6 @@ export default async function SuccesPage({
   const summary =
     (await getCodSummary(searchParams.cod)) ??
     (await getSessionSummary(searchParams.session_id));
-  const emailConfigured = Boolean(process.env.RESEND_API_KEY);
 
   return (
     <>
@@ -87,22 +86,6 @@ export default async function SuccesPage({
                   {summary.type === "cod" ? " (ramburs)" : ""}.
                 </p>
               )}
-              {summary.email && emailConfigured ? (
-                <p>Confirmarea a fost trimisă la adresa {summary.email}.</p>
-              ) : summary.email ? (
-                <p>
-                  Comanda este înregistrată pentru {summary.email}. Emailul de
-                  confirmare se trimite când{" "}
-                  <span className="text-mist">RESEND_API_KEY</span> este
-                  configurat (producție).
-                </p>
-              ) : null}
-              {summary.type === "card" && !emailConfigured ? (
-                <p className="text-ash">
-                  Stripe poate trimite și el chitanța, dacă ai activat
-                  notificările în Dashboard → Settings → Emails.
-                </p>
-              ) : null}
               <p className="text-ash">
                 Cartea{summary.productTitle?.includes(" + ") ? "le" : ""} va fi
                 expediată în câteva zile lucrătoare. Dacă ai întrebări despre
@@ -111,8 +94,8 @@ export default async function SuccesPage({
             </div>
           ) : (
             <p className="font-sans text-[15px] leading-relaxed text-mist">
-              Comanda ta a fost înregistrată. Vei primi confirmarea pe email în
-              câteva minute.
+              Plata a fost procesată. Cartea va fi expediată în câteva zile
+              lucrătoare.
             </p>
           )}
 

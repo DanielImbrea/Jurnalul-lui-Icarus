@@ -41,3 +41,6 @@ next-env.d.ts
 
 # uploads (local dev)
 /public/uploads/
+
+# stripe cli (local binary)
+/tools/stripe/

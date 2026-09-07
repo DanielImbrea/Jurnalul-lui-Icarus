@@ -42,6 +42,17 @@ function upsertEnvVar(content, key, value) {
   return content.trimEnd() + `\n${line}\n`;
 }
 
+function isPlaceholderPriceId(value) {
+  if (!value) return true;
+  const v = value.toLowerCase();
+  return (
+    v.includes("replace") ||
+    v.includes("inlocuieste") ||
+    v.includes("xxx") ||
+    v === "price_"
+  );
+}
+
 loadEnv();
 
 const secretKey = process.env.STRIPE_SECRET_KEY;
@@ -89,7 +100,7 @@ const results = {};
 
 for (const item of catalog) {
   const existing = process.env[item.envKey];
-  if (existing && !existing.includes("REPLACE")) {
+  if (existing && !isPlaceholderPriceId(existing)) {
     console.log(`⏭  ${item.name}: ${item.envKey} deja setat (${existing})`);
     results[item.envKey] = existing;
     continue;

@@ -81,7 +81,7 @@ export function HeroBooksMobile({ className = "" }: { className?: string }) {
         href="/carti/sub-umbrele-lui-blake"
         src={blakeFeaturedImages.hero}
         alt="Sub umbrele lui Blake"
-        label="Blake"
+        label="Dark romance"
         tilt="left"
         primary
         reveal={false}
@@ -91,7 +91,7 @@ export function HeroBooksMobile({ className = "" }: { className?: string }) {
         href="/carti/imbratisarea-durerii-si-avantajele-ei"
         src={durereFeaturedImages.hero}
         alt="Îmbrățișarea durerii și avantajele ei"
-        label="Durere"
+        label="Reflecție"
         tilt="right"
         primary
         reveal={false}
