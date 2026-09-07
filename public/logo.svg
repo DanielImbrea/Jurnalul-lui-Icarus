@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <circle cx="60" cy="60" r="58" fill="#F6F3EC"/>
+  <g transform="translate(10 8)">
+    <path d="M22 28c0-9 6-16 16-17 5-1 10 1 13 4-6 1-10 5-10 12 0 4 2 7 5 9" stroke="#0E0D0C" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M28 42c5-1 12-1 18 1 4 2 7 5 7 9 0 5-4 9-9 10-7 1-14-1-19-6" stroke="#0E0D0C" stroke-width="1.1" stroke-linecap="round" opacity=".9"/>
+    <path d="M43 40c9-2 18-1 25 4" stroke="#0E0D0C" stroke-width="1" stroke-linecap="round" opacity=".75"/>
+    <g transform="translate(38 32) scale(.9)">
+      <path fill="#0E0D0C" d="M-8 2c2.5-3 7-4.5 11-3 1.5-1.5 4.5-2.2 7.5-1.5 1.5-.8 3.5-.4 5 .8-2 .8-4 1.5-5 2.5 3 .8 5.5 2.5 6.5 4.5-4 .8-8 0-11.5-1.5-3 1.5-6.5 2.2-10 1.5-1.5.8-3 .8-4.5 0 1-1.5 2-2.5 3-3.5.5-.8.5-1.5 1-2.2z"/>
+      <circle cx="4" cy="-.5" r=".65" fill="#7a1525"/><circle cx="4" cy="-.5" r=".28" fill="#d42040"/>
+    </g>
+    <g transform="translate(54 28) scale(-.75 .75)">
+      <path fill="#0E0D0C" d="M-8 2c2.5-3 7-4.5 11-3 1.5-1.5 4.5-2.2 7.5-1.5 1.5-.8 3.5-.4 5 .8-2 .8-4 1.5-5 2.5 3 .8 5.5 2.5 6.5 4.5-4 .8-8 0-11.5-1.5-3 1.5-6.5 2.2-10 1.5-1.5.8-3 .8-4.5 0 1-1.5 2-2.5 3-3.5.5-.8.5-1.5 1-2.2z"/>
+      <circle cx="4" cy="-.5" r=".65" fill="#7a1525"/><circle cx="4" cy="-.5" r=".28" fill="#d42040"/>
+    </g>
+    <g transform="translate(66 34) scale(.65)">
+      <path fill="#0E0D0C" d="M-8 2c2.5-3 7-4.5 11-3 1.5-1.5 4.5-2.2 7.5-1.5 1.5-.8 3.5-.4 5 .8-2 .8-4 1.5-5 2.5 3 .8 5.5 2.5 6.5 4.5-4 .8-8 0-11.5-1.5-3 1.5-6.5 2.2-10 1.5-1.5.8-3 .8-4.5 0 1-1.5 2-2.5 3-3.5.5-.8.5-1.5 1-2.2z"/>
+      <circle cx="4" cy="-.5" r=".65" fill="#7a1525"/><circle cx="4" cy="-.5" r=".28" fill="#d42040"/>
+    </g>
+    <g transform="translate(50 88)">
+      <path fill="#0E0D0C" d="M-11 0c-4-1.5-8-1.5-12 0v9c4-1.5 8-1.5 12 0V0z"/>
+      <path fill="#0E0D0C" d="M0 0c4-1.5 8-1.5 12 0v9c-4-1.5-8-1.5-12 0V0z"/>
+      <line x1="0" y1="0" x2="0" y2="9" stroke="#F6F3EC" stroke-width=".5"/>
+      <path d="M-9 2.5h5M-9 5h4M1 2.5h5M1 5h4" stroke="#F6F3EC" stroke-width=".35" opacity=".5" stroke-linecap="round"/>
+      <path d="M-10 0c-1.5-2-3-3.5-4.5-3M10 0c1.5-2 3-3.5 4.5-3" stroke="#0E0D0C" stroke-width=".9" stroke-linecap="round"/>
+    </g>
+    <text x="50" y="72" text-anchor="middle" fill="#0E0D0C" font-family="Georgia, 'Times New Roman', serif" font-size="5.2" letter-spacing="1.8">JURNALUL LUI</text>
+    <text x="50" y="80" text-anchor="middle" fill="#0E0D0C" font-family="Georgia, 'Times New Roman', serif" font-size="6.2" letter-spacing="2.8" font-weight="600">ICARUS</text>
+  </g>
+</svg>

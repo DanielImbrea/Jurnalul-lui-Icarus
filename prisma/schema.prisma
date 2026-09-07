@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Order {
+  id              String   @id
+  email           String
+  customerName    String?
+  productId       String
+  amountTotal     Int
+  currency        String   @default("ron")
+  status          String   @default("COMPLETED")
+  stripeSessionId String   @unique
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  reviews         Review[]
+
+  @@index([email])
+  @@index([productId])
+}
+
+model Review {
+  id               String   @id @default(cuid())
+  bookId           String
+  name             String
+  email            String
+  rating           Int
+  content          String
+  imageUrl         String?
+  socialHandle     String?
+  status           String   @default("PENDING")
+  featured         Boolean  @default(false)
+  verifiedPurchase Boolean  @default(false)
+  consentGiven     Boolean  @default(false)
+  orderId          String?
+  order            Order?   @relation(fields: [orderId], references: [id])
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  galleryPhotos    ReaderGalleryPhoto[]
+
+  @@index([bookId, status])
+  @@index([status])
+  @@index([featured])
+  @@index([email])
+}
+
+model ReaderGalleryPhoto {
+  id        String   @id @default(cuid())
+  reviewId  String?
+  review    Review?  @relation(fields: [reviewId], references: [id], onDelete: SetNull)
+  bookId    String
+  name      String
+  email     String?
+  imageUrl  String
+  caption   String?
+  status    String   @default("PENDING")
+  featured  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([bookId, status])
+  @@index([status])
+  @@index([featured])
+}
+
+model Quote {
+  id        String   @id @default(cuid())
+  bookId    String?
+  content   String
+  source    String?
+  featured  Boolean  @default(false)
+  status    String   @default("DRAFT")
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, sortOrder])
+}
+
+model EditorialPost {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  excerpt     String?
+  content     String
+  imageUrl    String?
+  status      String    @default("DRAFT")
+  featured    Boolean   @default(false)
+  sortOrder   Int       @default(0)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([status, sortOrder])
+}
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}

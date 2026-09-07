@@ -1,0 +1,122 @@
+import Image from "next/image";
+import Link from "next/link";
+import { blakeFeaturedImages, durereFeaturedImages } from "@/lib/book-images";
+
+type HeroBookPanelProps = {
+  href: string;
+  src: string;
+  alt: string;
+  label: string;
+  tilt?: "left" | "right";
+  className?: string;
+  delay?: string;
+  contain?: boolean;
+};
+
+function HeroBookPanel({
+  href,
+  src,
+  alt,
+  label,
+  tilt = "left",
+  className = "",
+  delay = "0.2s",
+  contain = false
+}: HeroBookPanelProps) {
+  const rotation = tilt === "left" ? "-rotate-[2.5deg]" : "rotate-[2.5deg]";
+
+  return (
+    <Link
+      href={href}
+      className={`reveal-on-load group block w-full max-w-[400px] justify-self-center ${className}`}
+      style={{ animationDelay: delay }}
+      aria-label={label}
+    >
+      <div
+        className={`hero-book-panel relative overflow-hidden rounded-2xl border border-bone/12 shadow-[0_28px_80px_rgba(0,0,0,0.55)] transition-transform duration-700 hover:scale-[1.02] ${rotation}`}
+      >
+        <div className="relative aspect-[3/4] bg-gradient-to-b from-charcoal/70 to-black/90">
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            priority
+            quality={92}
+            className={`transition-transform duration-700 group-hover:scale-[1.04] ${
+              contain
+                ? "object-contain object-center p-3"
+                : "object-cover object-center"
+            }`}
+            sizes="(max-width: 1024px) 42vw, 400px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/65 via-ink/10 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-ink/25 via-transparent to-ink/20" />
+        </div>
+
+        <div className="absolute inset-x-0 bottom-0 p-4">
+          <span className="inline-flex rounded-md border border-bone/10 bg-ink/75 px-2.5 py-1.5 font-sans text-[9px] uppercase tracking-[0.16em] text-bone backdrop-blur-md">
+            {label}
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+export function HeroBooksMobile({ className = "" }: { className?: string }) {
+  return (
+    <div
+      className={`reveal-on-load grid grid-cols-2 gap-4 lg:hidden ${className}`}
+      style={{ animationDelay: "0.18s" }}
+    >
+      <HeroBookPanel
+        href="/carti/sub-umbrele-lui-blake"
+        src={blakeFeaturedImages.hero}
+        alt="Sub umbrele lui Blake"
+        label="Blake"
+        tilt="left"
+        className="!animate-none"
+        delay="0s"
+      />
+      <HeroBookPanel
+        href="/carti/imbratisarea-durerii-si-avantajele-ei"
+        src={durereFeaturedImages.hero}
+        alt="Îmbrățișarea durerii și avantajele ei"
+        label="Durere"
+        tilt="right"
+        contain
+        className="!animate-none mt-6"
+        delay="0s"
+      />
+    </div>
+  );
+}
+
+export function HeroBookLeft() {
+  return (
+    <HeroBookPanel
+      href="/carti/sub-umbrele-lui-blake"
+      src={blakeFeaturedImages.hero}
+      alt="Sub umbrele lui Blake"
+      label="Sub umbrele lui Blake"
+      tilt="left"
+      className="hidden lg:block"
+      delay="0.15s"
+    />
+  );
+}
+
+export function HeroBookRight() {
+  return (
+    <HeroBookPanel
+      href="/carti/imbratisarea-durerii-si-avantajele-ei"
+      src={durereFeaturedImages.hero}
+      alt="Îmbrățișarea durerii și avantajele ei"
+      label="Îmbrățișarea durerii"
+      tilt="right"
+      contain
+      className="hidden lg:block lg:mt-10"
+      delay="0.25s"
+    />
+  );
+}
