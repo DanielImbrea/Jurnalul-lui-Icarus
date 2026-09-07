@@ -70,6 +70,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ro" className={`${fraunces.variable} ${inter.variable}`}>
+      <head>
+        <link
+          rel="preload"
+          as="image"
+          href="/books/blake/08-hero.webp"
+          type="image/webp"
+          fetchPriority="high"
+        />
+      </head>
       <body className="relative font-sans antialiased">
         <JsonLd
           data={{

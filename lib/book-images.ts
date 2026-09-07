@@ -1,5 +1,5 @@
 export const blakeFeaturedImages = {
-  hero: "/books/blake/08.png",
+  hero: "/books/blake/08-hero.webp",
   moment: "/books/blake/7.png",
   showcase: "/books/blake/3.png"
 } as const;
@@ -18,7 +18,7 @@ export const blakeImages = [
 ] as const;
 
 export const durereFeaturedImages = {
-  hero: "/books/durere/01.png"
+  hero: "/books/durere/01-hero.webp"
 } as const;
 
 export const durereImages = [

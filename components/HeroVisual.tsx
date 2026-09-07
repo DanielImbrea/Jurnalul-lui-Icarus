@@ -2,6 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { blakeFeaturedImages, durereFeaturedImages } from "@/lib/book-images";
 
+/** Placeholder blur pentru încărcare instant — ton wine/charcoal */
+const HERO_BLUR =
+  "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADwAwCdASoQABkAPzmEuVOvKKWisAgB4CcJaACdABuYrRO7d+0awkwAAP7NxFh54GoW+4kFQpyzRWzOdCC6B5ucTWPNv4KgxBxCYzGYP9BNBZqsJsGj1Qpx7KeUNwIFbOSJNjAiZ/q9hECpdTK5L/2RsznAPh+wAAA=";
+
 type HeroBookPanelProps = {
   href: string;
   src: string;
@@ -10,7 +14,8 @@ type HeroBookPanelProps = {
   tilt?: "left" | "right";
   className?: string;
   delay?: string;
-  contain?: boolean;
+  /** Doar imaginea LCP (prima) — priority + preload */
+  primary?: boolean;
 };
 
 function HeroBookPanel({
@@ -21,7 +26,7 @@ function HeroBookPanel({
   tilt = "left",
   className = "",
   delay = "0.2s",
-  contain = false
+  primary = false
 }: HeroBookPanelProps) {
   const rotation = tilt === "left" ? "-rotate-[2.5deg]" : "rotate-[2.5deg]";
 
@@ -35,18 +40,18 @@ function HeroBookPanel({
       <div
         className={`hero-book-panel relative overflow-hidden rounded-2xl border border-bone/12 shadow-[0_28px_80px_rgba(0,0,0,0.55)] transition-transform duration-700 hover:scale-[1.02] ${rotation}`}
       >
-        <div className="relative aspect-[3/4] bg-gradient-to-b from-charcoal/70 to-black/90">
+        <div className="relative aspect-[3/4] bg-charcoal/80">
           <Image
             src={src}
             alt={alt}
             fill
-            priority
-            quality={92}
-            className={`transition-transform duration-700 group-hover:scale-[1.04] ${
-              contain
-                ? "object-contain object-center p-3"
-                : "object-cover object-center"
-            }`}
+            priority={primary}
+            fetchPriority={primary ? "high" : "auto"}
+            loading={primary ? "eager" : "lazy"}
+            placeholder="blur"
+            blurDataURL={HERO_BLUR}
+            unoptimized
+            className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
             sizes="(max-width: 1024px) 42vw, 400px"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink/65 via-ink/10 to-transparent" />
@@ -75,6 +80,7 @@ export function HeroBooksMobile({ className = "" }: { className?: string }) {
         alt="Sub umbrele lui Blake"
         label="Blake"
         tilt="left"
+        primary
         className="!animate-none"
         delay="0s"
       />
@@ -84,7 +90,6 @@ export function HeroBooksMobile({ className = "" }: { className?: string }) {
         alt="Îmbrățișarea durerii și avantajele ei"
         label="Durere"
         tilt="right"
-        contain
         className="!animate-none mt-6"
         delay="0s"
       />
@@ -100,6 +105,7 @@ export function HeroBookLeft() {
       alt="Sub umbrele lui Blake"
       label="Sub umbrele lui Blake"
       tilt="left"
+      primary
       className="hidden lg:block"
       delay="0.15s"
     />
@@ -114,7 +120,6 @@ export function HeroBookRight() {
       alt="Îmbrățișarea durerii și avantajele ei"
       label="Îmbrățișarea durerii"
       tilt="right"
-      contain
       className="hidden lg:block lg:mt-10"
       delay="0.25s"
     />
