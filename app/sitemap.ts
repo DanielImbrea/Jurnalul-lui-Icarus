@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/carti/imbratisarea-durerii-si-avantajele-ei",
     "/despre-autor",
     "/galeria-cititorilor",
+    "/recenzii",
     "/cititorii-lui-icarus",
     "/din-universul-lui-icarus",
     "/jurnalul-lui-icarus",

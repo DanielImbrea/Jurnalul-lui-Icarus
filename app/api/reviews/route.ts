@@ -89,8 +89,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message:
-        "Mulțumim că ai lăsat o parte din povestea ta aici. Recenzia va fi verificată înainte de publicare."
+      message: "Mulțumim că ai lăsat o parte din povestea ta aici."
     });
   } catch (error) {
     console.error("Eroare la trimiterea recenziei:", error);

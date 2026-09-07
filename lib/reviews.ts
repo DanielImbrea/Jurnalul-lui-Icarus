@@ -79,6 +79,29 @@ export async function getFeaturedReviews(limit = 3) {
   );
 }
 
+export async function getHomepageReviews(limit = 4) {
+  return withDbFallback(
+    () =>
+      prisma.review.findMany({
+        where: { status: "APPROVED" },
+        orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
+        take: limit,
+        select: {
+          id: true,
+          bookId: true,
+          name: true,
+          rating: true,
+          content: true,
+          imageUrl: true,
+          verifiedPurchase: true,
+          featured: true,
+          createdAt: true
+        }
+      }),
+    []
+  );
+}
+
 const EMPTY_COMMUNITY_STATS = {
   totalReviews: 0,
   pendingReviews: 0,
@@ -120,6 +143,31 @@ export async function getCommunityStats() {
       pendingPhotos
     };
   }, EMPTY_COMMUNITY_STATS);
+}
+
+export async function getAllApprovedReviews(bookId?: BookId) {
+  return withDbFallback(
+    () =>
+      prisma.review.findMany({
+        where: {
+          status: "APPROVED",
+          ...(bookId ? { bookId } : {})
+        },
+        orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
+        select: {
+          id: true,
+          bookId: true,
+          name: true,
+          rating: true,
+          content: true,
+          imageUrl: true,
+          verifiedPurchase: true,
+          featured: true,
+          createdAt: true
+        }
+      }),
+    []
+  );
 }
 
 export async function getAdminReviews(status?: ReviewStatus) {

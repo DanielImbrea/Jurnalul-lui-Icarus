@@ -14,7 +14,7 @@ export interface ReviewDisplay {
 
 interface ReviewCardProps {
   review: ReviewDisplay;
-  variant?: "default" | "featured" | "compact";
+  variant?: "default" | "featured" | "compact" | "grid";
 }
 
 export default function ReviewCard({
@@ -22,40 +22,82 @@ export default function ReviewCard({
   variant = "default"
 }: ReviewCardProps) {
   const isFeatured = variant === "featured";
+  const isGrid = variant === "grid";
+  const isCompact = variant === "compact";
 
   return (
     <article
       className={`overflow-hidden rounded-2xl border border-bone/10 bg-charcoal/30 shadow-[0_24px_64px_rgba(0,0,0,0.35)] ${
-        isFeatured ? "p-10 md:p-12" : "p-8"
+        isGrid
+          ? "flex h-full flex-col rounded-xl p-5 shadow-[0_12px_32px_rgba(0,0,0,0.28)]"
+          : isFeatured
+            ? "p-10 md:p-12"
+            : "p-8"
       }`}
     >
-      <StarRating rating={review.rating} size={isFeatured ? "lg" : "md"} />
+      <StarRating
+        rating={review.rating}
+        size={isFeatured ? "lg" : isGrid ? "sm" : "md"}
+      />
 
       <blockquote
-        className={`mt-6 font-serif leading-relaxed text-bone ${
-          isFeatured ? "text-2xl md:text-3xl" : "text-lg"
+        className={`font-serif leading-relaxed text-bone ${
+          isFeatured
+            ? "mt-6 text-2xl md:text-3xl"
+            : isGrid
+              ? "mt-3 line-clamp-4 flex-1 text-[15px]"
+              : isCompact
+                ? "mt-4 text-base"
+                : "mt-6 text-lg"
         }`}
       >
         „{review.content}”
       </blockquote>
 
-      <footer className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2">
-        <cite className="font-sans text-sm not-italic text-mist">— {review.name}</cite>
+      <footer
+        className={`flex flex-wrap items-center ${
+          isGrid ? "mt-4 gap-x-3 gap-y-1" : "mt-8 gap-x-4 gap-y-2"
+        }`}
+      >
+        <cite
+          className={`not-italic text-mist ${
+            isGrid ? "font-sans text-xs" : "font-sans text-sm"
+          }`}
+        >
+          — {review.name}
+        </cite>
         {review.verifiedPurchase && <VerifiedBadge />}
       </footer>
 
       {review.imageUrl && (
-        <div className="mt-8 overflow-hidden border border-bone/10">
-          <div className="relative aspect-[4/3] max-h-48 w-full max-w-xs">
+        <figure className={isGrid ? "mt-4 flex justify-center" : "mt-8 max-w-full"}>
+          <div
+            className={`overflow-hidden rounded-lg border border-bone/10 bg-ink/25 ${
+              isGrid ? "w-full" : "inline-block"
+            }`}
+          >
             <Image
               src={review.imageUrl}
               alt={`Fotografie de la ${review.name}`}
-              fill
-              className="object-cover opacity-90"
-              sizes="320px"
+              width={480}
+              height={640}
+              className={`mx-auto h-auto w-auto max-w-full object-contain ${
+                isFeatured
+                  ? "max-h-[28rem]"
+                  : isGrid
+                    ? "max-h-36"
+                    : isCompact
+                      ? "max-h-44"
+                      : "max-h-64"
+              }`}
+              sizes={
+                isGrid
+                  ? "(max-width: 640px) 45vw, 240px"
+                  : "(max-width: 768px) 100vw, 480px"
+              }
             />
           </div>
-        </div>
+        </figure>
       )}
     </article>
   );

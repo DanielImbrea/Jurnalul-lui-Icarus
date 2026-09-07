@@ -137,7 +137,7 @@ export default function ReviewForm({
       resetForm();
       const message =
         data.message ||
-        "Mulțumim că ai lăsat o parte din povestea ta aici. Recenzia va fi verificată înainte de publicare.";
+        "Mulțumim că ai lăsat o parte din povestea ta aici.";
       setSubmittedMessage(message);
       showToast("Recenzia ta a fost trimisă.");
     } catch {
