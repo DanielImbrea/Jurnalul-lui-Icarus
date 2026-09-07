@@ -55,12 +55,12 @@ export default function ComandaPage() {
               comanda.
             </li>
             <li>
-              2. Completezi datele de livrare și plata în pagina securizată
-              Stripe. Costul transportului este de {SHIPPING_RON} lei.
+              2. Alegi <span className="text-mist">plata cu cardul</span> (Stripe)
+              sau <span className="text-mist">ramburs la curier</span>. Transportul
+              este de {SHIPPING_RON} lei.
             </li>
             <li>
-              3. Primești confirmarea comenzii pe email, imediat după efectuarea
-              plății.
+              3. Primești confirmarea comenzii pe email imediat după plasare.
             </li>
             <li>
               4. Comanda este pregătită și expediată în câteva zile lucrătoare.

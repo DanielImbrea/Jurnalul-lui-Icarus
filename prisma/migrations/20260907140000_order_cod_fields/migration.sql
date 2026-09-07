@@ -1,0 +1,12 @@
+-- AlterTable
+ALTER TABLE "Order" ADD COLUMN IF NOT EXISTS "phone" TEXT;
+ALTER TABLE "Order" ADD COLUMN IF NOT EXISTS "addressLine1" TEXT;
+ALTER TABLE "Order" ADD COLUMN IF NOT EXISTS "addressLine2" TEXT;
+ALTER TABLE "Order" ADD COLUMN IF NOT EXISTS "city" TEXT;
+ALTER TABLE "Order" ADD COLUMN IF NOT EXISTS "postalCode" TEXT;
+ALTER TABLE "Order" ADD COLUMN IF NOT EXISTS "paymentMethod" TEXT NOT NULL DEFAULT 'card';
+
+ALTER TABLE "Order" ALTER COLUMN "stripeSessionId" DROP NOT NULL;
+
+CREATE INDEX IF NOT EXISTS "Order_paymentMethod_idx" ON "Order"("paymentMethod");
+CREATE INDEX IF NOT EXISTS "Order_status_idx" ON "Order"("status");

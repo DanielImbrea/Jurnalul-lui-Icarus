@@ -9,20 +9,28 @@ datasource db {
 }
 
 model Order {
-  id              String   @id
+  id              String   @id @default(cuid())
   email           String
   customerName    String?
+  phone           String?
+  addressLine1    String?
+  addressLine2    String?
+  city            String?
+  postalCode      String?
   productId       String
   amountTotal     Int
   currency        String   @default("ron")
+  paymentMethod   String   @default("card")
   status          String   @default("COMPLETED")
-  stripeSessionId String   @unique
+  stripeSessionId String?  @unique
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   reviews         Review[]
 
   @@index([email])
   @@index([productId])
+  @@index([paymentMethod])
+  @@index([status])
 }
 
 model Review {

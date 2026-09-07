@@ -56,6 +56,35 @@ export const newsletterSchema = z.object({
   email: z.string().trim().email("Adresa de email nu este validă.").max(120)
 });
 
+export const codOrderSchema = z.object({
+  productId: z.enum(["blake", "durere", "bundle"]),
+  customerName: z
+    .string()
+    .trim()
+    .min(2, "Numele trebuie să aibă cel puțin 2 caractere.")
+    .max(120),
+  email: z.string().trim().email("Adresa de email nu este validă.").max(120),
+  phone: z
+    .string()
+    .trim()
+    .min(6, "Introdu un număr de telefon valid.")
+    .max(20)
+    .regex(/^[0-9+\s()-]+$/, "Număr de telefon invalid."),
+  addressLine1: z
+    .string()
+    .trim()
+    .min(3, "Adresa este obligatorie.")
+    .max(200),
+  addressLine2: z.string().trim().max(200).optional().or(z.literal("")),
+  city: z.string().trim().min(2, "Localitatea este obligatorie.").max(100),
+  postalCode: z
+    .string()
+    .trim()
+    .min(4, "Cod poștal invalid.")
+    .max(10)
+    .regex(/^[0-9]+$/, "Cod poștal invalid.")
+});
+
 export const adminReviewUpdateSchema = z.object({
   name: z.string().trim().min(2).max(80).optional(),
   bookId: z.enum(BOOK_IDS).optional(),
