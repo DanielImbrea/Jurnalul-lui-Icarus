@@ -56,8 +56,13 @@ export const newsletterSchema = z.object({
   email: z.string().trim().email("Adresa de email nu este validă.").max(120)
 });
 
-export const codOrderSchema = z.object({
+export const cartLineSchema = z.object({
   productId: z.enum(["blake", "durere", "bundle"]),
+  quantity: z.coerce.number().int().min(1).max(20)
+});
+
+export const codOrderSchema = z.object({
+  lines: z.array(cartLineSchema).min(1, "Coșul este gol."),
   customerName: z
     .string()
     .trim()

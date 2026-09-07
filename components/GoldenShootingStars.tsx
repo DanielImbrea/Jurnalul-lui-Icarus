@@ -31,7 +31,7 @@ function pathConfig(path: StarPath) {
     case "ltr":
       left = `${-5 + Math.random() * 40}%`;
       top = `${8 + Math.random() * 78}%`;
-      travelX = 95 + Math.random() * 25;
+      travelX = 55 + Math.random() * 35;
       travelY = -1.5 + Math.random() * 3;
       break;
     case "ttb":
@@ -43,7 +43,7 @@ function pathConfig(path: StarPath) {
     case "diag-se":
       left = `${-4 + Math.random() * 38}%`;
       top = `${-2 + Math.random() * 28}%`;
-      travelX = 80 + Math.random() * 30;
+      travelX = 45 + Math.random() * 40;
       travelY = 28 + Math.random() * 28;
       break;
     case "diag-sw":

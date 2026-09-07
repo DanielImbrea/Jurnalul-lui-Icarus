@@ -110,4 +110,26 @@ if (!process.env.STRIPE_WEBHOOK_SECRET) {
   console.log("✅ Stripe: webhook secret setat");
 }
 
+// Resend (email confirmare comenzi)
+const resendKey = process.env.RESEND_API_KEY;
+const fromEmail =
+  process.env.ORDER_FROM_EMAIL ?? process.env.NEXT_PUBLIC_CONTACT_EMAIL;
+
+if (!resendKey) {
+  console.log("⚠️  Resend: RESEND_API_KEY lipsește — emailurile de confirmare nu se trimit");
+} else {
+  console.log(`✅ Resend: API key setat (${resendKey.startsWith("re_") ? "format valid" : "verifică formatul"})`);
+}
+
+if (!fromEmail) {
+  console.log("⚠️  Resend: ORDER_FROM_EMAIL lipsește");
+} else if (!fromEmail.includes("@")) {
+  console.log(`⚠️  Resend: ORDER_FROM_EMAIL invalid: ${fromEmail}`);
+} else {
+  const onVerifiedDomain = fromEmail.endsWith("@jurnalulluiicarus.com");
+  console.log(
+    `✅ Resend: expeditor ${fromEmail}${onVerifiedDomain ? "" : " (⚠️  nu e pe domeniul verificat jurnalulluiicarus.com)"}`
+  );
+}
+
 console.log("");

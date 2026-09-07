@@ -16,6 +16,7 @@
     "setup:stripe": "node scripts/setup-stripe-products.mjs",
     "setup:cloudflare": "node scripts/setup-cloudflare-dns.mjs",
     "setup:check": "node scripts/check-setup.mjs",
+    "test:resend": "node scripts/test-resend-email.mjs",
     "postinstall": "prisma generate"
   },
   "dependencies": {

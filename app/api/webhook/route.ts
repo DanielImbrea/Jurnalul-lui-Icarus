@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { saveOrderFromStripeSession } from "@/lib/orders";
+import { saveOrderFromStripeSession, getOrderLines } from "@/lib/orders";
+import { sendOrderConfirmationEmail } from "@/lib/order-email";
 import { getStripe } from "@/lib/stripe";
 import Stripe from "stripe";
 
@@ -37,6 +38,22 @@ export async function POST(req: NextRequest) {
       const session = event.data.object as Stripe.Checkout.Session;
       try {
         await saveOrderFromStripeSession(session);
+
+        const email =
+          session.customer_details?.email || session.customer_email || null;
+        const productIdsRaw =
+          session.metadata?.productIds ?? session.metadata?.productId ?? "";
+
+        if (email && productIdsRaw) {
+          await sendOrderConfirmationEmail({
+            to: email,
+            customerName: session.customer_details?.name ?? null,
+            lines: getOrderLines(productIdsRaw),
+            totalRon: (session.amount_total ?? 0) / 100,
+            paymentMethod: "card",
+            orderId: session.id
+          });
+        }
       } catch (err) {
         console.error("Eroare salvare comandă:", err);
       }

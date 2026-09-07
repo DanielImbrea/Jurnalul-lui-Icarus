@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { products } from "@/lib/products";
 import { bundleImages } from "@/lib/book-images";
-import BuyButton from "./BuyButton";
+import AddToCartButton from "./AddToCartButton";
 import ProductPrice from "./ProductPrice";
 import ScrollReveal from "./ScrollReveal";
 
@@ -35,9 +35,12 @@ export default function BundleCTA() {
                 ceea ce ni se întâmplă.
               </p>
 
-              <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-end">
+              <div className="mt-8 flex flex-col items-start gap-4">
                 <ProductPrice priceRon={bundle.priceRon} showTotal />
-                <BuyButton productId="bundle" label="Cumpără ambele cărți" />
+                <AddToCartButton
+                  productId="bundle"
+                  label="Adaugă pachetul în coș"
+                />
               </div>
             </div>
           </div>

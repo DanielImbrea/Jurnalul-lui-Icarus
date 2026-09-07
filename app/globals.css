@@ -8,6 +8,26 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+body {
+  overflow-x: clip;
+  max-width: 100%;
+  background-color: #0E0D0C;
+  background-image:
+    radial-gradient(ellipse 100% 60% at 15% -5%, rgba(90, 30, 42, 0.55) 0%, transparent 52%),
+    radial-gradient(ellipse 80% 50% at 85% 5%, rgba(60, 18, 28, 0.35) 0%, transparent 48%),
+    linear-gradient(180deg, #2d0a14 0%, #1f060e 14%, #140409 38%, #0c0205 62%, #0E0D0C 100%);
+  background-attachment: fixed;
+  color: #EFEAE1;
+}
+
+@media (max-width: 767px) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -20,16 +40,6 @@ html {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-body {
-  background-color: #0E0D0C;
-  background-image:
-    radial-gradient(ellipse 100% 60% at 15% -5%, rgba(90, 30, 42, 0.55) 0%, transparent 52%),
-    radial-gradient(ellipse 80% 50% at 85% 5%, rgba(60, 18, 28, 0.35) 0%, transparent 48%),
-    linear-gradient(180deg, #2d0a14 0%, #1f060e 14%, #140409 38%, #0c0205 62%, #0E0D0C 100%);
-  background-attachment: fixed;
-  color: #EFEAE1;
 }
 
 ::selection {
@@ -45,10 +55,12 @@ body {
 .container-editorial {
   width: 100%;
   max-width: 1180px;
+  min-width: 0;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+  box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
@@ -70,6 +82,21 @@ body {
   inset: 0;
   opacity: 0.05;
   mix-blend-mode: overlay;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.toast-enter {
+  animation: toastIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .reveal-on-load {

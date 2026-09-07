@@ -3,7 +3,7 @@ import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import { prisma } from "@/lib/db";
 import { getStripe } from "@/lib/stripe";
-import { products } from "@/lib/products";
+import { getOrderProductTitles } from "@/lib/orders";
 
 export const metadata: Metadata = {
   title: "Comandă confirmată",
@@ -34,11 +34,10 @@ async function getCodSummary(orderId?: string) {
       where: { id: orderId, paymentMethod: "cod" }
     });
     if (!order) return null;
-    const product = products[order.productId as keyof typeof products];
     return {
       type: "cod" as const,
       email: order.email,
-      productTitle: product?.title ?? null,
+      productTitle: getOrderProductTitles(order.productId),
       amount: order.amountTotal / 100
     };
   } catch (error) {
@@ -55,6 +54,7 @@ export default async function SuccesPage({
   const summary =
     (await getCodSummary(searchParams.cod)) ??
     (await getSessionSummary(searchParams.session_id));
+  const emailConfigured = Boolean(process.env.RESEND_API_KEY);
 
   return (
     <>
@@ -87,12 +87,26 @@ export default async function SuccesPage({
                   {summary.type === "cod" ? " (ramburs)" : ""}.
                 </p>
               )}
-              {summary.email && (
+              {summary.email && emailConfigured ? (
                 <p>Confirmarea a fost trimisă la adresa {summary.email}.</p>
-              )}
+              ) : summary.email ? (
+                <p>
+                  Comanda este înregistrată pentru {summary.email}. Emailul de
+                  confirmare se trimite când{" "}
+                  <span className="text-mist">RESEND_API_KEY</span> este
+                  configurat (producție).
+                </p>
+              ) : null}
+              {summary.type === "card" && !emailConfigured ? (
+                <p className="text-ash">
+                  Stripe poate trimite și el chitanța, dacă ai activat
+                  notificările în Dashboard → Settings → Emails.
+                </p>
+              ) : null}
               <p className="text-ash">
-                Cartea va fi expediată în câteva zile lucrătoare. Dacă ai
-                întrebări despre comandă, ne poți scrie oricând.
+                Cartea{summary.productTitle?.includes(" + ") ? "le" : ""} va fi
+                expediată în câteva zile lucrătoare. Dacă ai întrebări despre
+                comandă, ne poți scrie oricând.
               </p>
             </div>
           ) : (

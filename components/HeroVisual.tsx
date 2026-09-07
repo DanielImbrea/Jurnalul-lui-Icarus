@@ -16,6 +16,8 @@ type HeroBookPanelProps = {
   delay?: string;
   /** Doar imaginea LCP (prima) — priority + preload */
   primary?: boolean;
+  /** Fade-in la load (dezactivat când părintele are deja reveal) */
+  reveal?: boolean;
 };
 
 function HeroBookPanel({
@@ -26,14 +28,15 @@ function HeroBookPanel({
   tilt = "left",
   className = "",
   delay = "0.2s",
-  primary = false
+  primary = false,
+  reveal = true
 }: HeroBookPanelProps) {
   const rotation = tilt === "left" ? "-rotate-[2.5deg]" : "rotate-[2.5deg]";
 
   return (
     <Link
       href={href}
-      className={`reveal-on-load group block w-full max-w-[400px] justify-self-center ${className}`}
+      className={`${reveal ? "reveal-on-load" : ""} group block w-full max-w-[400px] justify-self-center ${className}`}
       style={{ animationDelay: delay }}
       aria-label={label}
     >
@@ -71,7 +74,7 @@ function HeroBookPanel({
 export function HeroBooksMobile({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`reveal-on-load grid grid-cols-2 gap-4 lg:hidden ${className}`}
+      className={`reveal-on-load grid grid-cols-2 gap-3 sm:gap-4 lg:hidden ${className}`}
       style={{ animationDelay: "0.18s" }}
     >
       <HeroBookPanel
@@ -81,7 +84,7 @@ export function HeroBooksMobile({ className = "" }: { className?: string }) {
         label="Blake"
         tilt="left"
         primary
-        className="!animate-none"
+        reveal={false}
         delay="0s"
       />
       <HeroBookPanel
@@ -90,7 +93,9 @@ export function HeroBooksMobile({ className = "" }: { className?: string }) {
         alt="Îmbrățișarea durerii și avantajele ei"
         label="Durere"
         tilt="right"
-        className="!animate-none mt-6"
+        primary
+        reveal={false}
+        className="mt-4 sm:mt-6"
         delay="0s"
       />
     </div>

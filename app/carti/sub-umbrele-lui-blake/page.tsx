@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import PageHero from "@/components/PageHero";
-import BuyButton from "@/components/BuyButton";
+import AddToCartButton from "@/components/AddToCartButton";
 import ProductPrice from "@/components/ProductPrice";
 import JsonLd from "@/components/JsonLd";
 import BookGallery from "@/components/BookGallery";
@@ -56,10 +56,10 @@ export default function BlakePage() {
         atmosphere="blake"
       />
 
-      <section className="relative py-24">
-        <div className="container-editorial grid gap-16 md:grid-cols-12">
-          <div className="md:col-span-7">
-            <div className="space-y-6 font-sans text-[16px] leading-relaxed text-mist">
+      <section className="relative overflow-x-clip py-24">
+        <div className="container-editorial grid min-w-0 gap-16 md:grid-cols-12">
+          <div className="min-w-0 md:col-span-7">
+            <div className="space-y-6 break-words font-sans text-[16px] leading-relaxed text-mist">
               <p>
                 Există o liniște pe care unii oameni n-o găsesc niciodată în
                 lucrurile sigure. O caută în altă parte — în risc, în
@@ -102,7 +102,7 @@ export default function BlakePage() {
             <BookGallery images={blakeImages} title={product.title} />
           </div>
 
-          <aside className="md:col-span-4 md:col-start-9">
+          <aside className="min-w-0 md:col-span-4 md:col-start-9">
             <div className="sticky top-28 overflow-hidden rounded-xl border border-bone/10 bg-charcoal/40">
               <div className="relative aspect-[3/4] w-full">
                 <Image
@@ -117,10 +117,10 @@ export default function BlakePage() {
               <div className="p-8">
                 <ProductPrice priceRon={product.priceRon} showTotal />
                 <p className="mt-3 font-sans text-xs text-ash/80">
-                  Plată securizată prin Stripe. Transportul se adaugă la checkout.
+                  Adaugă în coș și alege plata cu cardul sau ramburs la finalizare.
                 </p>
                 <div className="mt-6">
-                  <BuyButton productId="blake" />
+                  <AddToCartButton productId="blake" label="Adaugă în coș" />
                 </div>
               </div>
             </div>

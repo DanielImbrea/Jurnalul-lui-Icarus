@@ -6,54 +6,71 @@ import {
   resolveStripePriceId,
   isStripePriceConfigured
 } from "@/lib/products";
+import {
+  consolidateLines,
+  encodeCartLines,
+  getCartProductTitles,
+  type CartLine
+} from "@/lib/cart";
 import { getStripeShippingOptions } from "@/lib/shipping";
 import { absoluteUrl } from "@/lib/seo";
+import { cartLineSchema } from "@/lib/validation";
+import { z } from "zod";
 
 export const runtime = "nodejs";
 
-interface CheckoutBody {
-  productId: ProductId;
-}
+const checkoutBodySchema = z.object({
+  lines: z.array(cartLineSchema).min(1, "Coșul este gol.")
+});
 
 export async function POST(req: NextRequest) {
   try {
-    const body = (await req.json()) as CheckoutBody;
-    const product = products[body.productId];
+    const body = await req.json();
+    const parsed = checkoutBodySchema.safeParse(body);
 
-    if (!product) {
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: "Produsul solicitat nu a fost găsit." },
+        { error: parsed.error.issues[0]?.message ?? "Coș invalid." },
         { status: 400 }
       );
     }
 
-    if (!isStripePriceConfigured(body.productId)) {
-      return NextResponse.json(
-        {
-          error:
-            "Plățile nu sunt încă activate. Rulează yarn setup:stripe sau setează STRIPE_PRICE_* în variabilele de mediu."
-        },
-        { status: 503 }
-      );
+    const lines = consolidateLines(parsed.data.lines as CartLine[]);
+
+    for (const line of lines) {
+      if (!products[line.productId]) {
+        return NextResponse.json(
+          { error: "Un produs din coș nu a fost găsit." },
+          { status: 400 }
+        );
+      }
+
+      if (!isStripePriceConfigured(line.productId)) {
+        return NextResponse.json(
+          {
+            error:
+              "Plățile nu sunt încă activate. Rulează yarn setup:stripe sau setează STRIPE_PRICE_* în variabilele de mediu."
+          },
+          { status: 503 }
+        );
+      }
     }
 
     const stripe = getStripe();
-    const stripePriceId = resolveStripePriceId(body.productId);
+    const lineItems = lines.map((line) => ({
+      price: resolveStripePriceId(line.productId as ProductId),
+      quantity: line.quantity
+    }));
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       locale: "ro",
       payment_method_types: ["card"],
       allow_promotion_codes: true,
-      line_items: [
-        {
-          price: stripePriceId,
-          quantity: 1
-        }
-      ],
+      line_items: lineItems,
       metadata: {
-        productId: product.id,
-        productTitle: product.title
+        productIds: encodeCartLines(lines),
+        productTitle: getCartProductTitles(lines)
       },
       success_url: absoluteUrl(
         `/comanda/succes?session_id={CHECKOUT_SESSION_ID}`

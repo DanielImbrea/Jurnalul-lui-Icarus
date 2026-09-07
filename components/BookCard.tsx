@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Product } from "@/lib/products";
 import { getBookCover } from "@/lib/book-images";
-import BuyButton from "./BuyButton";
+import AddToCartButton from "./AddToCartButton";
 import ProductPrice from "./ProductPrice";
 
 export default function BookCard({
@@ -62,7 +62,7 @@ export default function BookCard({
               {product.shortDescription}
             </p>
 
-            <div className="mt-6 flex flex-col gap-4 border-t border-bone/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mt-6 flex flex-col gap-4 border-t border-bone/10 pt-5">
               <div className="flex flex-wrap items-end gap-x-5 gap-y-2">
                 <ProductPrice priceRon={product.priceRon} className="!text-left [&_p:last-child]:hidden" />
                 <Link
@@ -72,7 +72,7 @@ export default function BookCard({
                   {discoverLabel} →
                 </Link>
               </div>
-              <BuyButton productId={product.id} variant="outline" />
+              <AddToCartButton productId={product.id} variant="outline" />
             </div>
           </div>
         </div>
@@ -114,9 +114,9 @@ export default function BookCard({
           </Link>
         </div>
 
-        <div className="mt-8 flex flex-col gap-4 border-t border-bone/10 pt-6 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mt-8 flex flex-col gap-4 border-t border-bone/10 pt-6">
           <ProductPrice priceRon={product.priceRon} className="!text-left" />
-          <BuyButton productId={product.id} variant="outline" />
+          <AddToCartButton productId={product.id} variant="outline" />
         </div>
       </div>
     </article>

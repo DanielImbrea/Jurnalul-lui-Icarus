@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createCodOrder } from "@/lib/orders";
+import { createCodOrder, getOrderLines } from "@/lib/orders";
+import {
+  getOrderTotalFromLines,
+  sendOrderConfirmationEmail
+} from "@/lib/order-email";
+import { consolidateLines } from "@/lib/cart";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { codOrderSchema, sanitizeText } from "@/lib/validation";
 
@@ -28,8 +33,9 @@ export async function POST(req: NextRequest) {
     }
 
     const data = parsed.data;
+    const lines = consolidateLines(data.lines);
     const order = await createCodOrder({
-      productId: data.productId,
+      lines,
       customerName: sanitizeText(data.customerName),
       email: sanitizeText(data.email),
       phone: sanitizeText(data.phone),
@@ -37,6 +43,15 @@ export async function POST(req: NextRequest) {
       addressLine2: data.addressLine2 ? sanitizeText(data.addressLine2) : undefined,
       city: sanitizeText(data.city),
       postalCode: sanitizeText(data.postalCode)
+    });
+
+    await sendOrderConfirmationEmail({
+      to: order.email,
+      customerName: order.customerName,
+      lines: getOrderLines(order.productId),
+      totalRon: order.amountTotal / 100,
+      paymentMethod: "cod",
+      orderId: order.id
     });
 
     return NextResponse.json({

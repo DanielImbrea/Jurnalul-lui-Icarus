@@ -24,7 +24,9 @@ export default function PageAtmosphere({
   return (
     <div
       className={`pointer-events-none overflow-hidden ${
-        fixed ? "fixed inset-0 z-0" : "absolute inset-0"
+        fixed
+          ? "fixed inset-x-0 top-0 z-0 h-[100dvh] w-full max-w-[100vw]"
+          : "absolute inset-0"
       } ${className}`}
       aria-hidden
     >

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import StarRating from "./StarRating";
+import { useToast } from "@/components/ToastProvider";
 import type { BookId } from "@/lib/validation";
 
 interface ReviewFormProps {
@@ -10,10 +11,77 @@ interface ReviewFormProps {
   compact?: boolean;
 }
 
+function ReviewSubmittedPanel({
+  message,
+  compact,
+  onReset
+}: {
+  message: string;
+  compact?: boolean;
+  onReset: () => void;
+}) {
+  return (
+    <div className="panel-glass relative overflow-hidden rounded-2xl border border-ember/20 p-10 text-center sm:p-12">
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(169,135,93,0.14),transparent_70%)]"
+        aria-hidden
+      />
+
+      <div className="relative mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-ember/30 bg-ember/10">
+        <svg
+          className="h-7 w-7 text-ember"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={1.75}
+          aria-hidden
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+        </svg>
+      </div>
+
+      <p className="relative mt-6 font-sans text-[11px] uppercase tracking-[0.18em] text-ember">
+        Recenzie trimisă
+      </p>
+      <h2 className="relative mt-3 font-serif text-2xl leading-snug text-bone sm:text-3xl">
+        Mulțumesc că ai lăsat un semn.
+      </h2>
+      <p className="relative mx-auto mt-4 max-w-md font-sans text-[15px] leading-relaxed text-mist">
+        {message}
+      </p>
+      <p className="relative mt-3 font-sans text-sm text-ash">
+        O voi citi personal înainte de a o publica pe site.
+      </p>
+
+      <div className="relative mt-8 flex flex-wrap items-center justify-center gap-3">
+        <Link href="/carti" className="btn-primary !px-5 !py-2.5 !text-[12px]">
+          Înapoi la cărți
+        </Link>
+        <button
+          type="button"
+          onClick={onReset}
+          className="btn-secondary !px-5 !py-2.5 !text-[12px]"
+        >
+          Scrie altă recenzie
+        </button>
+      </div>
+
+      {!compact && (
+        <p className="relative mt-6 font-sans text-xs text-ash/80">
+          Poți închide pagina — recenzia ta e deja înregistrată.
+        </p>
+      )}
+    </div>
+  );
+}
+
 export default function ReviewForm({
   defaultBookId,
   compact = false
 }: ReviewFormProps) {
+  const { showToast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [bookId, setBookId] = useState<BookId>(defaultBookId ?? "blake");
@@ -23,14 +91,27 @@ export default function ReviewForm({
   const [consent, setConsent] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [submittedMessage, setSubmittedMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  function resetForm() {
+    setName("");
+    setEmail("");
+    setContent("");
+    setSocialHandle("");
+    setConsent(false);
+    setImage(null);
+    setRating(5);
+    setBookId(defaultBookId ?? "blake");
+    setError(null);
+    setSubmittedMessage(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    setSuccess(null);
 
     const formData = new FormData();
     formData.append("name", name);
@@ -47,30 +128,34 @@ export default function ReviewForm({
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || "Eroare la trimitere.");
+        const message = data.error || "Eroare la trimitere.";
+        setError(message);
+        showToast(message, "error");
         return;
       }
 
-      setSuccess(data.message);
-      setName("");
-      setEmail("");
-      setContent("");
-      setSocialHandle("");
-      setConsent(false);
-      setImage(null);
-      setRating(5);
+      resetForm();
+      const message =
+        data.message ||
+        "Mulțumim că ai lăsat o parte din povestea ta aici. Recenzia va fi verificată înainte de publicare.";
+      setSubmittedMessage(message);
+      showToast("Recenzia ta a fost trimisă.");
     } catch {
-      setError("Nu am putut trimite recenzia. Încearcă din nou.");
+      const message = "Nu am putut trimite recenzia. Încearcă din nou.";
+      setError(message);
+      showToast(message, "error");
     } finally {
       setLoading(false);
     }
   }
 
-  if (success) {
+  if (submittedMessage) {
     return (
-      <div className="panel-glass rounded-2xl border border-bone/10 p-10 text-center">
-        <p className="font-serif text-2xl text-bone">{success}</p>
-      </div>
+      <ReviewSubmittedPanel
+        message={submittedMessage}
+        compact={compact}
+        onReset={resetForm}
+      />
     );
   }
 
@@ -175,6 +260,7 @@ export default function ReviewForm({
           Fotografie <span className="normal-case tracking-normal text-ash/50">(opțional)</span>
         </span>
         <input
+          ref={fileInputRef}
           type="file"
           accept="image/jpeg,image/png,image/webp"
           onChange={(e) => setImage(e.target.files?.[0] ?? null)}
