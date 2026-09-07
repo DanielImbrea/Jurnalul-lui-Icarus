@@ -4,14 +4,15 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type PendingKey = "pendingReviews" | "pendingPhotos" | "total";
+type PendingKey = "pendingReviews" | "pendingPhotos" | "pendingOrders" | "total";
 
 const navItems: {
   href: string;
   label: string;
   pendingKey?: PendingKey;
 }[] = [
-  { href: "/admin", label: "Comunitate", pendingKey: "total" },
+  { href: "/admin", label: "Comunitate" },
+  { href: "/admin/orders", label: "Comenzi", pendingKey: "pendingOrders" },
   { href: "/admin/reviews", label: "Recenzii", pendingKey: "pendingReviews" },
   { href: "/admin/gallery", label: "Galerie cititori", pendingKey: "pendingPhotos" },
   { href: "/admin/quotes", label: "Citate" },
@@ -21,11 +22,12 @@ const navItems: {
 interface PendingStats {
   pendingReviews: number;
   pendingPhotos: number;
+  pendingOrders: number;
 }
 
 function pendingLabel(count: number) {
-  if (count === 1) return "1 de aprobat";
-  return `${count} de aprobat`;
+  if (count === 1) return "1 de urmărit";
+  return `${count} de urmărit`;
 }
 
 function CountBadge({ count }: { count: number }) {
@@ -51,7 +53,8 @@ export default function AdminNav() {
         const data = await res.json();
         setPending({
           pendingReviews: data.pendingReviews ?? 0,
-          pendingPhotos: data.pendingPhotos ?? 0
+          pendingPhotos: data.pendingPhotos ?? 0,
+          pendingOrders: data.pendingOrders ?? 0
         });
       } catch {
         // ignore — nav rămâne funcțional fără count
@@ -70,7 +73,9 @@ export default function AdminNav() {
   }
 
   const totalPending =
-    (pending?.pendingReviews ?? 0) + (pending?.pendingPhotos ?? 0);
+    (pending?.pendingReviews ?? 0) +
+    (pending?.pendingPhotos ?? 0) +
+    (pending?.pendingOrders ?? 0);
 
   function countFor(key?: PendingKey) {
     if (!pending || !key) return 0;
@@ -108,6 +113,14 @@ export default function AdminNav() {
                   <span>
                     {pending.pendingPhotos}{" "}
                     {pending.pendingPhotos === 1 ? "fotografie" : "fotografii"}
+                  </span>
+                )}
+                {(pending.pendingReviews > 0 || pending.pendingPhotos > 0) &&
+                  pending.pendingOrders > 0 && <span>, </span>}
+                {pending.pendingOrders > 0 && (
+                  <span>
+                    {pending.pendingOrders}{" "}
+                    {pending.pendingOrders === 1 ? "comandă" : "comenzi"} de expediat
                   </span>
                 )}
               </>

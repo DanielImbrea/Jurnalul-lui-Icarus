@@ -10,6 +10,7 @@ interface Stats {
   averageRating: number | null;
   totalPhotos: number;
   pendingPhotos: number;
+  pendingOrders: number;
   newsletterSubscribers: number;
 }
 
@@ -27,6 +28,7 @@ export default function AdminDashboard() {
   }
 
   const cards = [
+    { label: "Comenzi de expediat", value: stats.pendingOrders, href: "/admin/orders" },
     { label: "Total Reviews", value: stats.totalReviews, href: "/admin/reviews" },
     { label: "Pending Reviews", value: stats.pendingReviews, href: "/admin/reviews" },
     { label: "Featured Reviews", value: stats.featuredReviews, href: "/admin/reviews" },

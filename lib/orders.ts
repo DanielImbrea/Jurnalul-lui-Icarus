@@ -56,29 +56,66 @@ export async function saveOrderFromStripeSession(
 
   if (!email || !productIdsRaw) return;
 
-  const productId = productIdsRaw;
+  const shipping = session.shipping_details;
+  const customer = session.customer_details;
+  const address = shipping?.address ?? customer?.address ?? null;
+
+  const orderData = {
+    email: email.toLowerCase(),
+    customerName: shipping?.name ?? customer?.name ?? null,
+    phone: customer?.phone ?? null,
+    addressLine1: address?.line1 ?? null,
+    addressLine2: address?.line2 ?? null,
+    city: address?.city ?? null,
+    postalCode: address?.postal_code ?? null,
+    productId: productIdsRaw,
+    amountTotal: session.amount_total ?? 0,
+    currency: session.currency ?? "ron",
+    paymentMethod: "card",
+    status: "COMPLETED"
+  };
 
   await prisma.order.upsert({
     where: { stripeSessionId: session.id },
     create: {
       id: session.id,
       stripeSessionId: session.id,
-      email: email.toLowerCase(),
-      customerName: session.customer_details?.name ?? null,
-      productId,
-      amountTotal: session.amount_total ?? 0,
-      currency: session.currency ?? "ron",
-      paymentMethod: "card",
-      status: "COMPLETED"
+      ...orderData
     },
-    update: {
-      email: email.toLowerCase(),
-      customerName: session.customer_details?.name ?? null,
-      productId,
-      amountTotal: session.amount_total ?? 0,
-      paymentMethod: "card",
-      status: "COMPLETED"
-    }
+    update: orderData
+  });
+}
+
+export type OrderPaymentFilter = "card" | "cod";
+export type OrderStatusFilter = "PENDING" | "COMPLETED" | "CANCELLED";
+
+export async function getAdminOrders(filters?: {
+  paymentMethod?: OrderPaymentFilter;
+  status?: OrderStatusFilter;
+}) {
+  return prisma.order.findMany({
+    where: {
+      ...(filters?.paymentMethod ? { paymentMethod: filters.paymentMethod } : {}),
+      ...(filters?.status ? { status: filters.status } : {})
+    },
+    orderBy: { createdAt: "desc" },
+    take: 200
+  });
+}
+
+export async function updateOrderStatus(
+  id: string,
+  status: OrderStatusFilter
+) {
+  return prisma.order.update({
+    where: { id },
+    data: { status }
+  });
+}
+
+export async function countPendingCodOrders() {
+  return prisma.order.count({
+    where: { paymentMethod: "cod", status: "PENDING" }
   });
 }
 
