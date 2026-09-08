@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { fetchAdminJson } from "@/lib/admin-fetch";
 
 type PaymentMethod = "card" | "cod";
 type OrderStatus = "PENDING" | "COMPLETED" | "CANCELLED";
@@ -52,9 +53,11 @@ export default function AdminOrdersPanel() {
   const [filter, setFilter] = useState<Filter>("ALL");
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   async function load() {
     setLoading(true);
+    setError(null);
     const params = new URLSearchParams();
 
     if (filter === "CARD") params.set("paymentMethod", "card");
@@ -65,9 +68,12 @@ export default function AdminOrdersPanel() {
     }
 
     const query = params.toString();
-    const res = await fetch(`/api/admin/orders${query ? `?${query}` : ""}`);
-    const data = await res.json();
-    setOrders(data);
+    const { data, error: fetchError } = await fetchAdminJson<Order[]>(
+      `/api/admin/orders${query ? `?${query}` : ""}`
+    );
+
+    setOrders(Array.isArray(data) ? data : []);
+    setError(fetchError);
     setLoading(false);
   }
 
@@ -105,6 +111,8 @@ export default function AdminOrdersPanel() {
 
       {loading ? (
         <p className="mt-10 font-sans text-sm text-ash">Se încarcă...</p>
+      ) : error ? (
+        <p className="mt-10 font-sans text-sm text-wine-light">{error}</p>
       ) : orders.length === 0 ? (
         <p className="mt-10 font-sans text-sm text-ash">Nicio comandă.</p>
       ) : (

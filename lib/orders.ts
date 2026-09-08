@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/db";
+import { prisma, withDbFallback } from "@/lib/db";
 import type { BookId } from "@/lib/validation";
 import type { ProductId } from "@/lib/products";
 import { products } from "@/lib/products";
@@ -93,14 +93,18 @@ export async function getAdminOrders(filters?: {
   paymentMethod?: OrderPaymentFilter;
   status?: OrderStatusFilter;
 }) {
-  return prisma.order.findMany({
-    where: {
-      ...(filters?.paymentMethod ? { paymentMethod: filters.paymentMethod } : {}),
-      ...(filters?.status ? { status: filters.status } : {})
-    },
-    orderBy: { createdAt: "desc" },
-    take: 200
-  });
+  return withDbFallback(
+    () =>
+      prisma.order.findMany({
+        where: {
+          ...(filters?.paymentMethod ? { paymentMethod: filters.paymentMethod } : {}),
+          ...(filters?.status ? { status: filters.status } : {})
+        },
+        orderBy: { createdAt: "desc" },
+        take: 200
+      }),
+    []
+  );
 }
 
 export async function updateOrderStatus(
@@ -114,9 +118,13 @@ export async function updateOrderStatus(
 }
 
 export async function countPendingCodOrders() {
-  return prisma.order.count({
-    where: { paymentMethod: "cod", status: "PENDING" }
-  });
+  return withDbFallback(
+    () =>
+      prisma.order.count({
+        where: { paymentMethod: "cod", status: "PENDING" }
+      }),
+    0
+  );
 }
 
 function orderIncludesBook(productIdField: string, bookId: BookId): boolean {

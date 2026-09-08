@@ -171,9 +171,13 @@ export async function getAllApprovedReviews(bookId?: BookId) {
 }
 
 export async function getAdminReviews(status?: ReviewStatus) {
-  return prisma.review.findMany({
-    where: status ? { status } : undefined,
-    orderBy: { createdAt: "desc" },
-    include: { order: true }
-  });
+  return withDbFallback(
+    () =>
+      prisma.review.findMany({
+        where: status ? { status } : undefined,
+        orderBy: { createdAt: "desc" },
+        include: { order: true }
+      }),
+    []
+  );
 }

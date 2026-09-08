@@ -29,11 +29,15 @@ export async function getApprovedGalleryPhotos(limit = 24) {
 }
 
 export async function getAdminGalleryPhotos(status?: GalleryStatus) {
-  return prisma.readerGalleryPhoto.findMany({
-    where: status ? { status } : undefined,
-    orderBy: { createdAt: "desc" },
-    include: { review: true }
-  });
+  return withDbFallback(
+    () =>
+      prisma.readerGalleryPhoto.findMany({
+        where: status ? { status } : undefined,
+        orderBy: { createdAt: "desc" },
+        include: { review: true }
+      }),
+    []
+  );
 }
 
 export async function getFeaturedGalleryPhotos(limit = 1) {

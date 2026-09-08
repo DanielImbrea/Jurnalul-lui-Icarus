@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { fetchAdminJson } from "@/lib/admin-fetch";
 
 type PendingKey = "pendingReviews" | "pendingPhotos" | "pendingOrders" | "total";
 
@@ -48,9 +49,14 @@ export default function AdminNav() {
   useEffect(() => {
     async function loadPending() {
       try {
-        const res = await fetch("/api/admin/stats");
-        if (!res.ok) return;
-        const data = await res.json();
+        const { data, error: fetchError } = await fetchAdminJson<{
+          pendingReviews?: number;
+          pendingPhotos?: number;
+          pendingOrders?: number;
+        }>("/api/admin/stats");
+
+        if (fetchError || !data) return;
+
         setPending({
           pendingReviews: data.pendingReviews ?? 0,
           pendingPhotos: data.pendingPhotos ?? 0,

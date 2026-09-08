@@ -7,6 +7,7 @@ import {
 } from "@/lib/orders";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 function formatAddress(order: {
   addressLine1: string | null;
@@ -25,21 +26,29 @@ function formatAddress(order: {
 }
 
 export async function GET(req: NextRequest) {
-  const paymentMethod = req.nextUrl.searchParams.get(
-    "paymentMethod"
-  ) as OrderPaymentFilter | null;
-  const status = req.nextUrl.searchParams.get("status") as OrderStatusFilter | null;
+  try {
+    const paymentMethod = req.nextUrl.searchParams.get(
+      "paymentMethod"
+    ) as OrderPaymentFilter | null;
+    const status = req.nextUrl.searchParams.get("status") as OrderStatusFilter | null;
 
-  const orders = await getAdminOrders({
-    paymentMethod: paymentMethod ?? undefined,
-    status: status ?? undefined
-  });
+    const orders = await getAdminOrders({
+      paymentMethod: paymentMethod ?? undefined,
+      status: status ?? undefined
+    });
 
-  return NextResponse.json(
-    orders.map((order) => ({
-      ...order,
-      productTitle: getOrderProductTitles(order.productId),
-      formattedAddress: formatAddress(order)
-    }))
-  );
+    return NextResponse.json(
+      orders.map((order) => ({
+        ...order,
+        productTitle: getOrderProductTitles(order.productId),
+        formattedAddress: formatAddress(order)
+      }))
+    );
+  } catch (error) {
+    console.error("Eroare listare comenzi admin:", error);
+    return NextResponse.json(
+      { error: "Nu am putut încărca comenzile." },
+      { status: 500 }
+    );
+  }
 }

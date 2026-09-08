@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { products } from "@/lib/products";
+import { fetchAdminJson } from "@/lib/admin-fetch";
 
 type ReviewStatus = "PENDING" | "APPROVED" | "HIDDEN" | "REJECTED";
 
@@ -33,14 +34,19 @@ export default function AdminReviewsPanel() {
   const [status, setStatus] = useState<ReviewStatus | "ALL">("PENDING");
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<Review | null>(null);
 
   async function load() {
     setLoading(true);
+    setError(null);
     const query = status === "ALL" ? "" : `?status=${status}`;
-    const res = await fetch(`/api/admin/reviews${query}`);
-    const data = await res.json();
-    setReviews(data);
+    const { data, error: fetchError } = await fetchAdminJson<Review[]>(
+      `/api/admin/reviews${query}`
+    );
+
+    setReviews(Array.isArray(data) ? data : []);
+    setError(fetchError);
     setLoading(false);
   }
 
@@ -83,6 +89,8 @@ export default function AdminReviewsPanel() {
 
       {loading ? (
         <p className="mt-10 font-sans text-sm text-ash">Se încarcă...</p>
+      ) : error ? (
+        <p className="mt-10 font-sans text-sm text-wine-light">{error}</p>
       ) : reviews.length === 0 ? (
         <p className="mt-10 font-sans text-sm text-ash">Nicio recenzie.</p>
       ) : (

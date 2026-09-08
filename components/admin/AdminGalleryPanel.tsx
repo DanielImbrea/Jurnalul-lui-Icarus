@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { products } from "@/lib/products";
+import { fetchAdminJson } from "@/lib/admin-fetch";
 
 type GalleryStatus = "PENDING" | "APPROVED" | "HIDDEN" | "REJECTED";
 
@@ -81,18 +82,26 @@ export default function AdminGalleryPanel() {
     REJECTED: 0
   });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   async function load() {
     setLoading(true);
+    setError(null);
     const query = status === "ALL" ? "" : `?status=${status}`;
 
-    const [filteredRes, allRes] = await Promise.all([
-      fetch(`/api/admin/gallery${query}`),
-      fetch("/api/admin/gallery")
+    const [filteredResult, allResult] = await Promise.all([
+      fetchAdminJson<GalleryPhoto[]>(`/api/admin/gallery${query}`),
+      fetchAdminJson<GalleryPhoto[]>("/api/admin/gallery")
     ]);
 
-    setPhotos(await filteredRes.json());
-    setStatusCounts(countByStatus(await allRes.json()));
+    const filteredPhotos = Array.isArray(filteredResult.data)
+      ? filteredResult.data
+      : [];
+    const allPhotos = Array.isArray(allResult.data) ? allResult.data : [];
+
+    setPhotos(filteredPhotos);
+    setStatusCounts(countByStatus(allPhotos));
+    setError(filteredResult.error ?? allResult.error);
     setLoading(false);
   }
 
@@ -241,6 +250,8 @@ export default function AdminGalleryPanel() {
 
         {loading ? (
           <p className="mt-10 font-sans text-sm text-ash">Se încarcă...</p>
+        ) : error ? (
+          <p className="mt-10 font-sans text-sm text-wine-light">{error}</p>
         ) : visiblePhotos.length === 0 ? (
           <p className="mt-10 font-sans text-sm text-ash">
             {selectedReaderName

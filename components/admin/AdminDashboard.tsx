@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { fetchAdminJson } from "@/lib/admin-fetch";
 
 interface Stats {
   totalReviews: number;
@@ -16,12 +17,18 @@ interface Stats {
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/admin/stats")
-      .then((r) => r.json())
-      .then(setStats);
+    fetchAdminJson<Stats>("/api/admin/stats").then(({ data, error: fetchError }) => {
+      setStats(data);
+      setError(fetchError);
+    });
   }, []);
+
+  if (error) {
+    return <p className="font-sans text-sm text-wine-light">{error}</p>;
+  }
 
   if (!stats) {
     return <p className="font-sans text-sm text-ash">Se încarcă...</p>;
