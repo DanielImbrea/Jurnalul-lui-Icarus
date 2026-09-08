@@ -2,7 +2,7 @@
   "name": "daniel-imbrea-universul-literar",
   "version": "1.0.0",
   "private": true,
-  "description": "Website oficial — Daniel Imbrea. Sub umbrele lui Blake & Îmbrățișarea durerii și avantajele ei.",
+  "description": "Website oficial — Daniel Imbrea. Sub Umbrele lui Blake & Îmbrățișarea Durerii și Avantajele ei.",
   "scripts": {
     "dev": "next dev -p 3020",
     "build": "prisma generate && next build",

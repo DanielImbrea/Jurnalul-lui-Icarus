@@ -7,7 +7,7 @@ import { products } from "@/lib/products";
 export const metadata: Metadata = {
   title: "Cărțile",
   description:
-    "Sub umbrele lui Blake și Îmbrățișarea durerii și avantajele ei — cele două cărți ale lui Daniel Imbrea.",
+    "Sub Umbrele lui Blake și Îmbrățișarea Durerii și Avantajele ei — cele două cărți ale lui Daniel Imbrea.",
   alternates: { canonical: "/carti" }
 };
 

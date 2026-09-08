@@ -48,7 +48,7 @@ export default function IcarusSection() {
               <div className="relative aspect-[4/5]">
                 <Image
                   src={blakeImages[1]}
-                  alt="Cititor cu Sub umbrele lui Blake"
+                  alt="Cititor cu Sub Umbrele lui Blake"
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 360px"

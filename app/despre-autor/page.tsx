@@ -5,7 +5,7 @@ import PageHero from "@/components/PageHero";
 export const metadata: Metadata = {
   title: "Despre autor",
   description:
-    "Daniel Imbrea — autorul cărților Sub umbrele lui Blake și Îmbrățișarea durerii și avantajele ei, și vocea din spatele Jurnalului lui Icarus.",
+    "Daniel Imbrea — autorul cărților Sub Umbrele lui Blake și Îmbrățișarea Durerii și Avantajele ei, și vocea din spatele Jurnalului lui Icarus.",
   alternates: { canonical: "/despre-autor" }
 };
 
@@ -23,29 +23,34 @@ export default function DespreAutorPage() {
         <div className="container-editorial grid gap-16 md:grid-cols-12">
           <div className="md:col-span-7 space-y-6 font-sans text-[16px] leading-relaxed text-mist">
             <p>
-              Daniel Imbrea scrie despre ce rămâne când oamenii încetează
-              să se mai prefacă. Despre iubirile care ne pun în pericol și
+              Am scris despre ce rămâne când oamenii încetează să se mai
+              prefacă. Despre iubirile și tentațiile care ne pun în pericol și
               despre durerile care, la un moment dat, se transformă în
               claritate.
             </p>
             <p>
-              A publicat două cărți foarte diferite ca ton, dar legate de
+              Am publicat două cărți foarte diferite ca ton, dar legate de
               aceeași întrebare: cât din noi este cel pe care-l arătăm, și
-              cât este cel pe care-l ascundem? „Sub umbrele lui Blake”
+              cât este cel pe care-l ascundem? „Sub Umbrele lui Blake”
               privește această întrebare prin iubire, dorință și risc.
-              „Îmbrățișarea durerii și avantajele ei” o privește prin
+              „Îmbrățișarea Durerii și Avantajele ei” o privește prin
               pierdere, transformare și maturizare.
             </p>
-            <p>
-              Înainte de acest site, cărțile lui ajunseseră deja la peste
-              200 de cititori — mulți dintre ei descoperiți prin Jurnalul
-              lui Icarus, spațiul în care Daniel scrie de multă vreme cu
-              voce tare despre lucrurile pe care majoritatea le țin în
-              tăcere.
+            <p className="text-bone italic">
+              Există iubiri care ne salvează. Și există iubiri care ne trag
+              încet în întuneric, până când nu mai știm dacă vrem să fim
+              salvați sau să ne pierdem cu totul.
             </p>
             <p className="text-bone italic">
-              Există iubiri care ne salvează. Și există iubiri care ne
-              obligă să ne privim în oglindă.
+              Există dorințe pe care le ascundem atât de bine, încât ajungem
+              să credem că nu ne aparțin. Până când apare cineva care le vede.
+              Care le atinge. Care știe exact ce să trezească în noi.
+            </p>
+            <p className="text-bone italic">
+              Unele iubiri ne cer să fim vulnerabili. Altele ne cer să ne
+              abandonăm limitele. Iar cele mai periculoase ne fac să confundăm
+              dorința cu nevoia, atracția cu obsesia și plăcerea cu tot
+              ceea ce juram că nu vom deveni niciodată.
             </p>
           </div>
 
@@ -53,8 +58,9 @@ export default function DespreAutorPage() {
             <div className="border border-bone/10 bg-charcoal/40 p-8">
               <p className="font-serif text-xl text-bone">Jurnalul lui Icarus</p>
               <p className="mt-3 font-sans text-sm leading-relaxed text-ash">
-                Comunitatea din jurul cărților lui Daniel — gânduri,
-                fragmente și conversații care continuă dincolo de pagină.
+                Un loc în care poveștile nu se termină la ultima pagină.
+                Gânduri nerostite, dorințe necontrolate, fragmente, confesiuni
+                și conversații despre tot ceea ce se ascunde în noi.
               </p>
               <Link
                 href="/jurnalul-lui-icarus"

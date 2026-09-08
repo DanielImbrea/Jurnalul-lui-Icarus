@@ -63,7 +63,7 @@ export default function BookShowcase() {
             <div className="relative aspect-[3/4] bg-gradient-to-b from-charcoal/80 to-black/90 md:aspect-auto md:min-h-[480px]">
               <Image
                 src={blakeFeaturedImages.moment}
-                alt="Sub umbrele lui Blake — atmosferă"
+                alt="Sub Umbrele lui Blake — atmosferă"
                 fill
                 className="object-contain p-4 transition-transform duration-700 group-hover:scale-[1.02] md:p-6"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -71,7 +71,7 @@ export default function BookShowcase() {
             </div>
             <div className="flex flex-col justify-center p-7 md:p-10">
               <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-ember">
-                Sub umbrele lui Blake
+                Sub Umbrele lui Blake
               </p>
               <p className="mt-4 font-serif text-2xl leading-snug text-bone md:text-3xl">
                 Nu toate dorințele ar trebui urmate.

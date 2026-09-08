@@ -21,7 +21,7 @@ function LogoMark({ size = 64 }: { size?: number }) {
       />
       <path
         d="M48 10c14 6 26 20 30 36 2 8 1 17-3 24-8-6-17-10-27-12V10Z"
-        fill="#A9875D"
+        fill="#CDB56E"
       />
       <path
         d="M48 10v58"
@@ -46,7 +46,7 @@ function LogoMark({ size = 64 }: { size?: number }) {
       />
       <path
         d="M26 76c7-3 14-5 22-5s15 2 22 5"
-        stroke="#A9875D"
+        stroke="#CDB56E"
         strokeWidth="0.75"
         strokeLinecap="round"
         opacity="0.45"
@@ -177,7 +177,7 @@ export default async function OpenGraphImage() {
                   fontSize: 13,
                   letterSpacing: "0.26em",
                   textTransform: "uppercase",
-                  color: "#A9875D",
+                  color: "#CDB56E",
                   marginBottom: 14
                 }}
               >
@@ -207,7 +207,7 @@ export default async function OpenGraphImage() {
                   style={{
                     width: 64,
                     height: 2,
-                    background: "#A9875D"
+                    background: "#CDB56E"
                   }}
                 />
                 <div
@@ -309,9 +309,9 @@ export default async function OpenGraphImage() {
                 letterSpacing: "0.06em"
               }}
             >
-              <span>Sub umbrele lui Blake</span>
-              <span style={{ color: "#A9875D" }}>·</span>
-              <span>Îmbrățișarea durerii</span>
+              <span>Sub Umbrele lui Blake</span>
+              <span style={{ color: "#CDB56E" }}>·</span>
+              <span>Îmbrățișarea Durerii</span>
             </div>
           </div>
         </div>

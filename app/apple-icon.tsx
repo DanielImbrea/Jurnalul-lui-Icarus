@@ -30,7 +30,7 @@ export default async function AppleIcon() {
           />
           <path
             d="M48 10c14 6 26 20 30 36 2 8 1 17-3 24-8-6-17-10-27-12V10Z"
-            fill="#A9875D"
+            fill="#CDB56E"
           />
           <path
             d="M48 10v58"

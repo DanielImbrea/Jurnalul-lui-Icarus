@@ -16,7 +16,7 @@ const product = products.blake;
 export const metadata: Metadata = {
   title: `${product.title} — ${product.subtitle}`,
   description:
-    "Sub umbrele lui Blake, de Daniel Imbrea (Sedcom Libris, 2024) — o poveste dark romance despre iubire, tentație și limitele pe care le încălcăm ca să ne găsim liniștea.",
+    "Sub Umbrele lui Blake, de Daniel Imbrea (Sedcom Libris, 2024) — o poveste dark romance despre iubire, tentație și limitele pe care le încălcăm ca să ne găsim liniștea.",
   alternates: { canonical: `/carti/${product.slug}` },
   openGraph: {
     title: product.title,
@@ -67,7 +67,7 @@ export default function BlakePage() {
                 întoarcă.
               </p>
               <p>
-                „Sub umbrele lui Blake” este povestea acelei căutări. A unui
+                „Sub Umbrele lui Blake” este povestea acelei căutări. A unui
                 bărbat care și-a construit viața din control și viteză, și a
                 unei femei care devine, fără să vrea, singurul lui loc de
                 refugiu. Este o poveste despre dorință și despre prețul ei —

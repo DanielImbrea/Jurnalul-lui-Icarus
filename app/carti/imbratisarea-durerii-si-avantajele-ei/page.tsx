@@ -16,7 +16,7 @@ const product = products.durere;
 export const metadata: Metadata = {
   title: `${product.title} — ${product.subtitle}`,
   description:
-    "Îmbrățișarea durerii și avantajele ei, de Daniel Imbrea (2023) — despre durere, transformare și echilibrul dintre lacrimi și succes.",
+    "Îmbrățișarea Durerii și Avantajele ei, de Daniel Imbrea (2023) — despre durere, transformare și echilibrul dintre lacrimi și succes.",
   alternates: { canonical: `/carti/${product.slug}` },
   openGraph: {
     title: product.title,
@@ -73,7 +73,7 @@ export default function DurerePage() {
                 putem fugi de ea?
               </p>
               <p>
-                „Îmbrățișarea durerii și avantajele ei” nu este un manual de
+                „Îmbrățișarea Durerii și Avantajele ei” nu este un manual de
                 dezvoltare personală și nu promite că orice suferință ascunde o
                 lecție frumoasă. Este o privire sinceră asupra durerii, asupra
                 pierderilor care ne schimbă și asupra felului în care putem merge

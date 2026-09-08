@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import LegalContent from "@/components/LegalContent";
+import { legalInfo, LEGAL_LAST_UPDATED } from "@/lib/legal";
 
 export const metadata: Metadata = {
   title: "Termeni și condiții",
@@ -9,52 +10,70 @@ export const metadata: Metadata = {
 };
 
 export default function TermeniPage() {
+  const { operatorName, brandName, siteUrl, contactEmail } = legalInfo;
+
   return (
     <>
       <PageHero eyebrow="Informații legale" title="Termeni și condiții" atmosphere="neutral" />
       <LegalContent>
-        <p>
-          <strong>[COMPLETEAZĂ]</strong> Acest document trebuie redactat sau
-          validat de o persoană autorizată (jurist / consultant) înainte de
-          lansarea publică a site-ului. Structura de mai jos este un
-          punct de plecare, nu conținut juridic final.
+        <p className="text-ash">
+          Ultima actualizare: {LEGAL_LAST_UPDATED}. Prezentul document reglementează
+          utilizarea site-ului {siteUrl} și condițiile de vânzare a produselor
+          comercializate prin intermediul acestuia.
         </p>
 
         <h2>1. Datele operatorului</h2>
         <p>
-          Denumire: [COMPLETEAZĂ — persoană fizică autorizată / SRL].
+          Operator: {operatorName} (persoană fizică), în calitate de autor și
+          comerciant al produselor disponibile pe site-ul {brandName}.
           <br />
-          CUI / CIF: [COMPLETEAZĂ].
+          Website: {siteUrl}
           <br />
-          Sediu / adresă de corespondență: [COMPLETEAZĂ].
-          <br />
-          Email: [COMPLETEAZĂ].
+          Email de contact:{" "}
+          <a
+            href={`mailto:${contactEmail}`}
+            className="underline decoration-bone/30 underline-offset-4 hover:text-ember"
+          >
+            {contactEmail}
+          </a>
         </p>
 
         <h2>2. Obiectul contractului</h2>
         <p>
-          Prezentul document reglementează condițiile de vânzare a
-          produselor (cărți fizice) comercializate prin acest site,
-          aparținând autorului Daniel Imbrea.
+          Prezentul document reglementează condițiile de vânzare a produselor
+          (cărți fizice) comercializate prin acest site, aparținând autorului{" "}
+          {operatorName}.
         </p>
 
         <h2>3. Produse și prețuri</h2>
         <p>
-          Prețurile afișate pe site sunt exprimate în lei (RON) și includ
-          TVA, dacă este cazul. [COMPLETEAZĂ regimul fiscal aplicabil.]
+          Prețurile afișate pe site sunt exprimate în lei (RON) și reprezintă
+          prețul final al produsului. Costul transportului se adaugă separat,
+          conform paginii de checkout și secțiunii{" "}
+          <a
+            href="/livrare-si-comenzi"
+            className="underline decoration-bone/30 underline-offset-4 hover:text-ember"
+          >
+            Livrare și comenzi
+          </a>
+          .
         </p>
 
         <h2>4. Plata</h2>
         <p>
-          Plata se procesează prin Stripe, folosind card bancar. Site-ul
-          nu stochează datele cardului — acestea sunt gestionate integral
-          de Stripe, conform standardelor PCI-DSS.
+          Plata poate fi efectuată prin card bancar (procesată securizat prin
+          Stripe) sau ramburs la curier, la primirea coletului. Site-ul nu
+          stochează datele cardului — acestea sunt gestionate integral de
+          Stripe, conform standardelor PCI-DSS.
         </p>
 
         <h2>5. Livrarea</h2>
         <p>
           Detaliile de livrare sunt disponibile în{" "}
-          <a href="/livrare-si-comenzi" className="underline decoration-bone/30 underline-offset-4 hover:text-ember">
+          <a
+            href="/livrare-si-comenzi"
+            className="underline decoration-bone/30 underline-offset-4 hover:text-ember"
+          >
             Livrare și comenzi
           </a>
           .
@@ -62,9 +81,13 @@ export default function TermeniPage() {
 
         <h2>6. Dreptul de retur</h2>
         <p>
-          Detaliile privind dreptul de retragere din contract sunt
+          Consumatorii persoane fizice beneficiază de dreptul de retragere din
+          contract, conform legislației aplicabile. Detaliile complete sunt
           disponibile în{" "}
-          <a href="/politica-de-retur" className="underline decoration-bone/30 underline-offset-4 hover:text-ember">
+          <a
+            href="/politica-de-retur"
+            className="underline decoration-bone/30 underline-offset-4 hover:text-ember"
+          >
             Politica de retur
           </a>
           .
@@ -72,15 +95,47 @@ export default function TermeniPage() {
 
         <h2>7. Proprietate intelectuală</h2>
         <p>
-          Conținutul site-ului (texte, design, elemente vizuale) aparține
-          Daniel Imbrea și nu poate fi reprodus fără acord scris.
+          Conținutul site-ului (texte, design, elemente vizuale) aparține{" "}
+          {operatorName} și nu poate fi reprodus, distribuit sau utilizat fără
+          acord scris prealabil.
         </p>
 
-        <h2>8. Legea aplicabilă</h2>
+        <h2>8. Soluționarea litigiilor</h2>
         <p>
-          Prezentul document este guvernat de legislația română.
-          [COMPLETEAZĂ instanța competentă / procedura de soluționare a
-          litigiilor, dacă este necesar.]
+          Prezentul document este guvernat de legislația română. Consumatorii
+          pot apela la mecanismele legale de soluționare a litigiilor, inclusiv
+          la Autoritatea Națională pentru Protecția Consumatorilor (ANPC) —{" "}
+          <a
+            href="https://anpc.ro"
+            target="_blank"
+            rel="noreferrer"
+            className="underline decoration-bone/30 underline-offset-4 hover:text-ember"
+          >
+            anpc.ro
+          </a>
+          , și la platforma europeană de soluționare online a litigiilor (SOL) —{" "}
+          <a
+            href="https://ec.europa.eu/consumers/odr"
+            target="_blank"
+            rel="noreferrer"
+            className="underline decoration-bone/30 underline-offset-4 hover:text-ember"
+          >
+            ec.europa.eu/consumers/odr
+          </a>
+          .
+        </p>
+
+        <h2>9. Contact</h2>
+        <p>
+          Pentru întrebări legate de comenzi, livrări sau drepturile tale ca
+          consumator, ne poți scrie la{" "}
+          <a
+            href={`mailto:${contactEmail}`}
+            className="underline decoration-bone/30 underline-offset-4 hover:text-ember"
+          >
+            {contactEmail}
+          </a>
+          .
         </p>
       </LegalContent>
     </>

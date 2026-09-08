@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { COLOR_EMBER } from "./lib/colors";
 
 const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
@@ -14,7 +15,7 @@ const config: Config = {
         paper: "#F6F3EC",
         wine: "#5A1E2A",
         "wine-light": "#7A3140",
-        ember: "#A9875D"
+        ember: COLOR_EMBER
       },
       fontFamily: {
         serif: ["var(--font-fraunces)", "Georgia", "serif"],

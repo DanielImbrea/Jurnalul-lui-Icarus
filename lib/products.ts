@@ -30,7 +30,7 @@ export const products: Record<ProductId, Product> = {
   blake: {
     id: "blake",
     slug: "sub-umbrele-lui-blake",
-    title: "Sub umbrele lui Blake",
+    title: "Sub Umbrele lui Blake",
     subtitle: "Întunericul nu este pentru oricine",
     badge: "Ficțiune • Dark romance • 18+",
     shortDescription:
@@ -48,7 +48,7 @@ export const products: Record<ProductId, Product> = {
   durere: {
     id: "durere",
     slug: "imbratisarea-durerii-si-avantajele-ei",
-    title: "Îmbrățișarea durerii și avantajele ei",
+    title: "Îmbrățișarea Durerii și Avantajele ei",
     subtitle: "Granițele dintre lacrimi și succes într-un echilibru perfect",
     badge: "Reflecție • Transformare • Viață",
     shortDescription:
@@ -65,7 +65,7 @@ export const products: Record<ProductId, Product> = {
     id: "bundle",
     slug: "pachet-complet",
     title: "Amândouă cărțile",
-    subtitle: "Sub umbrele lui Blake + Îmbrățișarea durerii și avantajele ei",
+    subtitle: "Sub Umbrele lui Blake + Îmbrățișarea Durerii și Avantajele ei",
     badge: "Pachet complet",
     shortDescription: "Universul complet al lui Daniel Imbrea — ambele cărți, la un preț mai bun.",
     priceRon: 98,

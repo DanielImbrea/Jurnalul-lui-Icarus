@@ -6,7 +6,7 @@ import { SHIPPING_RON } from "@/lib/shipping";
 export const metadata: Metadata = {
   title: "Coș",
   description:
-    "Coșul tău — Sub umbrele lui Blake, Îmbrățișarea durerii și avantajele ei, sau pachetul complet.",
+    "Coșul tău — Sub Umbrele lui Blake, Îmbrățișarea Durerii și Avantajele ei, sau pachetul complet.",
   alternates: { canonical: "/comanda" }
 };
 

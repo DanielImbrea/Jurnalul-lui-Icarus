@@ -9,7 +9,7 @@ import type { BookId } from "@/lib/validation";
 export const metadata: Metadata = {
   title: "Recenzii de la cititori",
   description:
-    "Ce au rămas cititorii cu ele după Sub umbrele lui Blake și Îmbrățișarea durerii și avantajele ei."
+    "Ce au rămas cititorii cu ele după Sub Umbrele lui Blake și Îmbrățișarea Durerii și Avantajele ei."
 };
 
 interface PageProps {

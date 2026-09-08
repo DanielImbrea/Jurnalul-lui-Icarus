@@ -207,8 +207,8 @@ export default function ReviewForm({
             onChange={(e) => setBookId(e.target.value as BookId)}
             className="select-field"
           >
-            <option value="blake">Sub umbrele lui Blake</option>
-            <option value="durere">Îmbrățișarea durerii și avantajele ei</option>
+            <option value="blake">Sub Umbrele lui Blake</option>
+            <option value="durere">Îmbrățișarea Durerii și Avantajele ei</option>
           </select>
         </label>
       )}

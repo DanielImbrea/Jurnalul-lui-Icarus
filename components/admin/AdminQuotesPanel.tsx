@@ -80,8 +80,8 @@ export default function AdminQuotesPanel() {
             className="border border-bone/15 bg-ink px-4 py-3 font-sans text-sm text-bone"
           >
             <option value="">General</option>
-            <option value="blake">Sub umbrele lui Blake</option>
-            <option value="durere">Îmbrățișarea durerii</option>
+            <option value="blake">Sub Umbrele lui Blake</option>
+            <option value="durere">Îmbrățișarea Durerii</option>
           </select>
           <input
             value={source}

@@ -24,15 +24,15 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — Sub umbrele lui Blake & Îmbrățișarea durerii și avantajele ei`,
+    default: `${SITE_NAME} — Sub Umbrele lui Blake & Îmbrățișarea Durerii și Avantajele ei`,
     template: `%s — ${SITE_NAME}`
   },
   description: SITE_DESCRIPTION,
   keywords: [
     "Daniel Imbrea",
-    "Sub umbrele lui Blake",
+    "Sub Umbrele lui Blake",
     "Întunericul nu este pentru oricine",
-    "Îmbrățișarea durerii și avantajele ei",
+    "Îmbrățișarea Durerii și Avantajele ei",
     "Jurnalul lui Icarus",
     "cărți Daniel Imbrea",
     "autor Daniel Imbrea",

@@ -5,6 +5,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageAtmosphere from "@/components/PageAtmosphere";
 import { ToastProvider } from "@/components/ToastProvider";
+import CookieConsentBanner from "@/components/CookieConsentBanner";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { CartProvider } from "@/components/cart/CartProvider";
 
 export default function SiteShell({ children }: { children: React.ReactNode }) {
@@ -24,6 +26,8 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
           <div className="relative z-[1] min-w-0 max-w-full">{children}</div>
         </main>
         <Footer />
+        <CookieConsentBanner />
+        <GoogleAnalytics />
       </CartProvider>
     </ToastProvider>
   );

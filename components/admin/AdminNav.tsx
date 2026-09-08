@@ -5,15 +5,20 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchAdminJson } from "@/lib/admin-fetch";
 
-type PendingKey = "pendingReviews" | "pendingPhotos" | "pendingOrders" | "total";
+type PendingKey = "pendingReviews" | "pendingPhotos" | "pendingOrders" | "pendingCommunityPosts" | "total";
 
 const navItems: {
   href: string;
   label: string;
   pendingKey?: PendingKey;
 }[] = [
-  { href: "/admin", label: "Comunitate" },
+  { href: "/admin", label: "Panou" },
   { href: "/admin/orders", label: "Comenzi", pendingKey: "pendingOrders" },
+  {
+    href: "/admin/comunitate",
+    label: "Mesaje",
+    pendingKey: "pendingCommunityPosts"
+  },
   { href: "/admin/reviews", label: "Recenzii", pendingKey: "pendingReviews" },
   { href: "/admin/gallery", label: "Galerie cititori", pendingKey: "pendingPhotos" },
   { href: "/admin/quotes", label: "Citate" },
@@ -24,6 +29,7 @@ interface PendingStats {
   pendingReviews: number;
   pendingPhotos: number;
   pendingOrders: number;
+  pendingCommunityPosts: number;
 }
 
 function pendingLabel(count: number) {
@@ -53,6 +59,7 @@ export default function AdminNav() {
           pendingReviews?: number;
           pendingPhotos?: number;
           pendingOrders?: number;
+          pendingCommunityPosts?: number;
         }>("/api/admin/stats");
 
         if (fetchError || !data) return;
@@ -60,7 +67,8 @@ export default function AdminNav() {
         setPending({
           pendingReviews: data.pendingReviews ?? 0,
           pendingPhotos: data.pendingPhotos ?? 0,
-          pendingOrders: data.pendingOrders ?? 0
+          pendingOrders: data.pendingOrders ?? 0,
+          pendingCommunityPosts: data.pendingCommunityPosts ?? 0
         });
       } catch {
         // ignore — nav rămâne funcțional fără count
@@ -81,7 +89,8 @@ export default function AdminNav() {
   const totalPending =
     (pending?.pendingReviews ?? 0) +
     (pending?.pendingPhotos ?? 0) +
-    (pending?.pendingOrders ?? 0);
+    (pending?.pendingOrders ?? 0) +
+    (pending?.pendingCommunityPosts ?? 0);
 
   function countFor(key?: PendingKey) {
     if (!pending || !key) return 0;
@@ -127,6 +136,16 @@ export default function AdminNav() {
                   <span>
                     {pending.pendingOrders}{" "}
                     {pending.pendingOrders === 1 ? "comandă" : "comenzi"} de expediat
+                  </span>
+                )}
+                {(pending.pendingReviews > 0 ||
+                  pending.pendingPhotos > 0 ||
+                  pending.pendingOrders > 0) &&
+                  pending.pendingCommunityPosts > 0 && <span>, </span>}
+                {pending.pendingCommunityPosts > 0 && (
+                  <span>
+                    {pending.pendingCommunityPosts}{" "}
+                    {pending.pendingCommunityPosts === 1 ? "mesaj" : "mesaje"}
                   </span>
                 )}
               </>

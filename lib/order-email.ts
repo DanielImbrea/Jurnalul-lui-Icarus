@@ -47,7 +47,7 @@ function buildOrderEmailHtml(input: OrderEmailInput) {
           ? "<p>Vei plăti numerar curierului când primești coletul.</p>"
           : "<p>Plata a fost procesată prin Stripe.</p>"
       }
-      <p style="color:#666;font-size:14px">Comanda va fi expediată în câteva zile lucrătoare.</p>
+      <p style="color:#666;font-size:14px">Comanda va fi expediată în 2–3 zile lucrătoare.</p>
       ${
         input.orderId
           ? `<p style="color:#888;font-size:12px">Referință comandă: ${input.orderId}</p>`

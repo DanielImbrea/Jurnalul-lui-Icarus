@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
-import { BRAND_NAME, TIKTOK_HANDLE, TIKTOK_URL } from "@/lib/brand";
+import { BRAND_NAME, CONTACT_EMAIL, TIKTOK_HANDLE, TIKTOK_URL } from "@/lib/brand";
 
 export default function Footer() {
   return (
@@ -24,7 +24,7 @@ export default function Footer() {
           <ul className="mt-4 space-y-3 font-sans text-sm text-ash">
             <li>
               <Link href="/carti/sub-umbrele-lui-blake" className="hover:text-bone">
-                Sub umbrele lui Blake
+                Sub Umbrele lui Blake
               </Link>
             </li>
             <li>
@@ -32,7 +32,7 @@ export default function Footer() {
                 href="/carti/imbratisarea-durerii-si-avantajele-ei"
                 className="hover:text-bone"
               >
-                Îmbrățișarea durerii
+                Îmbrățișarea Durerii
               </Link>
             </li>
             <li>
@@ -49,6 +49,11 @@ export default function Footer() {
           </p>
           <ul className="mt-4 space-y-3 font-sans text-sm text-ash">
             <li>
+              <Link href="/comunitate" className="hover:text-bone">
+                Comunitate
+              </Link>
+            </li>
+            <li>
               <Link href="/galeria-cititorilor" className="hover:text-bone">
                 Galeria cititorilor
               </Link>
@@ -62,6 +67,11 @@ export default function Footer() {
               <Link href="/contact" className="hover:text-bone">
                 Contact
               </Link>
+            </li>
+            <li>
+              <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-bone">
+                {CONTACT_EMAIL}
+              </a>
             </li>
             <li>
               <a href={TIKTOK_URL} target="_blank" rel="noreferrer" className="hover:text-bone">

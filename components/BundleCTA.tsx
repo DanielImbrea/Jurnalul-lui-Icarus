@@ -16,7 +16,7 @@ export default function BundleCTA() {
             <div className="relative aspect-[4/3] md:col-span-5 md:aspect-auto md:min-h-[320px]">
               <Image
                 src={bundleImages[0]}
-                alt="Ambele cărți — Sub umbrele lui Blake și Îmbrățișarea durerii"
+                alt="Ambele cărți — Sub Umbrele lui Blake și Îmbrățișarea Durerii"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 420px"

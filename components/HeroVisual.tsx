@@ -80,7 +80,7 @@ export function HeroBooksMobile({ className = "" }: { className?: string }) {
       <HeroBookPanel
         href="/carti/sub-umbrele-lui-blake"
         src={blakeFeaturedImages.hero}
-        alt="Sub umbrele lui Blake"
+        alt="Sub Umbrele lui Blake"
         label="Dark romance"
         tilt="left"
         primary
@@ -90,7 +90,7 @@ export function HeroBooksMobile({ className = "" }: { className?: string }) {
       <HeroBookPanel
         href="/carti/imbratisarea-durerii-si-avantajele-ei"
         src={durereFeaturedImages.hero}
-        alt="Îmbrățișarea durerii și avantajele ei"
+        alt="Îmbrățișarea Durerii și Avantajele ei"
         label="Reflecție"
         tilt="right"
         primary
@@ -107,8 +107,8 @@ export function HeroBookLeft() {
     <HeroBookPanel
       href="/carti/sub-umbrele-lui-blake"
       src={blakeFeaturedImages.hero}
-      alt="Sub umbrele lui Blake"
-      label="Sub umbrele lui Blake"
+      alt="Sub Umbrele lui Blake"
+      label="Sub Umbrele lui Blake"
       tilt="left"
       primary
       className="hidden lg:block"
@@ -122,8 +122,8 @@ export function HeroBookRight() {
     <HeroBookPanel
       href="/carti/imbratisarea-durerii-si-avantajele-ei"
       src={durereFeaturedImages.hero}
-      alt="Îmbrățișarea durerii și avantajele ei"
-      label="Îmbrățișarea durerii"
+      alt="Îmbrățișarea Durerii și Avantajele ei"
+      label="Îmbrățișarea Durerii"
       tilt="right"
       className="hidden lg:block lg:mt-10"
       delay="0.25s"

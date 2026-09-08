@@ -88,13 +88,13 @@ export default async function SuccesPage({
               )}
               <p className="text-ash">
                 Cartea{summary.productTitle?.includes(" + ") ? "le" : ""} va fi
-                expediată în câteva zile lucrătoare. Dacă ai întrebări despre
+                expediată în 2–3 zile lucrătoare. Dacă ai întrebări despre
                 comandă, ne poți scrie oricând.
               </p>
             </div>
           ) : (
             <p className="font-sans text-[15px] leading-relaxed text-mist">
-              Plata a fost procesată. Cartea va fi expediată în câteva zile
+              Plata a fost procesată. Cartea va fi expediată în 2–3 zile
               lucrătoare.
             </p>
           )}

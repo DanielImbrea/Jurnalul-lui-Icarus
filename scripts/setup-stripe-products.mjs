@@ -73,14 +73,14 @@ const stripe = new Stripe(secretKey, { apiVersion: "2024-06-20" });
 const catalog = [
   {
     envKey: "STRIPE_PRICE_BLAKE",
-    name: "Sub umbrele lui Blake",
+    name: "Sub Umbrele lui Blake",
     description: "Roman — Daniel Imbrea. Livrare separată (+19 RON la checkout).",
     amountRon: 59,
     metadata: { productId: "blake", site: "danielimbrea.ro" }
   },
   {
     envKey: "STRIPE_PRICE_DURERE",
-    name: "Îmbrățișarea durerii și avantajele ei",
+    name: "Îmbrățișarea Durerii și Avantajele ei",
     description: "Carte — Daniel Imbrea. Livrare separată (+19 RON la checkout).",
     amountRon: 59,
     metadata: { productId: "durere", site: "danielimbrea.ro" }
@@ -88,7 +88,7 @@ const catalog = [
   {
     envKey: "STRIPE_PRICE_BUNDLE",
     name: "Pachet complet — ambele cărți",
-    description: "Sub umbrele lui Blake + Îmbrățișarea durerii. Livrare separată (+19 RON).",
+    description: "Sub Umbrele lui Blake + Îmbrățișarea Durerii. Livrare separată (+19 RON).",
     amountRon: 98,
     metadata: { productId: "bundle", site: "danielimbrea.ro" }
   }

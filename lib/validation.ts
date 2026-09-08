@@ -52,6 +52,34 @@ export const gallerySubmitSchema = z.object({
   })
 });
 
+export const communityPostSubmitSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, "Numele trebuie să aibă cel puțin 2 caractere.")
+    .max(80),
+  email: z.string().trim().email("Adresa de email nu este validă.").max(120),
+  content: z
+    .string()
+    .trim()
+    .min(15, "Mesajul trebuie să aibă cel puțin 15 caractere.")
+    .max(3000),
+  parentId: z.string().trim().max(40).optional().or(z.literal("")),
+  consentGiven: z.literal(true, {
+    message: "Trebuie să accepți publicarea mesajului."
+  })
+});
+
+export const adminCommunityPostUpdateSchema = z.object({
+  name: z.string().trim().min(2).max(80).optional(),
+  content: z.string().trim().min(15).max(3000).optional(),
+  status: z.enum(["PENDING", "APPROVED", "HIDDEN", "REJECTED"]).optional()
+});
+
+export const adminCommunityReplySchema = z.object({
+  content: z.string().trim().min(2).max(3000)
+});
+
 export const newsletterSchema = z.object({
   email: z.string().trim().email("Adresa de email nu este validă.").max(120)
 });

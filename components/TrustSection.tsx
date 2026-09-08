@@ -5,7 +5,7 @@ const points = [
   },
   {
     title: "Publicate oficial",
-    text: "Sub umbrele lui Blake — Sedcom Libris, 2024. Îmbrățișarea durerii — 2023."
+    text: "Sub Umbrele lui Blake — Sedcom Libris, 2024. Îmbrățișarea Durerii — 2023."
   },
   {
     title: "Comandă directă",

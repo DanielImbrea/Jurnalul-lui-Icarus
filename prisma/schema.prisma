@@ -114,3 +114,21 @@ model NewsletterSubscriber {
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
 }
+
+model CommunityPost {
+  id            String          @id @default(cuid())
+  parentId      String?
+  parent        CommunityPost?  @relation("CommunityThread", fields: [parentId], references: [id], onDelete: Cascade)
+  replies       CommunityPost[] @relation("CommunityThread")
+  name          String
+  email         String?
+  content       String
+  status        String          @default("PENDING")
+  isAuthorReply Boolean         @default(false)
+  consentGiven  Boolean         @default(false)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  @@index([status, createdAt])
+  @@index([parentId])
+}

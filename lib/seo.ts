@@ -6,7 +6,7 @@ import { BRAND_NAME } from "@/lib/brand";
 export const SITE_NAME = BRAND_NAME;
 
 export const SITE_DESCRIPTION =
-  "Site-ul oficial al scriitorului Daniel Imbrea. Descoperă „Sub umbrele lui Blake” și „Îmbrățișarea durerii și avantajele ei”, universul Jurnalul lui Icarus și comandă direct cărțile.";
+  "Site-ul oficial al scriitorului Daniel Imbrea. Descoperă „Sub Umbrele lui Blake” și „Îmbrățișarea Durerii și Avantajele ei”, universul Jurnalul lui Icarus și comandă direct cărțile.";
 
 export function absoluteUrl(path: string): string {
   return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;

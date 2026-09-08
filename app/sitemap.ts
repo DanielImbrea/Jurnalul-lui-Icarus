@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/carti/sub-umbrele-lui-blake",
     "/carti/imbratisarea-durerii-si-avantajele-ei",
     "/despre-autor",
+    "/comunitate",
     "/galeria-cititorilor",
     "/recenzii",
     "/cititorii-lui-icarus",

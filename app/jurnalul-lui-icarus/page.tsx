@@ -33,8 +33,8 @@ export default function IcarusPage() {
             <p>
               Astăzi este mai mult decât un jurnal. Este comunitatea din
               jurul universului lui Daniel Imbrea — oamenii care au citit
-              primii, care au recunoscut ceva din ei în „Sub umbrele lui
-              Blake” sau în „Îmbrățișarea durerii”, și care continuă
+              primii, care au recunoscut ceva din ei în „Sub Umbrele lui
+              Blake” sau în „Îmbrățișarea Durerii”, și care continuă
               conversația în fiecare zi.
             </p>
             <p className="text-bone">
@@ -80,7 +80,7 @@ export default function IcarusPage() {
           <p className="max-w-lg font-sans text-sm text-ash">
             Vrei să descoperi și cărțile din spatele acestui univers?{" "}
             <Link href="/carti" className="text-bone underline decoration-bone/30 underline-offset-4 hover:text-ember hover:decoration-ember">
-              Vezi Sub umbrele lui Blake și Îmbrățișarea durerii și avantajele ei.
+              Vezi Sub Umbrele lui Blake și Îmbrățișarea Durerii și Avantajele ei.
             </Link>
           </p>
         </div>

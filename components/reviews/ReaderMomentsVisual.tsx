@@ -4,15 +4,15 @@ import Link from "next/link";
 const FALLBACK_MOMENTS = [
   {
     src: "/books/blake/7.png",
-    alt: "Sub umbrele lui Blake — moment de lectură"
+    alt: "Sub Umbrele lui Blake — moment de lectură"
   },
   {
     src: "/books/blake/3.png",
-    alt: "Sub umbrele lui Blake — atmosferă"
+    alt: "Sub Umbrele lui Blake — atmosferă"
   },
   {
     src: "/books/durere/02.png",
-    alt: "Îmbrățișarea durerii — moment de lectură"
+    alt: "Îmbrățișarea Durerii — moment de lectură"
   }
 ] as const;
 

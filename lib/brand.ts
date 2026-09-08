@@ -1,5 +1,8 @@
 export const BRAND_NAME = "Jurnalul lui Icarus";
 
+export const CONTACT_EMAIL =
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL || "jurnalulluiicarus@gmail.com";
+
 export const TIKTOK_URL =
   process.env.NEXT_PUBLIC_TIKTOK_URL ||
   "https://www.tiktok.com/@jurnalulluiicarus";

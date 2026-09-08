@@ -48,7 +48,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid #A9875D;
+  outline: 2px solid #CDB56E;
   outline-offset: 3px;
 }
 
@@ -269,8 +269,8 @@ body {
 
 /* Praf și stele aurii */
 .golden-dust {
-  background: radial-gradient(circle, #e8c882 0%, #a9875d 45%, transparent 70%);
-  box-shadow: 0 0 6px rgba(212, 175, 93, 0.45);
+  background: radial-gradient(circle, #E8C882 0%, #CDB56E 45%, transparent 70%);
+  box-shadow: 0 0 6px rgba(205, 181, 110, 0.5);
   animation: driftDust linear infinite, twinkleGold ease-in-out infinite;
 }
 

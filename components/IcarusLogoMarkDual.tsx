@@ -20,7 +20,7 @@ export default function IcarusLogoMarkDual({
       />
       <path
         d="M48 10c14 6 26 20 30 36 2 8 1 17-3 24-8-6-17-10-27-12V10Z"
-        fill="#A9875D"
+        fill="#CDB56E"
       />
       <path
         d="M48 10v58"
@@ -45,7 +45,7 @@ export default function IcarusLogoMarkDual({
       />
       <path
         d="M26 76c7-3 14-5 22-5s15 2 22 5"
-        stroke="#A9875D"
+        stroke="#CDB56E"
         strokeWidth="0.75"
         strokeLinecap="round"
         opacity="0.45"

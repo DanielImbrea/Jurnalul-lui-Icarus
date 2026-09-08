@@ -15,13 +15,13 @@ type UniverseLink = {
 const universeLinks: UniverseLink[] = [
   {
     href: "/carti/sub-umbrele-lui-blake",
-    label: "Sub umbrele lui Blake",
+    label: "Sub Umbrele lui Blake",
     hint: "Dark romance",
     subtitle: "Publicată în 2024 la Editura Sedcom Libris"
   },
   {
     href: "/carti/imbratisarea-durerii-si-avantajele-ei",
-    label: "Îmbrățișarea durerii și avantajele ei",
+    label: "Îmbrățișarea Durerii și Avantajele ei",
     hint: "Reflecție"
   },
   {
