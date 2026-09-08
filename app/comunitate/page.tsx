@@ -28,12 +28,12 @@ export default async function ComunitatePage() {
             <p>
               Comunitatea trăiește în două locuri: pe TikTok, unde conversația
               curge în timp real, și aici — un spațiu mai liniștit, unde poți
-              lăsa gânduri nerostite, dorințe necontrolate, confesiuni și
-              întrebări care s-au adunat în tine.
+              lăsa gânduri nerostite, dorințe ascunse, confesiuni și
+              întrebări care au rămas prea mult timp doar ale tale.
             </p>
             <p>
               Nu trebuie să fie perfect formulat. Poți scrie ce simți, ce te
-              frământă, ce ai purtat prea mult timp singur(ă). Mesajele sunt
+              frământă, ce ai purtat prea mult timp singur. Mesajele sunt
               moderate înainte de publicare — ca să rămână un loc sigur pentru
               toată lumea.
             </p>
@@ -52,7 +52,7 @@ export default async function ComunitatePage() {
             <p className="mt-3 font-serif text-2xl text-bone">{TIKTOK_HANDLE}</p>
             <p className="mt-4 font-sans text-sm leading-relaxed text-ash">
               Conversații zilnice, fragmente, reacții și comunitatea care a crescut
-              în jurul cărților — acolo mă găsești cel mai des.
+              în jurul cărților — toate își găsesc locul acolo.
             </p>
             <a
               href={TIKTOK_URL}
@@ -69,10 +69,30 @@ export default async function ComunitatePage() {
               Aici, pe site
             </p>
             <p className="mt-3 font-serif text-2xl text-bone">Spațiul tău</p>
-            <p className="mt-4 font-sans text-sm leading-relaxed text-mist">
-              Poți descărca aici ce ai ținut ascuns — fără presiune, fără
-              performanță. Alții pot răspunde, iar eu pot răspunde la mesajele
-              care au nevoie de o voce.
+            <div className="mt-4 space-y-4 font-sans text-sm leading-relaxed text-mist">
+              <p>
+                Un loc în care poți lăsa jos ceea ce ai purtat prea mult timp
+                singur.
+              </p>
+              <p>
+                Scrie fără să cauți cuvintele perfecte. Despre ceea ce te apasă,
+                ceea ce te-a rănit, despre o dorință pe care nu ai avut curajul
+                să o rostești și care, cu timpul, a început să te doară, sau
+                despre lucruri pe care le-ai păstrat prea mult timp doar pentru
+                tine.
+              </p>
+              <p>
+                Poate fi o confesiune, o întrebare, o teamă, o dorință sau pur
+                și simplu un gând pe care simți nevoia să-l lași undeva.
+              </p>
+              <p className="text-bone">
+                Nu trebuie să fie perfect. Trebuie doar să fie al tău.
+              </p>
+            </div>
+            <p className="mt-5 rounded-lg border border-ember/25 bg-ember/10 px-4 py-3 font-sans text-sm leading-relaxed text-bone">
+              Alți cititori pot răspunde, îți pot împărtăși propriile
+              experiențe sau, pur și simplu, îți pot arăta că nu ești singur
+              în ceea ce simți.
             </p>
             <Link href="#scrie" className="btn-primary mt-6 inline-flex">
               Scrie un mesaj

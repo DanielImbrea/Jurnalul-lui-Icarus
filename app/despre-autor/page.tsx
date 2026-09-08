@@ -59,7 +59,7 @@ export default function DespreAutorPage() {
               <p className="font-serif text-xl text-bone">Jurnalul lui Icarus</p>
               <p className="mt-3 font-sans text-sm leading-relaxed text-ash">
                 Un loc în care poveștile nu se termină la ultima pagină.
-                Gânduri nerostite, dorințe necontrolate, fragmente, confesiuni
+                Gânduri nerostite, dorințe ascunse, fragmente, confesiuni
                 și conversații despre tot ceea ce se ascunde în noi.
               </p>
               <Link

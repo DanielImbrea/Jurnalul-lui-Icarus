@@ -49,7 +49,7 @@ export default async function GaleriaCititorilorPage() {
             <p className="font-sans text-sm leading-relaxed text-mist">
               Galeria este pentru imagini — locul în care cartea ta prinde formă
               vizuală. Comunitatea este pentru cuvinte — locul în care te poți
-              descărca de ce ai purtat prea mult timp singur(ă).
+              descărca de ce ai purtat prea mult timp singur.
             </p>
           </div>
         </div>
