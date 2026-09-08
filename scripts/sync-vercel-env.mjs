@@ -13,6 +13,22 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
 const TEAM_SCOPE = "jurnalul-lui-icarus";
+const PROJECT_NAME = "jurnalul-lui-icarus";
+const scopeArgs = ["--scope", TEAM_SCOPE];
+
+function isProjectLinked() {
+  return existsSync(resolve(root, ".vercel/project.json"));
+}
+
+function ensureProjectLinked() {
+  if (isProjectLinked()) return;
+
+  console.log(`→ Leg proiectul de Vercel (${PROJECT_NAME})...\n`);
+  execSync(
+    `npx vercel link --yes --project ${PROJECT_NAME} ${scopeArgs.join(" ")}`,
+    { cwd: root, stdio: "inherit" }
+  );
+}
 
 function loadEnv() {
   const envPath = resolve(root, ".env");
@@ -68,8 +84,6 @@ function envExists(key, target) {
 }
 
 function upsertEnv(key, value, target = "production") {
-  const scopeArgs = ["--scope", TEAM_SCOPE];
-
   if (envExists(key, target)) {
     console.log(`→ Actualizez ${key} (${target})...`);
     runVercel(["env", "rm", key, target, "--yes", ...scopeArgs]);
@@ -118,13 +132,14 @@ Apoi:
 console.log("Sincronizez variabilele DB pe Vercel (Production)...\n");
 
 try {
+  ensureProjectLinked();
   upsertEnv("DATABASE_URL", DATABASE_URL);
   upsertEnv("DIRECT_URL", DIRECT_URL);
 } catch (error) {
   console.error(`\n❌ ${error.message}`);
   console.error(`
-Dacă proiectul nu e legat, rulează:
-  npx vercel link --scope ${TEAM_SCOPE}
+Dacă link-ul eșuează, rulează manual:
+  npx vercel link --yes --project ${PROJECT_NAME} --scope ${TEAM_SCOPE}
 
 Apoi reîncearcă:
   yarn setup:vercel-env
