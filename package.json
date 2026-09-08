@@ -19,6 +19,7 @@
     "stripe:listen": "node scripts/install-stripe-cli.mjs && tools/stripe/stripe listen --forward-to localhost:3020/api/webhook --events checkout.session.completed",
     "setup:cloudflare": "node scripts/setup-cloudflare-dns.mjs",
     "setup:check": "node scripts/check-setup.mjs",
+    "setup:vercel-env": "node scripts/sync-vercel-env.mjs",
     "test:resend": "node scripts/test-resend-email.mjs",
     "postinstall": "prisma generate"
   },
