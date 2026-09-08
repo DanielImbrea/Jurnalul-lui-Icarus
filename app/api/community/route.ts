@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getApprovedCommunityThreads } from "@/lib/community-posts";
-import { prisma } from "@/lib/db";
+import { getPrismaErrorCode, isDbConnectionError, prisma } from "@/lib/db";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { communityPostSubmitSchema, sanitizeText } from "@/lib/validation";
 
@@ -78,10 +78,17 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Eroare trimitere mesaj comunitate:", error);
 
-    const prismaCode =
-      error && typeof error === "object" && "code" in error
-        ? String((error as { code: string }).code)
-        : null;
+    const prismaCode = getPrismaErrorCode(error);
+
+    if (isDbConnectionError(error)) {
+      return NextResponse.json(
+        {
+          error:
+            "Serverul nu poate contacta baza de date momentan. Încearcă din nou peste câteva minute."
+        },
+        { status: 503 }
+      );
+    }
 
     if (prismaCode === "P2021") {
       return NextResponse.json(

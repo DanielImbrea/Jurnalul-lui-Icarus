@@ -84,6 +84,27 @@ if (!process.env.DATABASE_URL?.startsWith("postgresql")) {
   }
 }
 
+if (process.env.DATABASE_URL?.startsWith("postgresql")) {
+  try {
+    const url = new URL(process.env.DATABASE_URL.replace(/^postgresql:\/\//, "http://"));
+    if (url.port === "5432") {
+      console.log(
+        "⚠️  Database: DATABASE_URL folosește portul 5432 — pe Vercel trebuie pooler 6543 cu ?pgbouncer=true"
+      );
+    } else if (url.port === "6543" && !url.searchParams.has("pgbouncer")) {
+      console.log(
+        "⚠️  Database: adaugă ?pgbouncer=true la DATABASE_URL pentru Supabase pooler"
+      );
+    }
+  } catch {
+    // ignore malformed URL here; mesajul de mai sus acoperă lipsa
+  }
+
+  console.log(
+    "ℹ️  Vercel Production: setează DATABASE_URL (6543 + pgbouncer) — vezi .env.example"
+  );
+}
+
 // Stripe
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 const priceIds = [
