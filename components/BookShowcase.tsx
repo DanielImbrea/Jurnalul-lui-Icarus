@@ -74,11 +74,10 @@ export default function BookShowcase() {
                 Sub umbrele lui Blake
               </p>
               <p className="mt-4 font-serif text-2xl leading-snug text-bone md:text-3xl">
-                Unele povești se simt mai întâi în penumbra unei lumânări.
+                Nu toate dorințele ar trebui urmate.
               </p>
               <p className="mt-4 font-sans text-sm leading-relaxed text-ash">
-                Dark romance despre dorință, control și limitele pe care le
-                încălcăm ca să ne găsim liniștea.
+                Dar unele sunt imposibil de ignorat.
               </p>
               <span className="mt-6 inline-block font-sans text-[12px] text-bone underline decoration-bone/30 underline-offset-4 transition-colors group-hover:text-ember group-hover:decoration-ember">
                 Descoperă cartea →

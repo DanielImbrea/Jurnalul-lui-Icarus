@@ -34,7 +34,7 @@ export const products: Record<ProductId, Product> = {
     subtitle: "Întunericul nu este pentru oricine",
     badge: "Ficțiune • Dark romance • 18+",
     shortDescription:
-      "O poveste despre iubire, tentație și limitele pe care le încălcăm ca să ne găsim liniștea.",
+      "O poveste despre dorințe interzise, atracție și limite care se destramă atunci când tentația devine imposibil de ignorat.",
     priceRon: 59,
     stripePriceId: "price_REPLACE_WITH_BLAKE_PRICE_ID",
     meta: {
@@ -52,7 +52,7 @@ export const products: Record<ProductId, Product> = {
     subtitle: "Granițele dintre lacrimi și succes într-un echilibru perfect",
     badge: "Reflecție • Transformare • Viață",
     shortDescription:
-      "Despre durerea care nu ne distruge, ci ne așază — și despre ce rămâne după ea.",
+      "Despre durerea care nu ne distruge, ci ne schimbă — și despre omul care rămâne după ce ea trece.",
     priceRon: 59,
     stripePriceId: "price_REPLACE_WITH_DURERE_PRICE_ID",
     meta: {
