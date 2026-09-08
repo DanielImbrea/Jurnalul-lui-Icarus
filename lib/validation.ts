@@ -65,9 +65,9 @@ export const communityPostSubmitSchema = z.object({
     .min(15, "Mesajul trebuie să aibă cel puțin 15 caractere.")
     .max(3000),
   parentId: z.string().trim().max(40).optional().or(z.literal("")),
-  consentGiven: z.literal(true, {
+  consentGiven: z.coerce.boolean().refine((value) => value, {
     message: "Trebuie să accepți publicarea mesajului."
-  })
+  }),
 });
 
 export const adminCommunityPostUpdateSchema = z.object({

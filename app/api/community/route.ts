@@ -77,6 +77,22 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error("Eroare trimitere mesaj comunitate:", error);
+
+    const prismaCode =
+      error && typeof error === "object" && "code" in error
+        ? String((error as { code: string }).code)
+        : null;
+
+    if (prismaCode === "P2021") {
+      return NextResponse.json(
+        {
+          error:
+            "Spațiul de comunitate nu este configurat încă pe server. Contactează administratorul site-ului."
+        },
+        { status: 503 }
+      );
+    }
+
     return NextResponse.json(
       { error: "Nu am putut trimite mesajul. Încearcă din nou." },
       { status: 500 }
