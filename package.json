@@ -13,6 +13,7 @@
     "db:push": "prisma db push",
     "db:deploy": "prisma migrate deploy",
     "setup:supabase": "node scripts/setup-supabase-db.mjs",
+    "setup:supabase-pooler": "node scripts/fix-supabase-pooler-url.mjs",
     "setup:stripe": "node scripts/setup-stripe-products.mjs",
     "setup:stripe-cli": "node scripts/install-stripe-cli.mjs",
     "stripe:login": "node scripts/install-stripe-cli.mjs && tools/stripe/stripe login",
