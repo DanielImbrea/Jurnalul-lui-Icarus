@@ -92,7 +92,7 @@ export default function CommunityThreadList({
     return (
       <p className="font-sans text-sm leading-relaxed text-ash">
         Încă nu sunt mesaje publicate. Poți fi primul care lasă ceva aici — un
-        gând, o întrebare, o stare pe care ai simțit nevoia s-o pui în cuvinte.
+        gând, o întrebare, o stare pe care ai simțit nevoia să o pui în cuvinte.
       </p>
     );
   }
