@@ -155,9 +155,22 @@ export default function AdminOrdersPanel() {
                     <p className="mt-3 font-sans text-[12px] leading-relaxed text-ash">
                       <span className="text-mist">{order.email}</span>
                       {order.phone ? ` · ${order.phone}` : ""}
-                      <br />
-                      {new Date(order.createdAt).toLocaleString("ro-RO")}
+                    </p>
+
+                    <p className="mt-2 font-sans text-[12px] leading-relaxed text-ash">
+                      <span className="text-[11px] uppercase tracking-wide text-ash">
+                        Data comenzii:{" "}
+                      </span>
+                      <span className="text-mist">
+                        {new Date(order.createdAt).toLocaleString("ro-RO", {
+                          dateStyle: "short",
+                          timeStyle: "medium"
+                        })}
+                      </span>
                       {" · "}
+                      <span className="text-[11px] uppercase tracking-wide text-ash">
+                        Sumă:{" "}
+                      </span>
                       <span className="text-bone">
                         {(order.amountTotal / 100).toFixed(0)} {order.currency.toUpperCase()}
                       </span>
@@ -178,8 +191,11 @@ export default function AdminOrdersPanel() {
                       </p>
                     )}
 
-                    <p className="mt-2 font-sans text-[11px] text-ash/60">
-                      Ref: {order.id.slice(0, 12)}…
+                    <p
+                      className="mt-2 font-sans text-[11px] text-ash/60"
+                      title="Identificator intern din baza de date — folosit de site pentru a urmări comanda."
+                    >
+                      ID comandă: {order.id}
                     </p>
                   </div>
 
