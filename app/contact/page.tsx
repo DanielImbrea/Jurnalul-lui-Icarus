@@ -5,7 +5,7 @@ import { CONTACT_EMAIL, TIKTOK_HANDLE, TIKTOK_URL } from "@/lib/brand";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contactează-l pe Daniel Imbrea — email jurnalulluiicarus@gmail.com sau TikTok Jurnalul lui Icarus.",
+    `Contactează-l pe Daniel Imbrea — email ${CONTACT_EMAIL} sau TikTok Jurnalul lui Icarus.`,
   alternates: { canonical: "/contact" }
 };
 

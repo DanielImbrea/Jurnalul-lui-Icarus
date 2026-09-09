@@ -3,10 +3,10 @@ import { readFile } from "fs/promises";
 import { join } from "path";
 import { FAVICON_SRC } from "@/lib/brand";
 
-export const size = { width: 180, height: 180 };
+export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
-export default async function AppleIcon() {
+export default async function Icon() {
   const buffer = await readFile(
     join(process.cwd(), "public", FAVICON_SRC.replace(/^\//, ""))
   );
@@ -24,7 +24,7 @@ export default async function AppleIcon() {
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt="" width={180} height={180} />
+        <img src={src} alt="" width={32} height={32} />
       </div>
     ),
     { ...size }

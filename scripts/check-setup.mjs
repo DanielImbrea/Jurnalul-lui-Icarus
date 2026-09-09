@@ -133,8 +133,8 @@ if (!process.env.STRIPE_WEBHOOK_SECRET) {
 
 // Resend (email confirmare comenzi)
 const resendKey = process.env.RESEND_API_KEY;
-const fromEmail =
-  process.env.ORDER_FROM_EMAIL ?? process.env.NEXT_PUBLIC_CONTACT_EMAIL;
+const contactEmail = "jurnalulluiicarus@gmail.com";
+const fromEmail = process.env.ORDER_FROM_EMAIL ?? contactEmail;
 
 if (!resendKey) {
   console.log("⚠️  Resend: RESEND_API_KEY lipsește — emailurile de confirmare nu se trimit");

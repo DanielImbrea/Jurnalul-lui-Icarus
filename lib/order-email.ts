@@ -5,6 +5,7 @@ import {
   getCartSubtotal,
   type CartLine
 } from "@/lib/cart";
+import { CONTACT_EMAIL } from "@/lib/brand";
 import { products } from "@/lib/products";
 import { SHIPPING_RON } from "@/lib/shipping";
 
@@ -61,10 +62,7 @@ export async function sendOrderConfirmationEmail(
   input: OrderEmailInput
 ): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
-  const from =
-    process.env.ORDER_FROM_EMAIL ||
-    process.env.NEXT_PUBLIC_CONTACT_EMAIL ||
-    "onboarding@resend.dev";
+  const from = process.env.ORDER_FROM_EMAIL || CONTACT_EMAIL;
 
   if (!apiKey) {
     console.warn(

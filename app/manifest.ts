@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { BRAND_NAME } from "@/lib/brand";
+import { BRAND_NAME, FAVICON_SRC } from "@/lib/brand";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
@@ -13,7 +13,7 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#5A1E2A",
     icons: [
       {
-        src: "/jurnalulluiicarus-logo.png",
+        src: FAVICON_SRC,
         sizes: "512x512",
         type: "image/png",
         purpose: "any"

@@ -33,11 +33,9 @@ function loadEnv() {
 loadEnv();
 
 const apiKey = process.env.RESEND_API_KEY;
-const from =
-  process.env.ORDER_FROM_EMAIL ??
-  process.env.NEXT_PUBLIC_CONTACT_EMAIL ??
-  "onboarding@resend.dev";
-const to = process.argv[2] ?? process.env.NEXT_PUBLIC_CONTACT_EMAIL;
+const contactEmail = "jurnalulluiicarus@gmail.com";
+const from = process.env.ORDER_FROM_EMAIL ?? contactEmail;
+const to = process.argv[2] ?? contactEmail;
 
 if (!apiKey) {
   console.error("❌ RESEND_API_KEY lipsește din .env");

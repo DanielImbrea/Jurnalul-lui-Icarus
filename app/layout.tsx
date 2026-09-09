@@ -3,7 +3,7 @@ import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import JsonLd from "@/components/JsonLd";
 import SiteShell from "@/components/SiteShell";
-import { BRAND_NAME, TIKTOK_URL } from "@/lib/brand";
+import { BRAND_NAME, CONTACT_EMAIL, FAVICON_SRC, TIKTOK_URL } from "@/lib/brand";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 const fraunces = Fraunces({
@@ -55,11 +55,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/jurnalulluiicarus-logo.png", type: "image/png", sizes: "512x512" },
-      { url: "/jurnalulluiicarus-logo.png", type: "image/png", sizes: "192x192" }
+      { url: FAVICON_SRC, type: "image/png", sizes: "512x512" },
+      { url: FAVICON_SRC, type: "image/png", sizes: "192x192" }
     ],
     apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
-    shortcut: "/jurnalulluiicarus-logo.png"
+    shortcut: FAVICON_SRC
   },
   robots: {
     index: true,
@@ -86,6 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             "@type": "Person",
             name: "Daniel Imbrea",
             url: SITE_URL,
+            email: CONTACT_EMAIL,
             jobTitle: "Scriitor",
             sameAs: [TIKTOK_URL]
           }}

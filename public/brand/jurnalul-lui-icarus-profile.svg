@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" role="img" aria-label="Jurnalul lui Icarus">
+  <rect width="1024" height="1024" fill="#191715"/>
+  <g transform="translate(512 512) scale(6.25) translate(-48 -48)">
+    <path
+      d="M48 10c-14 6-26 20-30 36-2 8-1 17 3 24 8-6 17-10 27-12V10Z"
+      fill="#5A1E2A"
+    />
+    <path
+      d="M48 10c14 6 26 20 30 36 2 8 1 17-3 24-8-6-17-10-27-12V10Z"
+      fill="#CDB56E"
+    />
+    <path
+      d="M48 10v58"
+      stroke="#EFEAE1"
+      stroke-width="1.25"
+      stroke-linecap="round"
+      opacity="0.4"
+    />
+    <path
+      d="M48 10 38 4M48 10 58 4"
+      stroke="#EFEAE1"
+      stroke-width="1.1"
+      stroke-linecap="round"
+      opacity="0.55"
+    />
+    <path
+      d="M22 72c8-5 17-8 26-8s18 3 26 8"
+      stroke="#EFEAE1"
+      stroke-width="1"
+      stroke-linecap="round"
+      opacity="0.28"
+    />
+    <path
+      d="M26 76c7-3 14-5 22-5s15 2 22 5"
+      stroke="#CDB56E"
+      stroke-width="0.75"
+      stroke-linecap="round"
+      opacity="0.45"
+    />
+  </g>
+</svg>
