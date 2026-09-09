@@ -1,5 +1,8 @@
 export const BRAND_NAME = "Jurnalul lui Icarus";
 
+/** Logo principal (PNG rotund, fundal inclus). */
+export const LOGO_SRC = "/jurnalulluiicarus-logo.png";
+
 export const CONTACT_EMAIL =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL || "jurnalulluiicarus@gmail.com";
 

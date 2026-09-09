@@ -1,9 +1,16 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "fs/promises";
+import { join } from "path";
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
 export default async function AppleIcon() {
+  const buffer = await readFile(
+    join(process.cwd(), "public", "jurnalulluiicarus-logo.png")
+  );
+  const src = `data:image/png;base64,${buffer.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -12,41 +19,11 @@ export default async function AppleIcon() {
           height: "100%",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
-          background:
-            "radial-gradient(circle at 50% 20%, #2d0a14 0%, #080204 55%, #000000 100%)"
+          justifyContent: "center"
         }}
       >
-        <svg
-          width="132"
-          height="132"
-          viewBox="0 0 96 96"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M48 10c-14 6-26 20-30 36-2 8-1 17 3 24 8-6 17-10 27-12V10Z"
-            fill="#5A1E2A"
-          />
-          <path
-            d="M48 10c14 6 26 20 30 36 2 8 1 17-3 24-8-6-17-10-27-12V10Z"
-            fill="#CDB56E"
-          />
-          <path
-            d="M48 10v58"
-            stroke="#EFEAE1"
-            strokeWidth="1.25"
-            strokeLinecap="round"
-            opacity="0.4"
-          />
-          <path
-            d="M48 10 38 4M48 10 58 4"
-            stroke="#EFEAE1"
-            strokeWidth="1.1"
-            strokeLinecap="round"
-            opacity="0.55"
-          />
-        </svg>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt="" width={180} height={180} />
       </div>
     ),
     { ...size }

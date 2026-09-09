@@ -6,55 +6,6 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const runtime = "nodejs";
 
-function LogoMark({ size = 64 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 96 96"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M48 10c-14 6-26 20-30 36-2 8-1 17 3 24 8-6 17-10 27-12V10Z"
-        fill="#5A1E2A"
-      />
-      <path
-        d="M48 10c14 6 26 20 30 36 2 8 1 17-3 24-8-6-17-10-27-12V10Z"
-        fill="#CDB56E"
-      />
-      <path
-        d="M48 10v58"
-        stroke="#EFEAE1"
-        strokeWidth="1.25"
-        strokeLinecap="round"
-        opacity="0.4"
-      />
-      <path
-        d="M48 10 38 4M48 10 58 4"
-        stroke="#EFEAE1"
-        strokeWidth="1.1"
-        strokeLinecap="round"
-        opacity="0.55"
-      />
-      <path
-        d="M22 72c8-5 17-8 26-8s18 3 26 8"
-        stroke="#EFEAE1"
-        strokeWidth="1"
-        strokeLinecap="round"
-        opacity="0.28"
-      />
-      <path
-        d="M26 76c7-3 14-5 22-5s15 2 22 5"
-        stroke="#CDB56E"
-        strokeWidth="0.75"
-        strokeLinecap="round"
-        opacity="0.45"
-      />
-    </svg>
-  );
-}
-
 const dust = [
   { x: 80, y: 90, s: 3, o: 0.45 },
   { x: 220, y: 140, s: 2, o: 0.3 },
@@ -73,9 +24,10 @@ const dust = [
 ];
 
 export default async function OpenGraphImage() {
-  const [blakeCover, durereCover] = await Promise.all([
+  const [blakeCover, durereCover, logoSrc] = await Promise.all([
     getPublicImageDataUrl("/og/blake-cover.png"),
-    getPublicImageDataUrl("/og/durere-cover.png")
+    getPublicImageDataUrl("/og/durere-cover.png"),
+    getPublicImageDataUrl("/jurnalulluiicarus-logo.png")
   ]);
 
   return new ImageResponse(
@@ -148,23 +100,14 @@ export default async function OpenGraphImage() {
               maxWidth: 560
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 96,
-                height: 96,
-                borderRadius: "50%",
-                background:
-                  "radial-gradient(circle at 50% 30%, rgba(90,30,42,0.65) 0%, rgba(8,2,5,0.95) 72%)",
-                border: "2px solid rgba(169,135,93,0.5)",
-                boxShadow:
-                  "0 0 40px rgba(169,135,93,0.2), inset 0 0 20px rgba(169,135,93,0.1)"
-              }}
-            >
-              <LogoMark size={58} />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={logoSrc}
+              alt=""
+              width={96}
+              height={96}
+              style={{ borderRadius: "50%" }}
+            />
 
             <div
               style={{

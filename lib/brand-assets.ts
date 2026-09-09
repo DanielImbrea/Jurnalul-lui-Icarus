@@ -2,12 +2,7 @@ import { readFile } from "fs/promises";
 import { join } from "path";
 
 export async function getLogoMarkDataUrl() {
-  const svg = await readFile(
-    join(process.cwd(), "public", "logo-mark-dual.svg"),
-    "utf8"
-  );
-
-  return `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
+  return getPublicImageDataUrl("/jurnalulluiicarus-logo.png");
 }
 
 function mimeFromBuffer(buffer: Buffer, ext?: string) {
