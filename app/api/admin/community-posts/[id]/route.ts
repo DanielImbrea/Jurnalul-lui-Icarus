@@ -34,7 +34,8 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
       data: {
         name: data.name ? sanitizeText(data.name) : undefined,
         content: data.content ? sanitizeText(data.content) : undefined,
-        status: data.status
+        status: data.status,
+        createdAt: data.createdAt
       }
     });
 

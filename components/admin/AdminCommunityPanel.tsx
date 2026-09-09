@@ -29,6 +29,13 @@ const statuses: (PostStatus | "ALL")[] = [
   "REJECTED"
 ];
 
+function toDatetimeLocalInput(iso: string) {
+  const date = new Date(iso);
+  const pad = (value: number) => String(value).padStart(2, "0");
+
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
 export default function AdminCommunityPanel() {
   const [status, setStatus] = useState<PostStatus | "ALL">("PENDING");
   const [posts, setPosts] = useState<CommunityPost[]>([]);
@@ -36,6 +43,8 @@ export default function AdminCommunityPanel() {
   const [error, setError] = useState<string | null>(null);
   const [replyTarget, setReplyTarget] = useState<string | null>(null);
   const [replyDraft, setReplyDraft] = useState("");
+  const [dateEditId, setDateEditId] = useState<string | null>(null);
+  const [dateDraft, setDateDraft] = useState("");
 
   async function load() {
     setLoading(true);
@@ -66,6 +75,37 @@ export default function AdminCommunityPanel() {
   async function deletePost(id: string) {
     if (!confirm("Ștergi definitiv acest mesaj?")) return;
     await fetch(`/api/admin/community-posts/${id}`, { method: "DELETE" });
+    await load();
+  }
+
+  function startDateEdit(post: CommunityPost) {
+    setDateEditId(post.id);
+    setDateDraft(toDatetimeLocalInput(post.createdAt));
+  }
+
+  async function saveDate(id: string) {
+    if (!dateDraft) return;
+
+    const parsed = new Date(dateDraft);
+    if (Number.isNaN(parsed.getTime())) {
+      alert("Data și ora nu sunt valide.");
+      return;
+    }
+
+    const res = await fetch(`/api/admin/community-posts/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ createdAt: parsed.toISOString() })
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      alert(data.error || "Nu am putut actualiza data.");
+      return;
+    }
+
+    setDateEditId(null);
+    setDateDraft("");
     await load();
   }
 
@@ -155,12 +195,54 @@ export default function AdminCommunityPanel() {
                     {post.content}
                   </p>
 
-                  <p className="mt-2 font-sans text-[11px] text-ash/70">
-                    {new Date(post.createdAt).toLocaleString("ro-RO")}
-                  </p>
+                  {dateEditId === post.id ? (
+                    <div className="mt-3 space-y-2">
+                      <label className="block font-sans text-[11px] uppercase tracking-wide text-ash">
+                        Data și ora afișate
+                        <input
+                          type="datetime-local"
+                          value={dateDraft}
+                          onChange={(e) => setDateDraft(e.target.value)}
+                          className="input-field mt-1 font-sans text-sm normal-case tracking-normal"
+                        />
+                      </label>
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => saveDate(post.id)}
+                          className="border border-bone/20 px-3 py-1 font-sans text-[11px] text-bone hover:border-ember"
+                        >
+                          Salvează data
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setDateEditId(null);
+                            setDateDraft("");
+                          }}
+                          className="border border-bone/10 px-3 py-1 font-sans text-[11px] text-ash"
+                        >
+                          Anulează
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="mt-2 font-sans text-[11px] text-ash/70">
+                      {new Date(post.createdAt).toLocaleString("ro-RO")}
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex flex-col gap-2">
+                  {dateEditId !== post.id && (
+                    <button
+                      type="button"
+                      onClick={() => startDateEdit(post)}
+                      className="border border-bone/10 px-3 py-1 font-sans text-[11px] text-ash hover:text-bone"
+                    >
+                      Editează data
+                    </button>
+                  )}
                   {post.status === "PENDING" && (
                     <button
                       type="button"

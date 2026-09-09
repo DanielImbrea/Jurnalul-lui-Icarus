@@ -73,7 +73,10 @@ export const communityPostSubmitSchema = z.object({
 export const adminCommunityPostUpdateSchema = z.object({
   name: z.string().trim().min(2).max(80).optional(),
   content: z.string().trim().min(15).max(3000).optional(),
-  status: z.enum(["PENDING", "APPROVED", "HIDDEN", "REJECTED"]).optional()
+  status: z.enum(["PENDING", "APPROVED", "HIDDEN", "REJECTED"]).optional(),
+  createdAt: z.coerce
+    .date({ message: "Data și ora nu sunt valide." })
+    .optional()
 });
 
 export const adminCommunityReplySchema = z.object({
