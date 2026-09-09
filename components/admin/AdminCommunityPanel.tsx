@@ -50,7 +50,19 @@ export default function AdminCommunityPanel() {
   const [dateDraft, setDateDraft] = useState("");
   const [nameEditId, setNameEditId] = useState<string | null>(null);
   const [nameDraft, setNameDraft] = useState("");
+  const [contentEditId, setContentEditId] = useState<string | null>(null);
+  const [contentDraft, setContentDraft] = useState("");
   const replyRef = useRef<HTMLTextAreaElement>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+
+  function clearEdits() {
+    setNameEditId(null);
+    setNameDraft("");
+    setDateEditId(null);
+    setDateDraft("");
+    setContentEditId(null);
+    setContentDraft("");
+  }
 
   async function load() {
     setLoading(true);
@@ -85,17 +97,21 @@ export default function AdminCommunityPanel() {
   }
 
   function startDateEdit(post: CommunityPost) {
+    clearEdits();
     setDateEditId(post.id);
     setDateDraft(toDatetimeLocalInput(post.createdAt));
-    setNameEditId(null);
-    setNameDraft("");
   }
 
   function startNameEdit(post: CommunityPost) {
+    clearEdits();
     setNameEditId(post.id);
     setNameDraft(post.name);
-    setDateEditId(null);
-    setDateDraft("");
+  }
+
+  function startContentEdit(post: CommunityPost) {
+    clearEdits();
+    setContentEditId(post.id);
+    setContentDraft(post.content);
   }
 
   async function saveName(id: string) {
@@ -117,8 +133,30 @@ export default function AdminCommunityPanel() {
       return;
     }
 
-    setNameEditId(null);
-    setNameDraft("");
+    clearEdits();
+    await load();
+  }
+
+  async function saveContent(id: string) {
+    const trimmed = contentDraft.trim();
+    if (trimmed.length < 2) {
+      alert("Mesajul trebuie să aibă cel puțin 2 caractere.");
+      return;
+    }
+
+    const res = await fetch(`/api/admin/community-posts/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: trimmed })
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      alert(data.error || "Nu am putut actualiza mesajul.");
+      return;
+    }
+
+    clearEdits();
     await load();
   }
 
@@ -143,8 +181,7 @@ export default function AdminCommunityPanel() {
       return;
     }
 
-    setDateEditId(null);
-    setDateDraft("");
+    clearEdits();
     await load();
   }
 
@@ -220,10 +257,7 @@ export default function AdminCommunityPanel() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => {
-                            setNameEditId(null);
-                            setNameDraft("");
-                          }}
+                          onClick={clearEdits}
                           className="border border-bone/10 px-3 py-1 font-sans text-[11px] text-ash"
                         >
                           Anulează
@@ -259,9 +293,49 @@ export default function AdminCommunityPanel() {
                     <p className="mt-1 font-sans text-[12px] text-ash">{post.email}</p>
                   )}
 
-                  <p className="mt-3 whitespace-pre-wrap font-sans text-sm leading-relaxed text-mist">
-                    {post.content}
-                  </p>
+                  {contentEditId === post.id ? (
+                    <div className="relative mt-3">
+                      <textarea
+                        ref={contentRef}
+                        value={contentDraft}
+                        onChange={(e) => setContentDraft(e.target.value)}
+                        rows={5}
+                        maxLength={3000}
+                        className="input-field resize-y pr-12 font-sans text-sm leading-relaxed"
+                      />
+                      <EmojiInsertButton
+                        className="absolute bottom-3 right-3"
+                        onInsert={(emoji) =>
+                          insertAtTextareaCursor(
+                            contentRef.current,
+                            contentDraft,
+                            emoji,
+                            setContentDraft
+                          )
+                        }
+                      />
+                      <div className="mt-2 flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => saveContent(post.id)}
+                          className="border border-bone/20 px-3 py-1 font-sans text-[11px] text-bone hover:border-ember"
+                        >
+                          Salvează mesajul
+                        </button>
+                        <button
+                          type="button"
+                          onClick={clearEdits}
+                          className="border border-bone/10 px-3 py-1 font-sans text-[11px] text-ash"
+                        >
+                          Anulează
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="mt-3 whitespace-pre-wrap font-sans text-sm leading-relaxed text-mist">
+                      {post.content}
+                    </p>
+                  )}
 
                   {dateEditId === post.id ? (
                     <div className="mt-3 space-y-2">
@@ -284,10 +358,7 @@ export default function AdminCommunityPanel() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => {
-                            setDateEditId(null);
-                            setDateDraft("");
-                          }}
+                          onClick={clearEdits}
                           className="border border-bone/10 px-3 py-1 font-sans text-[11px] text-ash"
                         >
                           Anulează
@@ -309,6 +380,15 @@ export default function AdminCommunityPanel() {
                       className="border border-bone/10 px-3 py-1 font-sans text-[11px] text-ash hover:text-bone"
                     >
                       Editează numele
+                    </button>
+                  )}
+                  {contentEditId !== post.id && (
+                    <button
+                      type="button"
+                      onClick={() => startContentEdit(post)}
+                      className="border border-bone/10 px-3 py-1 font-sans text-[11px] text-ash hover:text-bone"
+                    >
+                      Editează mesajul
                     </button>
                   )}
                   {dateEditId !== post.id && (
