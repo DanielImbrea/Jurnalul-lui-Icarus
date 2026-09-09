@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import type { EmojiClickData } from "emoji-picker-react";
+import { Theme, type EmojiClickData } from "emoji-picker-react";
 
 const EmojiPicker = dynamic(() => import("emoji-picker-react"), { ssr: false });
 
@@ -74,7 +74,7 @@ export default function EmojiInsertButton({
         <div className="absolute bottom-full right-0 z-50 mb-2 w-[min(100vw-2rem,360px)] overflow-hidden rounded-xl border border-bone/10 shadow-2xl">
           <EmojiPicker
             onEmojiClick={handlePick}
-            theme="dark"
+            theme={Theme.DARK}
             searchPlaceholder="Caută emoji..."
             width="100%"
             height={380}
