@@ -1131,6 +1131,13 @@ electron-to-chromium@^1.5.420:
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.422.tgz"
   integrity sha512-UvA/32XqrLDdZSn7Jllo1AYNcWji/G0d5M0GTViE7KoGBiMunw3a34Sb2KO4ZZyrSEhqsxFoVhWWJshdyfKqJA==
 
+emoji-picker-react@^4.20.2:
+  version "4.20.2"
+  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.20.2.tgz#1bc2a448310d26ba2f3863ceedd0fe07c6930af8"
+  integrity sha512-bE1Y6je2HNUm5TGjoTNYSjlpVxITC+rkvvMMaLPx9lYD283pDj6qtG2H62KOcPVgQUBaHed3dDtOPKZ2zXMXcQ==
+  dependencies:
+    flairup "1.1.2"
+
 emoji-regex@^8.0.0:
   version "8.0.0"
   resolved "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz"
@@ -1578,6 +1585,11 @@ find-up@^5.0.0:
   dependencies:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
+
+flairup@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/flairup/-/flairup-1.1.2.tgz#1f068d84bed66f6938278bd59fee5a969168918e"
+  integrity sha512-AiTgxMXuGu5YpEe+39c61pe+0dhmzGMQkntbJjK9FdUY/UmtqlhIVGtrBR2zznbShArdjKWyYNV3mGBJC7fTWQ==
 
 flat-cache@^3.0.4:
   version "3.2.0"

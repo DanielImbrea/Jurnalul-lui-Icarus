@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import EmojiInsertButton, {
+  insertAtTextareaCursor
+} from "@/components/EmojiInsertButton";
 import { fetchAdminJson } from "@/lib/admin-fetch";
 
 type PostStatus = "PENDING" | "APPROVED" | "HIDDEN" | "REJECTED";
@@ -45,6 +48,9 @@ export default function AdminCommunityPanel() {
   const [replyDraft, setReplyDraft] = useState("");
   const [dateEditId, setDateEditId] = useState<string | null>(null);
   const [dateDraft, setDateDraft] = useState("");
+  const [nameEditId, setNameEditId] = useState<string | null>(null);
+  const [nameDraft, setNameDraft] = useState("");
+  const replyRef = useRef<HTMLTextAreaElement>(null);
 
   async function load() {
     setLoading(true);
@@ -81,6 +87,39 @@ export default function AdminCommunityPanel() {
   function startDateEdit(post: CommunityPost) {
     setDateEditId(post.id);
     setDateDraft(toDatetimeLocalInput(post.createdAt));
+    setNameEditId(null);
+    setNameDraft("");
+  }
+
+  function startNameEdit(post: CommunityPost) {
+    setNameEditId(post.id);
+    setNameDraft(post.name);
+    setDateEditId(null);
+    setDateDraft("");
+  }
+
+  async function saveName(id: string) {
+    const trimmed = nameDraft.trim();
+    if (trimmed.length < 2) {
+      alert("Numele trebuie să aibă cel puțin 2 caractere.");
+      return;
+    }
+
+    const res = await fetch(`/api/admin/community-posts/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: trimmed })
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      alert(data.error || "Nu am putut actualiza numele.");
+      return;
+    }
+
+    setNameEditId(null);
+    setNameDraft("");
+    await load();
   }
 
   async function saveDate(id: string) {
@@ -163,7 +202,36 @@ export default function AdminCommunityPanel() {
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="font-serif text-lg text-bone">{post.name}</p>
+                    {nameEditId === post.id ? (
+                      <div className="flex w-full max-w-sm flex-wrap items-center gap-2">
+                        <input
+                          type="text"
+                          value={nameDraft}
+                          onChange={(e) => setNameDraft(e.target.value)}
+                          maxLength={80}
+                          className="input-field min-w-[180px] flex-1 font-serif text-lg"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => saveName(post.id)}
+                          className="border border-bone/20 px-3 py-1 font-sans text-[11px] text-bone hover:border-ember"
+                        >
+                          Salvează
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setNameEditId(null);
+                            setNameDraft("");
+                          }}
+                          className="border border-bone/10 px-3 py-1 font-sans text-[11px] text-ash"
+                        >
+                          Anulează
+                        </button>
+                      </div>
+                    ) : (
+                      <p className="font-serif text-lg text-bone">{post.name}</p>
+                    )}
                     {post.isAuthorReply && (
                       <span className="rounded-full border border-ember/30 bg-ember/10 px-2 py-0.5 font-sans text-[10px] uppercase text-ember">
                         Autor
@@ -234,6 +302,15 @@ export default function AdminCommunityPanel() {
                 </div>
 
                 <div className="flex flex-col gap-2">
+                  {nameEditId !== post.id && (
+                    <button
+                      type="button"
+                      onClick={() => startNameEdit(post)}
+                      className="border border-bone/10 px-3 py-1 font-sans text-[11px] text-ash hover:text-bone"
+                    >
+                      Editează numele
+                    </button>
+                  )}
                   {dateEditId !== post.id && (
                     <button
                       type="button"
@@ -296,13 +373,27 @@ export default function AdminCommunityPanel() {
                   <p className="font-sans text-[11px] uppercase tracking-wide text-ash">
                     Răspuns public ca Daniel Imbrea
                   </p>
-                  <textarea
-                    value={replyDraft}
-                    onChange={(e) => setReplyDraft(e.target.value)}
-                    rows={3}
-                    className="input-field mt-2 resize-y"
-                    placeholder="Scrie răspunsul..."
-                  />
+                  <div className="relative mt-2">
+                    <textarea
+                      ref={replyRef}
+                      value={replyDraft}
+                      onChange={(e) => setReplyDraft(e.target.value)}
+                      rows={3}
+                      className="input-field resize-y pr-12"
+                      placeholder="Scrie răspunsul..."
+                    />
+                    <EmojiInsertButton
+                      className="absolute bottom-3 right-3"
+                      onInsert={(emoji) =>
+                        insertAtTextareaCursor(
+                          replyRef.current,
+                          replyDraft,
+                          emoji,
+                          setReplyDraft
+                        )
+                      }
+                    />
+                  </div>
                   <div className="mt-3 flex gap-2">
                     <button
                       type="button"

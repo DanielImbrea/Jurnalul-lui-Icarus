@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import EmojiInsertButton, {
+  insertAtTextareaCursor
+} from "@/components/EmojiInsertButton";
 import { useToast } from "@/components/ToastProvider";
 
 interface CommunityPostFormProps {
@@ -24,6 +27,7 @@ export default function CommunityPostForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -116,18 +120,27 @@ export default function CommunityPostForm({
 
       <label className="block font-sans text-sm text-mist">
         {parentId ? "Răspunsul tău" : "Mesajul tău"}
-        <textarea
-          required
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          rows={compact ? 4 : 6}
-          className="input-field resize-y"
-          placeholder={
-            parentId
-              ? "Scrie un răspuns..."
-              : "Gânduri, întrebări, confesiuni — ce ai simțit nevoia să spui..."
-          }
-        />
+        <div className="relative mt-1">
+          <textarea
+            ref={contentRef}
+            required
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            rows={compact ? 4 : 6}
+            className="input-field resize-y pr-12"
+            placeholder={
+              parentId
+                ? "Scrie un răspuns..."
+                : "Gânduri, întrebări, confesiuni — ce ai simțit nevoia să spui..."
+            }
+          />
+          <EmojiInsertButton
+            className="absolute bottom-3 right-3"
+            onInsert={(emoji) =>
+              insertAtTextareaCursor(contentRef.current, content, emoji, setContent)
+            }
+          />
+        </div>
       </label>
 
       <label className="flex items-start gap-3 font-sans text-sm text-ash">
