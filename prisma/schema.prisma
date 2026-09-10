@@ -125,8 +125,10 @@ model CommunityPost {
   content       String
   status        String          @default("PENDING")
   isAuthorReply Boolean         @default(false)
-  consentGiven  Boolean         @default(false)
-  createdAt     DateTime        @default(now())
+  consentGiven      Boolean         @default(false)
+  emailConsentGiven Boolean         @default(false)
+  emailApproved     Boolean         @default(false)
+  createdAt         DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 
   @@index([status, createdAt])

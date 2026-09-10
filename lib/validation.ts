@@ -68,12 +68,14 @@ export const communityPostSubmitSchema = z.object({
   consentGiven: z.coerce.boolean().refine((value) => value, {
     message: "Trebuie să accepți publicarea mesajului."
   }),
+  emailConsentGiven: z.coerce.boolean().optional().default(false)
 });
 
 export const adminCommunityPostUpdateSchema = z.object({
   name: z.string().trim().min(2).max(80).optional(),
   content: z.string().trim().min(2).max(3000).optional(),
   status: z.enum(["PENDING", "APPROVED", "HIDDEN", "REJECTED"]).optional(),
+  emailApproved: z.boolean().optional(),
   createdAt: z.coerce
     .date({ message: "Data și ora nu sunt valide." })
     .optional()

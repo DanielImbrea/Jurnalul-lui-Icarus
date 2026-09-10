@@ -65,6 +65,7 @@ export async function POST(req: NextRequest) {
         content: sanitizeText(data.content),
         parentId,
         consentGiven: true,
+        emailConsentGiven: data.emailConsentGiven ?? false,
         status: "PENDING"
       }
     });

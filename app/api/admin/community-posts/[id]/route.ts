@@ -29,12 +29,21 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
     }
 
     const data = parsed.data;
+
+    if (data.emailApproved === true && !existing.emailConsentGiven) {
+      return NextResponse.json(
+        { error: "Cititorul nu a acceptat publicarea emailului." },
+        { status: 400 }
+      );
+    }
+
     const post = await prisma.communityPost.update({
       where: { id: params.id },
       data: {
         name: data.name ? sanitizeText(data.name) : undefined,
         content: data.content ? sanitizeText(data.content) : undefined,
         status: data.status,
+        emailApproved: data.emailApproved,
         createdAt: data.createdAt
       }
     });

@@ -8,13 +8,13 @@ function formatDate(value: Date | string) {
   return new Date(value).toLocaleDateString("ro-RO", {
     day: "numeric",
     month: "long",
-    year: "numeric"
+    year: "numeric",
   });
 }
 
 function PostBubble({
   post,
-  nested = false
+  nested = false,
 }: {
   post: CommunityPostPublic;
   nested?: boolean;
@@ -43,6 +43,16 @@ function PostBubble({
       <p className="mt-3 whitespace-pre-wrap font-sans text-[15px] leading-relaxed text-mist">
         {post.content}
       </p>
+      {post.email && (
+        <p className="mt-3 font-sans text-[12px] text-ash">
+          <a
+            href={`mailto:${post.email}`}
+            className="text-mist underline decoration-bone/25 underline-offset-4 hover:text-ember"
+          >
+            {post.email}
+          </a>
+        </p>
+      )}
     </article>
   );
 }
@@ -84,7 +94,7 @@ function ThreadCard({ thread }: { thread: CommunityPostPublic }) {
 }
 
 export default function CommunityThreadList({
-  threads
+  threads,
 }: {
   threads: CommunityPostPublic[];
 }) {

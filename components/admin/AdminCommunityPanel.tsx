@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import EmojiInsertButton, {
-  insertAtTextareaCursor
+  insertAtTextareaCursor,
 } from "@/components/EmojiInsertButton";
 import { fetchAdminJson } from "@/lib/admin-fetch";
 
@@ -13,6 +13,8 @@ interface CommunityPost {
   parentId: string | null;
   name: string;
   email: string | null;
+  emailConsentGiven: boolean;
+  emailApproved: boolean;
   content: string;
   status: PostStatus;
   isAuthorReply: boolean;
@@ -29,7 +31,7 @@ const statuses: (PostStatus | "ALL")[] = [
   "PENDING",
   "APPROVED",
   "HIDDEN",
-  "REJECTED"
+  "REJECTED",
 ];
 
 function toDatetimeLocalInput(iso: string) {
@@ -69,7 +71,7 @@ export default function AdminCommunityPanel() {
     setError(null);
     const query = status === "ALL" ? "" : `?status=${status}`;
     const { data, error: fetchError } = await fetchAdminJson<CommunityPost[]>(
-      `/api/admin/community-posts${query}`
+      `/api/admin/community-posts${query}`,
     );
 
     setPosts(Array.isArray(data) ? data : []);
@@ -85,8 +87,24 @@ export default function AdminCommunityPanel() {
     await fetch(`/api/admin/community-posts/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: next })
+      body: JSON.stringify({ status: next }),
     });
+    await load();
+  }
+
+  async function updateEmailApproved(id: string, emailApproved: boolean) {
+    const res = await fetch(`/api/admin/community-posts/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ emailApproved }),
+    });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => null);
+      alert(data?.error ?? "Nu am putut actualiza emailul.");
+      return;
+    }
+
     await load();
   }
 
@@ -124,7 +142,7 @@ export default function AdminCommunityPanel() {
     const res = await fetch(`/api/admin/community-posts/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: trimmed })
+      body: JSON.stringify({ name: trimmed }),
     });
 
     if (!res.ok) {
@@ -147,7 +165,7 @@ export default function AdminCommunityPanel() {
     const res = await fetch(`/api/admin/community-posts/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: trimmed })
+      body: JSON.stringify({ content: trimmed }),
     });
 
     if (!res.ok) {
@@ -172,7 +190,7 @@ export default function AdminCommunityPanel() {
     const res = await fetch(`/api/admin/community-posts/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ createdAt: parsed.toISOString() })
+      body: JSON.stringify({ createdAt: parsed.toISOString() }),
     });
 
     if (!res.ok) {
@@ -192,7 +210,7 @@ export default function AdminCommunityPanel() {
     const res = await fetch(`/api/admin/community-posts/${postId}/reply`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content })
+      body: JSON.stringify({ content }),
     });
 
     if (!res.ok) {
@@ -215,7 +233,9 @@ export default function AdminCommunityPanel() {
             type="button"
             onClick={() => setStatus(item)}
             className={`px-3 py-1.5 font-sans text-[12px] ${
-              status === item ? "bg-bone/10 text-bone" : "text-ash hover:text-bone"
+              status === item
+                ? "bg-bone/10 text-bone"
+                : "text-ash hover:text-bone"
             }`}
           >
             {item === "ALL" ? "Toate" : item}
@@ -264,7 +284,9 @@ export default function AdminCommunityPanel() {
                         </button>
                       </div>
                     ) : (
-                      <p className="font-serif text-lg text-bone">{post.name}</p>
+                      <p className="font-serif text-lg text-bone">
+                        {post.name}
+                      </p>
                     )}
                     {post.isAuthorReply && (
                       <span className="rounded-full border border-ember/30 bg-ember/10 px-2 py-0.5 font-sans text-[10px] uppercase text-ember">
@@ -290,7 +312,19 @@ export default function AdminCommunityPanel() {
                   )}
 
                   {post.email && (
-                    <p className="mt-1 font-sans text-[12px] text-ash">{post.email}</p>
+                    <div className="mt-2 space-y-1">
+                      <p className="font-sans text-[12px] text-ash">
+                        Email (moderare):{" "}
+                        <span className="text-mist">{post.email}</span>
+                      </p>
+                      <p className="font-sans text-[11px] text-ash/80">
+                        {post.emailApproved
+                          ? "Email aprobat pentru afișare publică."
+                          : post.emailConsentGiven
+                            ? "Cititorul a acceptat publicarea emailului — așteaptă aprobarea ta."
+                            : "Email doar pentru moderare (cititorul nu l-a bifat pentru public)."}
+                      </p>
+                    </div>
                   )}
 
                   {contentEditId === post.id ? (
@@ -310,7 +344,7 @@ export default function AdminCommunityPanel() {
                             contentRef.current,
                             contentDraft,
                             emoji,
-                            setContentDraft
+                            setContentDraft,
                           )
                         }
                       />
@@ -406,7 +440,36 @@ export default function AdminCommunityPanel() {
                       onClick={() => updateStatus(post.id, "APPROVED")}
                       className="border border-bone/20 px-3 py-1 font-sans text-[11px] text-bone hover:border-ember"
                     >
-                      Aprobă
+                      Aprobă mesaj
+                    </button>
+                  )}
+                  {post.status === "APPROVED" && (
+                    <button
+                      type="button"
+                      onClick={() => updateStatus(post.id, "PENDING")}
+                      className="border border-bone/10 px-3 py-1 font-sans text-[11px] text-ash hover:text-bone"
+                    >
+                      Retrage mesaj
+                    </button>
+                  )}
+                  {post.email &&
+                    post.emailConsentGiven &&
+                    !post.emailApproved && (
+                      <button
+                        type="button"
+                        onClick={() => updateEmailApproved(post.id, true)}
+                        className="border border-bone/20 px-3 py-1 font-sans text-[11px] text-bone hover:border-ember"
+                      >
+                        Aprobă email
+                      </button>
+                    )}
+                  {post.email && post.emailApproved && (
+                    <button
+                      type="button"
+                      onClick={() => updateEmailApproved(post.id, false)}
+                      className="border border-bone/10 px-3 py-1 font-sans text-[11px] text-ash hover:text-bone"
+                    >
+                      Retrage email public
                     </button>
                   )}
                   {post.status !== "HIDDEN" && (
@@ -469,7 +532,7 @@ export default function AdminCommunityPanel() {
                           replyRef.current,
                           replyDraft,
                           emoji,
-                          setReplyDraft
+                          setReplyDraft,
                         )
                       }
                     />

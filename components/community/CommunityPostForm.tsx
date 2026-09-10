@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import EmojiInsertButton, {
-  insertAtTextareaCursor
+  insertAtTextareaCursor,
 } from "@/components/EmojiInsertButton";
 import { useToast } from "@/components/ToastProvider";
 
@@ -16,7 +16,7 @@ interface CommunityPostFormProps {
 export default function CommunityPostForm({
   parentId,
   compact = false,
-  onSuccess
+  onSuccess,
 }: CommunityPostFormProps) {
   const router = useRouter();
   const { showToast } = useToast();
@@ -24,6 +24,7 @@ export default function CommunityPostForm({
   const [email, setEmail] = useState("");
   const [content, setContent] = useState("");
   const [consent, setConsent] = useState(false);
+  const [emailConsent, setEmailConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -43,8 +44,9 @@ export default function CommunityPostForm({
           email,
           content,
           parentId: parentId ?? "",
-          consentGiven: consent
-        })
+          consentGiven: consent,
+          emailConsentGiven: emailConsent,
+        }),
       });
 
       const data = await res.json();
@@ -88,8 +90,9 @@ export default function CommunityPostForm({
             Scrie aici
           </p>
           <p className="mt-2 font-sans text-sm text-ash">
-            Numele tău va apărea public. Emailul rămâne privat — îl folosesc doar
-            pentru moderare.
+            Numele tău va apărea public dacă mesajul e aprobat. Emailul e privat
+            implicit — poți bifa opțional dacă vrei să apară și el, după ce îl
+            aprob eu.
           </p>
         </div>
       )}
@@ -137,7 +140,12 @@ export default function CommunityPostForm({
           <EmojiInsertButton
             className="absolute bottom-3 right-3"
             onInsert={(emoji) =>
-              insertAtTextareaCursor(contentRef.current, content, emoji, setContent)
+              insertAtTextareaCursor(
+                contentRef.current,
+                content,
+                emoji,
+                setContent,
+              )
             }
           />
         </div>
@@ -152,8 +160,21 @@ export default function CommunityPostForm({
           className="mt-0.5 size-4 rounded accent-ember"
         />
         <span>
-          Accept ca mesajul meu să fie moderat și, dacă este aprobat, publicat în
-          comunitate.
+          Accept ca mesajul meu să fie moderat și, dacă este aprobat, publicat
+          în comunitate.
+        </span>
+      </label>
+
+      <label className="flex items-start gap-3 font-sans text-sm text-ash">
+        <input
+          type="checkbox"
+          checked={emailConsent}
+          onChange={(e) => setEmailConsent(e.target.checked)}
+          className="mt-0.5 size-4 rounded accent-ember"
+        />
+        <span>
+          Accept ca adresa mea de email să fie afișată public, dacă o aprob
+          separat (opțional).
         </span>
       </label>
 
@@ -164,7 +185,11 @@ export default function CommunityPostForm({
         disabled={loading}
         className="btn-primary disabled:opacity-50"
       >
-        {loading ? "Se trimite..." : parentId ? "Trimite răspunsul" : "Trimite mesajul"}
+        {loading
+          ? "Se trimite..."
+          : parentId
+            ? "Trimite răspunsul"
+            : "Trimite mesajul"}
       </button>
     </form>
   );
