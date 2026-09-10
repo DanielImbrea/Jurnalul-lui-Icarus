@@ -5,7 +5,7 @@
   "description": "Website oficial — Daniel Imbrea. Sub Umbrele lui Blake & Îmbrățișarea Durerii și Avantajele ei.",
   "scripts": {
     "dev": "next dev -p 3020",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start -p 3020",
     "lint": "next lint",
     "db:generate": "prisma generate",
