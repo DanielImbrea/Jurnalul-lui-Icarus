@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import StarRating from "./StarRating";
 import { useToast } from "@/components/ToastProvider";
+import { products } from "@/lib/products";
 import type { BookId } from "@/lib/validation";
 
 interface ReviewFormProps {
@@ -199,16 +200,28 @@ export default function ReviewForm({
         </label>
       </div>
 
-      {!defaultBookId && (
+      {defaultBookId ? (
+        <div className="rounded-xl border border-bone/10 bg-black/15 px-4 py-4">
+          <p className="font-sans text-[12px] uppercase tracking-[0.08em] text-ash">
+            Cartea
+          </p>
+          <p className="mt-2 font-serif text-lg text-bone">
+            {products[defaultBookId].title}
+          </p>
+        </div>
+      ) : (
         <label className="block">
-          <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-ash">Cartea</span>
+          <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-ash">
+            Cartea
+          </span>
           <select
+            required
             value={bookId}
             onChange={(e) => setBookId(e.target.value as BookId)}
             className="select-field"
           >
-            <option value="blake">Sub Umbrele lui Blake</option>
-            <option value="durere">Îmbrățișarea Durerii și Avantajele ei</option>
+            <option value="blake">{products.blake.title}</option>
+            <option value="durere">{products.durere.title}</option>
           </select>
         </label>
       )}

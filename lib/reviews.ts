@@ -1,5 +1,42 @@
+import type { ReviewDisplay } from "@/components/reviews/ReviewCard";
 import { prisma, withDbFallback } from "@/lib/db";
+import { products } from "@/lib/products";
 import type { BookId } from "@/lib/validation";
+
+export type ReviewRecord = {
+  id: string;
+  bookId: string;
+  name: string;
+  rating: number;
+  content: string;
+  imageUrl?: string | null;
+  verifiedPurchase?: boolean;
+  featured?: boolean;
+};
+
+function bookTitleForReview(bookId: string) {
+  if (bookId === "blake" || bookId === "durere") {
+    return products[bookId].title;
+  }
+  return undefined;
+}
+
+export function toReviewDisplay(review: ReviewRecord): ReviewDisplay {
+  return {
+    id: review.id,
+    name: review.name,
+    rating: review.rating,
+    content: review.content,
+    imageUrl: review.imageUrl,
+    verifiedPurchase: review.verifiedPurchase,
+    featured: review.featured,
+    bookTitle: bookTitleForReview(review.bookId)
+  };
+}
+
+export function toReviewDisplays(reviews: ReviewRecord[]): ReviewDisplay[] {
+  return reviews.map(toReviewDisplay);
+}
 
 export type ReviewStatus =
   | "PENDING"
@@ -23,6 +60,7 @@ export async function getApprovedReviewsForBook(
         take: limit,
         select: {
           id: true,
+          bookId: true,
           name: true,
           rating: true,
           content: true,

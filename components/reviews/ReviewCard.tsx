@@ -10,6 +10,7 @@ export interface ReviewDisplay {
   imageUrl?: string | null;
   verifiedPurchase?: boolean;
   featured?: boolean;
+  bookTitle?: string;
 }
 
 interface ReviewCardProps {
@@ -54,19 +55,31 @@ export default function ReviewCard({
         „{review.content}”
       </blockquote>
 
-      <footer
-        className={`flex flex-wrap items-center ${
-          isGrid ? "mt-4 gap-x-3 gap-y-1" : "mt-8 gap-x-4 gap-y-2"
-        }`}
-      >
-        <cite
-          className={`not-italic text-mist ${
-            isGrid ? "font-sans text-xs" : "font-sans text-sm"
+      <footer className={isGrid ? "mt-4 space-y-1" : "mt-8 space-y-1.5"}>
+        <div
+          className={`flex flex-wrap items-center ${
+            isGrid ? "gap-x-3 gap-y-1" : "gap-x-4 gap-y-2"
           }`}
         >
-          — {review.name}
-        </cite>
-        {review.verifiedPurchase && <VerifiedBadge />}
+          <cite
+            className={`not-italic text-mist ${
+              isGrid ? "font-sans text-xs" : "font-sans text-sm"
+            }`}
+          >
+            — {review.name}
+          </cite>
+          {review.verifiedPurchase && <VerifiedBadge />}
+        </div>
+        {review.bookTitle && (
+          <p
+            className={`font-sans text-ash ${
+              isGrid ? "text-[11px] leading-snug" : "text-xs"
+            }`}
+          >
+            Recenzie la{" "}
+            <span className="text-mist">{review.bookTitle}</span>
+          </p>
+        )}
       </footer>
 
       {review.imageUrl && (

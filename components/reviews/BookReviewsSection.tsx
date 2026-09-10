@@ -3,7 +3,8 @@ import ReviewsGrid from "./ReviewsGrid";
 import StarRating from "./StarRating";
 import {
   getApprovedReviewsForBook,
-  getBookReviewStats
+  getBookReviewStats,
+  toReviewDisplays
 } from "@/lib/reviews";
 import type { BookId } from "@/lib/validation";
 
@@ -51,7 +52,7 @@ export default async function BookReviewsSection({
 
         <div className="mt-12">
           <ReviewsGrid
-            reviews={reviews}
+            reviews={toReviewDisplays(reviews)}
             className="lg:grid-cols-4 xl:grid-cols-5"
           />
         </div>

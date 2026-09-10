@@ -1,4 +1,8 @@
-import { getHomepageReviews, getCommunityStats } from "@/lib/reviews";
+import {
+  getCommunityStats,
+  getHomepageReviews,
+  toReviewDisplays
+} from "@/lib/reviews";
 import { getApprovedGalleryPhotos } from "@/lib/gallery";
 import ReviewsGrid from "./ReviewsGrid";
 import ReaderMomentsVisual from "./ReaderMomentsVisual";
@@ -77,7 +81,7 @@ export default async function FeaturedReviewsSection() {
 
         {reviews.length > 0 ? (
           <div className="mt-16">
-            <ReviewsGrid reviews={reviews} />
+            <ReviewsGrid reviews={toReviewDisplays(reviews)} />
             {hasMoreReviews && (
               <div className="mt-10 text-center">
                 <Link href="/recenzii" className="btn-secondary">

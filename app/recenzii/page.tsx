@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import ReviewsGrid from "@/components/reviews/ReviewsGrid";
-import { getAllApprovedReviews } from "@/lib/reviews";
+import { getAllApprovedReviews, toReviewDisplays } from "@/lib/reviews";
 import { products } from "@/lib/products";
 import type { BookId } from "@/lib/validation";
 
@@ -23,7 +23,7 @@ function resolveBookId(carte?: string): BookId | undefined {
 
 export default async function RecenziiPage({ searchParams }: PageProps) {
   const bookId = resolveBookId(searchParams.carte);
-  const reviews = await getAllApprovedReviews(bookId);
+  const reviews = toReviewDisplays(await getAllApprovedReviews(bookId));
   const bookTitle = bookId ? products[bookId].title : null;
 
   return (
