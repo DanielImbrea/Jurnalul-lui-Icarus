@@ -52,7 +52,7 @@ export default async function ComunitatePage() {
             <p className="mt-3 font-serif text-2xl text-bone">{TIKTOK_HANDLE}</p>
             <p className="mt-4 font-sans text-sm leading-relaxed text-ash">
               Conversații zilnice, fragmente, reacții și comunitatea care a crescut
-              în jurul cărților — toate își găsesc locul acolo.
+              în jurul cărților.
             </p>
             <a
               href={TIKTOK_URL}
