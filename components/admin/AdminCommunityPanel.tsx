@@ -5,6 +5,7 @@ import EmojiInsertButton, {
   insertAtTextareaCursor,
 } from "@/components/EmojiInsertButton";
 import { fetchAdminJson } from "@/lib/admin-fetch";
+import { isAuthorCommunityPost } from "@/lib/community-posts";
 
 type PostStatus = "PENDING" | "APPROVED" | "HIDDEN" | "REJECTED";
 
@@ -288,7 +289,7 @@ export default function AdminCommunityPanel() {
                         {post.name}
                       </p>
                     )}
-                    {post.isAuthorReply && (
+                    {isAuthorCommunityPost(post) && (
                       <span className="rounded-full border border-ember/30 bg-ember/10 px-2 py-0.5 font-sans text-[10px] uppercase text-ember">
                         Autor
                       </span>

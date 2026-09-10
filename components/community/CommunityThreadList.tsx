@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import type { CommunityPostPublic } from "@/lib/community-posts";
+import {
+  isAuthorCommunityPost,
+  type CommunityPostPublic,
+} from "@/lib/community-posts";
 import CommunityPostForm from "./CommunityPostForm";
 
 function formatDate(value: Date | string) {
@@ -19,10 +22,12 @@ function PostBubble({
   post: CommunityPostPublic;
   nested?: boolean;
 }) {
+  const fromAuthor = isAuthorCommunityPost(post);
+
   return (
     <article
       className={`rounded-xl border p-5 ${
-        post.isAuthorReply
+        fromAuthor
           ? "border-ember/25 bg-ember/5"
           : nested
             ? "border-bone/10 bg-charcoal/20"
@@ -31,7 +36,7 @@ function PostBubble({
     >
       <div className="flex flex-wrap items-center gap-2">
         <p className="font-serif text-lg text-bone">{post.name}</p>
-        {post.isAuthorReply && (
+        {fromAuthor && (
           <span className="rounded-full border border-ember/30 bg-ember/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-wide text-ember">
             Autor
           </span>

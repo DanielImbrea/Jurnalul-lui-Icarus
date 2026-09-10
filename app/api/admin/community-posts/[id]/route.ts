@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { AUTHOR_NAME } from "@/lib/products";
 import { adminCommunityPostUpdateSchema, sanitizeText } from "@/lib/validation";
 
 export const runtime = "nodejs";
@@ -29,6 +30,10 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
     }
 
     const data = parsed.data;
+    const nextName = data.name ? sanitizeText(data.name) : undefined;
+    const markAsAuthor =
+      nextName !== undefined &&
+      nextName.toLowerCase() === AUTHOR_NAME.toLowerCase();
 
     if (data.emailApproved === true && !existing.emailConsentGiven) {
       return NextResponse.json(
@@ -40,10 +45,11 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
     const post = await prisma.communityPost.update({
       where: { id: params.id },
       data: {
-        name: data.name ? sanitizeText(data.name) : undefined,
+        name: nextName,
         content: data.content ? sanitizeText(data.content) : undefined,
         status: data.status,
         emailApproved: data.emailApproved,
+        isAuthorReply: markAsAuthor ? true : undefined,
         createdAt: data.createdAt
       }
     });

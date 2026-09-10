@@ -1,4 +1,13 @@
 import { prisma, withDbFallback } from "@/lib/db";
+import { AUTHOR_NAME } from "@/lib/products";
+
+export function isAuthorCommunityPost(post: {
+  name: string;
+  isAuthorReply: boolean;
+}) {
+  if (post.isAuthorReply) return true;
+  return post.name.trim().toLowerCase() === AUTHOR_NAME.toLowerCase();
+}
 
 export type CommunityPostStatus =
   | "PENDING"
