@@ -38,8 +38,7 @@ export default async function GaleriaCititorilorPage() {
             <p className="mt-4 font-sans text-sm leading-relaxed text-ash">
               Comunitatea trăiește și pe TikTok, și aici pe site. Dacă vrei să
               lași cuvinte, nu doar imagini — gânduri ascunse, stări, întrebări
-              — poți face asta în spațiul Comunitate. Poți răspunde și tu, iar
-              eu pot răspunde la mesajele care au nevoie de o voce.
+              — poți face asta în spațiul Comunitate. Poți răspunde și tu.
             </p>
             <Link href="/comunitate" className="btn-secondary mt-6 inline-flex">
               Mergi la Comunitate

@@ -90,6 +90,21 @@ export default function AdminOrdersPanel() {
     await load();
   }
 
+  async function removeOrder(id: string) {
+    if (!confirm("Ștergi definitiv această comandă? Acțiunea nu poate fi anulată.")) {
+      return;
+    }
+
+    const res = await fetch(`/api/admin/orders/${id}`, { method: "DELETE" });
+    if (!res.ok) {
+      const data = await res.json().catch(() => null);
+      setError(data?.error ?? "Nu am putut șterge comanda.");
+      return;
+    }
+
+    await load();
+  }
+
   return (
     <div>
       <div className="flex flex-wrap gap-2">
@@ -239,6 +254,14 @@ export default function AdminOrdersPanel() {
                         Revino la de expediat
                       </button>
                     )}
+
+                    <button
+                      type="button"
+                      onClick={() => removeOrder(order.id)}
+                      className="border border-wine/30 px-3 py-1 font-sans text-[11px] text-wine-light hover:border-wine hover:text-bone"
+                    >
+                      Șterge
+                    </button>
                   </div>
                 </div>
               </article>
