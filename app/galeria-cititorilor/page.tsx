@@ -29,7 +29,7 @@ export default async function GaleriaCititorilorPage() {
         <div className="container-editorial">
           {photos.length === 0 ? (
             <p className="mb-8 max-w-lg font-sans text-[15px] leading-relaxed text-ash">
-              Galeria se va umple treptat, cu fotografii reale de la cititori.
+              Galeria se va umple treptat, cu fotografii de la cititori.
             </p>
           ) : (
             <p className="mb-8 font-sans text-[12px] uppercase tracking-[0.16em] text-ember">
