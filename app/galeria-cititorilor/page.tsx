@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import ReaderGalleryGrid from "@/components/gallery/ReaderGalleryGrid";
 import GalleryUploadForm from "@/components/gallery/GalleryUploadForm";
@@ -26,34 +25,6 @@ export default async function GaleriaCititorilorPage() {
         scrollTo={{ href: "#trimite", label: "Poți lăsa o fotografie aici" }}
       />
 
-      <section className="relative border-b border-bone/10 py-14">
-        <div className="container-editorial grid gap-8 md:grid-cols-2">
-          <div>
-            <p className="font-sans text-[12px] uppercase tracking-[0.16em] text-ember">
-              Comunitate
-            </p>
-            <h2 className="mt-3 font-serif text-2xl text-bone">
-              Mai mult decât fotografii
-            </h2>
-            <p className="mt-4 font-sans text-sm leading-relaxed text-ash">
-              Comunitatea trăiește și pe TikTok, și aici pe site. Dacă vrei să
-              lași cuvinte, nu doar imagini — gânduri ascunse, stări, întrebări
-              — poți face asta în spațiul Comunitate. Poți răspunde și tu.
-            </p>
-            <Link href="/comunitate" className="btn-secondary mt-6 inline-flex">
-              Mergi la Comunitate
-            </Link>
-          </div>
-          <div className="rounded-xl border border-bone/10 bg-charcoal/30 p-6">
-            <p className="font-sans text-sm leading-relaxed text-mist">
-              Galeria este pentru imagini — locul în care cartea ta prinde formă
-              vizuală. Comunitatea este pentru cuvinte — locul în care te poți
-              descărca de ce ai purtat prea mult timp singur.
-            </p>
-          </div>
-        </div>
-      </section>
-
       <section className="relative py-14 md:py-16">
         <div className="container-editorial">
           {photos.length === 0 ? (
@@ -76,14 +47,19 @@ export default async function GaleriaCititorilorPage() {
             Povestea prin ochii tăi
           </h2>
           <p className="mt-4 max-w-lg font-sans text-sm leading-relaxed text-ash">
-            Fie că o citești acum, fie că așteaptă pe noptieră, fie că și-a găsit
-            deja locul ei — trimite-mi o fotografie a exemplarului tău și, în câteva
-            cuvinte, spune-mi cum ai simțit-o și dacă ți-a trezit vreo întrebare,
-            dorință sau stare pe care ai simțit nevoia să o explorezi.
+            Fiecare cititor trăiește o carte în felul său. Uneori rămâne un
+            personaj, alteori o idee, o emoție sau un pasaj la care te întorci
+            fără să-ți dai seama de ce.
           </p>
           <p className="mt-4 max-w-lg font-sans text-sm leading-relaxed text-ash">
-            Voi vedea fiecare fotografie înainte ca ea să ajungă aici, iar dacă îmi
-            dai acordul, poate va deveni parte din „Cititorii lui Icarus”.
+            Dacă ai citit una dintre cărțile mele, mi-ar plăcea să aflu ce a rămas
+            cu tine după ultima pagină.
+          </p>
+          <p className="mt-4 max-w-lg font-sans text-sm leading-relaxed text-ash">
+            Poți trimite o fotografie cu exemplarul tău și, dacă dorești, câteva
+            rânduri despre experiența ta de lectură. Cu acordul tău, fotografia și
+            mesajul tău pot deveni parte din „Cititorii lui Icarus”, o colecție de
+            imagini trimise de cei care au ales să le citească.
           </p>
           <div className="mt-10">
             <GalleryUploadForm />
