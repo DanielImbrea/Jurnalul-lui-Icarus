@@ -50,6 +50,7 @@ function HeroScrollLink({ href, label }: { href: string; label: string }) {
 export default function PageHero({
   eyebrow,
   title,
+  subtitle,
   description,
   atmosphere = "neutral",
   compact = false,
@@ -57,6 +58,7 @@ export default function PageHero({
 }: {
   eyebrow: string;
   title: ReactNode;
+  subtitle?: ReactNode;
   description?: ReactNode;
   atmosphere?: "blake" | "durere" | "neutral";
   compact?: boolean;
@@ -89,8 +91,17 @@ export default function PageHero({
             >
               {title}
             </h1>
+            {subtitle ? (
+              <p className="mt-4 max-w-2xl font-serif text-xl leading-snug text-mist sm:text-2xl">
+                {subtitle}
+              </p>
+            ) : null}
             {description ? (
-              <div className="mt-5 max-w-2xl space-y-4 font-sans text-[15px] leading-relaxed text-mist">
+              <div
+                className={`max-w-2xl space-y-4 font-sans text-[15px] leading-relaxed text-mist ${
+                  subtitle ? "mt-6" : "mt-5"
+                }`}
+              >
                 {description}
               </div>
             ) : null}

@@ -8,6 +8,7 @@ import { useCart } from "@/components/cart/CartProvider";
 
 const links = [
   { href: "/carti", label: "Cărțile" },
+  { href: "/blog", label: "Blog" },
   { href: "/comunitate", label: "Comunitate" },
   { href: "/galeria-cititorilor", label: "Galeria cititorilor" },
   { href: "/lasa-o-recenzie", label: "Lasă o recenzie" },

@@ -1,7 +1,10 @@
 import type { MetadataRoute } from "next";
+import { getAllBlogSlugs } from "@/lib/blog";
 import { SITE_URL } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const blogSlugs = getAllBlogSlugs();
+
   const routes = [
     "",
     "/carti",
@@ -12,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/galeria-cititorilor",
     "/recenzii",
     "/cititorii-lui-icarus",
+    "/blog",
     "/din-universul-lui-icarus",
     "/jurnalul-lui-icarus",
     "/lasa-o-recenzie",
@@ -24,10 +28,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/livrare-si-comenzi"
   ];
 
-  return routes.map((route) => ({
+  const staticEntries: MetadataRoute.Sitemap = routes.map((route) => ({
     url: `${SITE_URL}${route}`,
     lastModified: new Date(),
-    changeFrequency: route === "" ? "weekly" : "monthly",
-    priority: route === "" ? 1 : 0.7
+    changeFrequency: route === "" || route === "/blog" ? "weekly" : "monthly",
+    priority: route === "" ? 1 : route === "/blog" ? 0.85 : 0.7
   }));
+
+  const blogEntries: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
+    url: `${SITE_URL}/blog/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.75
+  }));
+
+  return [...staticEntries, ...blogEntries];
 }

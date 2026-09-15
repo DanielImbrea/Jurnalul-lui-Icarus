@@ -50,6 +50,11 @@ export default function Footer() {
           </p>
           <ul className="mt-4 space-y-3 font-sans text-sm text-ash">
             <li>
+              <Link href="/blog" className="hover:text-bone">
+                Blog
+              </Link>
+            </li>
+            <li>
               <Link href="/comunitate" className="hover:text-bone">
                 Comunitate
               </Link>
