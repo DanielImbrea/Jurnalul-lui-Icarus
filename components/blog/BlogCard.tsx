@@ -19,6 +19,7 @@ export default function BlogCard({
         <BlogMetaBadge
           publishedAt={post.publishedAt}
           readingMinutes={post.readingMinutes}
+          variant="readingOnly"
         />
 
         <h2 className="mt-4 line-clamp-3 font-serif text-xl leading-snug text-bone transition-colors group-hover:text-ember sm:text-[1.35rem]">

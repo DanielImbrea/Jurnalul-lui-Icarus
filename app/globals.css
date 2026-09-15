@@ -608,6 +608,10 @@ body {
   @apply inline-flex max-w-full shrink-0 flex-nowrap items-center gap-3 rounded-full border border-ember/50 bg-gradient-to-br from-ember/[0.14] via-charcoal/90 to-charcoal/70 px-4 py-1.5 font-sans text-[11px] tracking-[0.04em] text-ember shadow-[inset_0_1px_0_rgba(232,200,130,0.2),0_0_28px_rgba(205,181,110,0.08)] backdrop-blur-sm sm:text-[12px];
 }
 
+.blog-meta-badge-compact {
+  @apply w-fit self-start gap-0 px-3 py-1.5 text-[10px] tracking-[0.06em] sm:text-[11px];
+}
+
 .blog-meta-badge time {
   @apply whitespace-nowrap font-medium;
 }
