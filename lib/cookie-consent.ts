@@ -39,4 +39,10 @@ export function hasAnalyticsConsent(): boolean {
   return readCookieConsent()?.analytics === true;
 }
 
+export function resetCookieConsent(): void {
+  if (typeof window === "undefined") return;
+  window.localStorage.removeItem(CONSENT_KEY);
+  window.dispatchEvent(new CustomEvent(CONSENT_EVENT));
+}
+
 export { CONSENT_EVENT };

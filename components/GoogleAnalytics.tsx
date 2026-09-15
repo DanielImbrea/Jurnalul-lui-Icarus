@@ -1,10 +1,24 @@
 "use client";
 
 import Script from "next/script";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 import { CONSENT_EVENT, hasAnalyticsConsent } from "@/lib/cookie-consent";
+import { GA_MEASUREMENT_ID, trackPageView } from "@/lib/gtag";
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+function GoogleAnalyticsTracker() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (!hasAnalyticsConsent()) return;
+    const query = searchParams.toString();
+    const path = query ? `${pathname}?${query}` : pathname;
+    trackPageView(path);
+  }, [pathname, searchParams]);
+
+  return null;
+}
 
 export default function GoogleAnalytics() {
   const [enabled, setEnabled] = useState(false);
@@ -20,12 +34,12 @@ export default function GoogleAnalytics() {
     return () => window.removeEventListener(CONSENT_EVENT, onConsent);
   }, []);
 
-  if (!GA_ID || !enabled) return null;
+  if (!GA_MEASUREMENT_ID || !enabled) return null;
 
   return (
     <>
       <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         strategy="afterInteractive"
       />
       <Script id="google-analytics" strategy="afterInteractive">
@@ -33,9 +47,16 @@ export default function GoogleAnalytics() {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${GA_ID}', { anonymize_ip: true });
+          gtag('config', '${GA_MEASUREMENT_ID}', {
+            anonymize_ip: true,
+            allow_google_signals: false,
+            allow_ad_personalization_signals: false
+          });
         `}
       </Script>
+      <Suspense fallback={null}>
+        <GoogleAnalyticsTracker />
+      </Suspense>
     </>
   );
 }

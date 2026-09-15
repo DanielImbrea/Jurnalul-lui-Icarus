@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CookiePreferencesButton from "./CookiePreferencesButton";
 import Logo from "./Logo";
 import { BRAND_NAME, CONTACT_EMAIL, TIKTOK_HANDLE, TIKTOK_URL } from "@/lib/brand";
 
@@ -106,6 +107,9 @@ export default function Footer() {
             <Link href="/politica-de-cookies" className="hover:text-bone">
               Cookies
             </Link>
+          </li>
+          <li>
+            <CookiePreferencesButton />
           </li>
           <li>
             <Link href="/livrare-si-comenzi" className="hover:text-bone">

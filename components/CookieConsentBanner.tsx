@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
+  CONSENT_EVENT,
   readCookieConsent,
   writeCookieConsent,
   type CookieConsent
@@ -14,7 +15,13 @@ export default function CookieConsentBanner() {
   );
 
   useEffect(() => {
-    setConsent(readCookieConsent());
+    function syncConsent() {
+      setConsent(readCookieConsent());
+    }
+
+    syncConsent();
+    window.addEventListener(CONSENT_EVENT, syncConsent);
+    return () => window.removeEventListener(CONSENT_EVENT, syncConsent);
   }, []);
 
   if (consent !== null) return null;

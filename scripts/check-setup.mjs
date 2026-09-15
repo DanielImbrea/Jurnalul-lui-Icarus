@@ -153,4 +153,15 @@ if (!fromEmail) {
   );
 }
 
+const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
+if (!gaId) {
+  console.log(
+    "⚠️  Analytics: NEXT_PUBLIC_GA_MEASUREMENT_ID lipsește — Google Analytics nu rulează (banner GDPR ok, fără măsurători)"
+  );
+} else if (!/^G-[A-Z0-9]+$/i.test(gaId)) {
+  console.log(`⚠️  Analytics: ID invalid (așteptat G-XXXXXXXX): ${gaId}`);
+} else {
+  console.log(`✅ Analytics: Google Analytics ${gaId}`);
+}
+
 console.log("");
