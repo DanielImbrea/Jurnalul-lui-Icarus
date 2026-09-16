@@ -71,17 +71,22 @@ function countByStatus(photos: GalleryPhoto[]): StatusCounts {
   );
 }
 
-export default function AdminGalleryPanel() {
+export default function AdminGalleryPanel({
+  initialPhotos,
+  initialAllPhotos
+}: {
+  initialPhotos?: GalleryPhoto[];
+  initialAllPhotos?: GalleryPhoto[];
+}) {
   const [status, setStatus] = useState<GalleryStatus | "ALL">("PENDING");
   const [selectedReader, setSelectedReader] = useState<string | null>(null);
-  const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
-  const [statusCounts, setStatusCounts] = useState<StatusCounts>({
-    PENDING: 0,
-    APPROVED: 0,
-    HIDDEN: 0,
-    REJECTED: 0
-  });
-  const [loading, setLoading] = useState(true);
+  const [photos, setPhotos] = useState<GalleryPhoto[]>(initialPhotos ?? []);
+  const [statusCounts, setStatusCounts] = useState<StatusCounts>(() =>
+    initialAllPhotos
+      ? countByStatus(initialAllPhotos)
+      : { PENDING: 0, APPROVED: 0, HIDDEN: 0, REJECTED: 0 }
+  );
+  const [loading, setLoading] = useState(initialPhotos === undefined);
   const [error, setError] = useState<string | null>(null);
 
   async function load() {
@@ -106,8 +111,9 @@ export default function AdminGalleryPanel() {
   }
 
   useEffect(() => {
+    if (initialPhotos !== undefined && status === "PENDING") return;
     load();
-  }, [status]);
+  }, [status, initialPhotos]);
 
   useEffect(() => {
     setSelectedReader(null);

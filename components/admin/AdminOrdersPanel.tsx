@@ -49,10 +49,14 @@ function stripeSessionUrl(sessionId: string) {
   return `https://dashboard.stripe.com/checkout/sessions/${sessionId}`;
 }
 
-export default function AdminOrdersPanel() {
+export default function AdminOrdersPanel({
+  initialOrders
+}: {
+  initialOrders?: Order[];
+}) {
   const [filter, setFilter] = useState<Filter>("ALL");
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [orders, setOrders] = useState<Order[]>(initialOrders ?? []);
+  const [loading, setLoading] = useState(initialOrders === undefined);
   const [error, setError] = useState<string | null>(null);
 
   async function load() {
@@ -78,8 +82,9 @@ export default function AdminOrdersPanel() {
   }
 
   useEffect(() => {
+    if (initialOrders !== undefined && filter === "ALL") return;
     load();
-  }, [filter]);
+  }, [filter, initialOrders]);
 
   async function updateStatus(id: string, status: OrderStatus) {
     await fetch(`/api/admin/orders/${id}`, {

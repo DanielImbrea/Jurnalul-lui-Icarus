@@ -1,38 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import { fetchAdminJson } from "@/lib/admin-fetch";
+import type { AdminStats } from "@/lib/admin/stats";
 
-interface Stats {
-  totalReviews: number;
-  pendingReviews: number;
-  featuredReviews: number;
-  averageRating: number | null;
-  totalPhotos: number;
-  pendingPhotos: number;
-  pendingOrders: number;
-  newsletterSubscribers: number;
-}
-
-export default function AdminDashboard() {
-  const [stats, setStats] = useState<Stats | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchAdminJson<Stats>("/api/admin/stats").then(({ data, error: fetchError }) => {
-      setStats(data);
-      setError(fetchError);
-    });
-  }, []);
-
-  if (error) {
-    return <p className="font-sans text-sm text-wine-light">{error}</p>;
-  }
-
-  if (!stats) {
-    return <p className="font-sans text-sm text-ash">Se încarcă...</p>;
-  }
+export default function AdminDashboard({
+  initialStats
+}: {
+  initialStats: AdminStats;
+}) {
+  const stats = initialStats;
 
   const cards = [
     { label: "Comenzi de expediat", value: stats.pendingOrders, href: "/admin/orders" },

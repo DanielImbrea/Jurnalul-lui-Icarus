@@ -30,10 +30,14 @@ const statuses: (ReviewStatus | "ALL")[] = [
   "REJECTED"
 ];
 
-export default function AdminReviewsPanel() {
+export default function AdminReviewsPanel({
+  initialReviews
+}: {
+  initialReviews?: Review[];
+}) {
   const [status, setStatus] = useState<ReviewStatus | "ALL">("PENDING");
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState<Review[]>(initialReviews ?? []);
+  const [loading, setLoading] = useState(initialReviews === undefined);
   const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<Review | null>(null);
 
@@ -51,8 +55,9 @@ export default function AdminReviewsPanel() {
   }
 
   useEffect(() => {
+    if (initialReviews !== undefined && status === "PENDING") return;
     load();
-  }, [status]);
+  }, [status, initialReviews]);
 
   async function updateReview(id: string, data: Partial<Review>) {
     await fetch(`/api/admin/reviews/${id}`, {

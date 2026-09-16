@@ -13,8 +13,12 @@ interface Quote {
   sortOrder: number;
 }
 
-export default function AdminQuotesPanel() {
-  const [quotes, setQuotes] = useState<Quote[]>([]);
+export default function AdminQuotesPanel({
+  initialQuotes
+}: {
+  initialQuotes?: Quote[];
+}) {
+  const [quotes, setQuotes] = useState<Quote[]>(initialQuotes ?? []);
   const [content, setContent] = useState("");
   const [bookId, setBookId] = useState<string>("");
   const [source, setSource] = useState("");
@@ -25,8 +29,9 @@ export default function AdminQuotesPanel() {
   }
 
   useEffect(() => {
+    if (initialQuotes !== undefined) return;
     load();
-  }, []);
+  }, [initialQuotes]);
 
   async function createQuote(e: React.FormEvent) {
     e.preventDefault();

@@ -42,10 +42,14 @@ function toDatetimeLocalInput(iso: string) {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
 
-export default function AdminCommunityPanel() {
+export default function AdminCommunityPanel({
+  initialPosts
+}: {
+  initialPosts?: CommunityPost[];
+}) {
   const [status, setStatus] = useState<PostStatus | "ALL">("PENDING");
-  const [posts, setPosts] = useState<CommunityPost[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState<CommunityPost[]>(initialPosts ?? []);
+  const [loading, setLoading] = useState(initialPosts === undefined);
   const [error, setError] = useState<string | null>(null);
   const [replyTarget, setReplyTarget] = useState<string | null>(null);
   const [replyDraft, setReplyDraft] = useState("");
@@ -81,8 +85,9 @@ export default function AdminCommunityPanel() {
   }
 
   useEffect(() => {
+    if (initialPosts !== undefined && status === "PENDING") return;
     load();
-  }, [status]);
+  }, [status, initialPosts]);
 
   async function updateStatus(id: string, next: PostStatus) {
     await fetch(`/api/admin/community-posts/${id}`, {

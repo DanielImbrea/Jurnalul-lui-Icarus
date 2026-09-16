@@ -1,13 +1,12 @@
-import AdminNav from "@/components/admin/AdminNav";
 import AdminDashboard from "@/components/admin/AdminDashboard";
+import { getAdminStats } from "@/lib/admin/stats";
 
-export default function AdminPage() {
+export default async function AdminPage() {
+  const stats = await getAdminStats();
+
   return (
-    <>
-      <AdminNav />
-      <main className="container-editorial py-12">
-        <AdminDashboard />
-      </main>
-    </>
+    <main className="container-editorial py-12">
+      <AdminDashboard initialStats={stats} />
+    </main>
   );
 }

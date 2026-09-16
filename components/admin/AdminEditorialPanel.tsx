@@ -13,8 +13,12 @@ interface EditorialPost {
   publishedAt?: string | null;
 }
 
-export default function AdminEditorialPanel() {
-  const [posts, setPosts] = useState<EditorialPost[]>([]);
+export default function AdminEditorialPanel({
+  initialPosts
+}: {
+  initialPosts?: EditorialPost[];
+}) {
+  const [posts, setPosts] = useState<EditorialPost[]>(initialPosts ?? []);
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [excerpt, setExcerpt] = useState("");
@@ -26,8 +30,9 @@ export default function AdminEditorialPanel() {
   }
 
   useEffect(() => {
+    if (initialPosts !== undefined) return;
     load();
-  }, []);
+  }, [initialPosts]);
 
   async function createPost(e: React.FormEvent) {
     e.preventDefault();

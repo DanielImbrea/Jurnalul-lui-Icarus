@@ -47,10 +47,16 @@ function CountBadge({ count }: { count: number }) {
   );
 }
 
-export default function AdminNav() {
+export default function AdminNav({
+  initialPending
+}: {
+  initialPending?: PendingStats;
+}) {
   const pathname = usePathname();
   const router = useRouter();
-  const [pending, setPending] = useState<PendingStats | null>(null);
+  const [pending, setPending] = useState<PendingStats | null>(
+    initialPending ?? null
+  );
 
   useEffect(() => {
     async function loadPending() {
@@ -75,10 +81,9 @@ export default function AdminNav() {
       }
     }
 
-    loadPending();
     const interval = setInterval(loadPending, 60_000);
     return () => clearInterval(interval);
-  }, [pathname]);
+  }, []);
 
   async function logout() {
     await fetch("/api/admin/auth", { method: "DELETE" });
