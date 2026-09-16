@@ -89,6 +89,29 @@ export const newsletterSchema = z.object({
   email: z.string().trim().email("Adresa de email nu este validă.").max(120)
 });
 
+export const CONTACT_TOPICS = ["contact", "feedback", "problem"] as const;
+export type ContactTopic = (typeof CONTACT_TOPICS)[number];
+
+export const contactSubmitSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, "Numele trebuie să aibă cel puțin 2 caractere.")
+    .max(80),
+  email: z.string().trim().email("Adresa de email nu este validă.").max(120),
+  topic: z.enum(CONTACT_TOPICS, {
+    message: "Alege un tip de mesaj."
+  }),
+  message: z
+    .string()
+    .trim()
+    .min(15, "Mesajul trebuie să aibă cel puțin 15 caractere.")
+    .max(4000),
+  consentGiven: z.literal(true, {
+    message: "Trebuie să accepți prelucrarea datelor pentru a trimite mesajul."
+  })
+});
+
 export const cartLineSchema = z.object({
   productId: z.enum(["blake", "durere", "bundle"]),
   quantity: z.coerce.number().int().min(1).max(20)
